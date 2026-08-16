@@ -1,0 +1,15 @@
+[project]
+name = "datapipe"
+version = "2.3.0"
+description = "Device telemetry pipeline CLI"
+requires-python = ">=3.10"
+
+[project.scripts]
+datapipe = "datapipe.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["datapipe"]
