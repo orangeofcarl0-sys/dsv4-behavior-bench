@@ -1,55 +1,91 @@
-# ablation-eval-v3 — DeepSeek Harness 消融实验分级套件（datapipe）
+# ablation-eval-v3
 
-DeepSeek Harness 社区预设（minimal-plus / routing-suite / anchored-standard）机制消融实验的 **datapipe 任务分级评分套件**。
-public/heldout 全绿无区分度，本套件（81 个分级测试）提供可判别的能力分层。
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![dsh](https://img.shields.io/badge/dsh-0.1.0--rc.6-green)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-81-green)]()
 
-## 结构
+轻量、零依赖的 **DeepSeek V4 行为区分度分级套件**：81 个纯 pytest 测试，
+专门用于检验基于 dsv4 的 Harness / Agent 相关工作（persona 路由、工具面
+收窄、思维模式预设）的真实效果差异。
+
+## 问题
+
+标准评测（public/heldout）对 dsv4 的**行为差异不敏感**：在我们的消融矩阵中
+（54+ 格，deepseek-v4-pro / v4-flash，persona × 工具面 × 路由 × 引导全谱系），
+所有格 public/heldout 全部满分（25/25 + 8/8）——预设之间的真实机制差异
+（we/let-me 轨迹、persona 带、工具目录）在分数上**完全不可见**：
+
+| 评分层 | seed（未修复） | 全部消融格 | GOLD（修复版） |
+|---|---|---|---|
+| public (25) | 16 失败 | **全绿** | 全绿 |
+| heldout (8) | 4 失败 | **全绿** | 全绿 |
+| **区分度** | — | **0（饱和）** | — |
+
+## 方案
+
+把 dsv4 行为差异压进分数：7 个预校准套件（V1-V4 分级方法论迭代产物），
+全部为**零依赖 pytest**，conftest 自动解析候选仓库：
 
 | 套件 | 测试数 | 考察点 |
 |---|---|---|
-| d10 | 11 | 常规边界回归（时区/微秒/负值过滤/空目录/幂等/CLI 链） |
-| d11 | 11 | 规格边界与规格推导 |
-| d12 | 10 | 对抗性健壮性（transform/emit 坏行容错、bool 陷阱、数组输入、md 转义、退出码） |
-| t2 | 8 | 任务-轨迹关联（规格推断） |
-| t3 | 6 | 分级能力基准 |
-| t4 | 11 | 规格缺失项推断（MIXED 族思路） |
-| v4 | 24 | V4 核心区分（v4core 8 题规格完整性 + v4 16 题全量） |
-| gold / gold2 | — | GOLD 参考实现（gold=原最强产物；gold2=修复版全过） |
+| d10 / d11 | 22 | 常规边界 + 规格推导（时区/微秒/负值/幂等/CLI 链） |
+| d12 | 10 | 对抗性健壮性（坏行容错、bool 陷阱、数组输入、md 转义、退出码） |
+| t2 / t3 / t4 | 25 | 分级能力 + 规格缺失推断（MIXED 族） |
+| v4 | 24 | V4 核心区分（v4core 规格完整性 8 + 全量 16） |
+| gold / gold2 | — | GOLD 参考实现（gold2 = 修复版全过） |
 
-## 校准与区分度（2026-08-16 实测，宿主评分）
+实测区分度（dsv4-pro 消融产物，2026-08-16）：
 
-| 候选 | d10 | d11 | d12 | t2 | t3 | t4 | v4 | 总分/81 |
-|---|---|---|---|---|---|---|---|---|
-| GOLD2（修复版） | 11 | 11 | 10 | 8 | 6 | 11 | 24 | **81** |
-| GOLD（=m1-router 产物） | 11 | 11 | 5 | 8 | 6 | 11 | 24 | 76 |
-| gw-anchored-r1 | 11 | 11 | 6 | 7 | 6 | 9 | 16 | 66 |
-| pro-anchored-r1 | 11 | 11 | 6 | 7 | 6 | 9 | 14 | 64 |
-| m2/m4/m5-r1 | 11 | 11 | 5 | 7 | 6 | 9 | 13 | 62 |
-| **seed**（未修复基线） | 4 | 6 | 5 | 4 | 0 | 2 | 4 | **25** |
+| 候选 | 分级总分 / 81 | d12 | t4 | v4 |
+|---|---:|---:|---:|---:|
+| **GOLD2**（修复版） | **81** | 10/10 | 11/11 | 24/24 |
+| GOLD / m1-router | 76 | 5/10 | 11/11 | 24/24 |
+| anchored 系 | 64-66 | 6/10 | 9/11 | 14-16/24 |
+| router 系（m2/m4/m5/m6） | 62 | 4-5/10 | 9/11 | 13-14/24 |
+| **seed**（未修复基线） | **25** | 5/10 | 2/11 | 4/24 |
 
-区分度：seed 25/81 → GOLD2 81/81，中间态 62-76 可排序。public/heldout 在这批候选上全部 25/25+8/8 饱和——**分级请以本套件为准**。
+同一个 dsv4 模型、同一任务、同一批产物——**61 分跨度**，且与轨迹指纹
+（we/let-me 密度）方向一致：能区分"persona 是否生效、工具面收窄是否
+带来质量回归、路由/引导是否真实改变产出"。
 
-## 用法
+## 轻量
 
-### 方式 A：PowerShell 一键评分
+- **零依赖**：纯 pytest + 标准库，conftest 自解析 `DATAPIPE_REPO`，无框架、无安装
+- **快**：单候选全套 81 测试 < 10 秒（含 gold 对照 < 30 秒）
+- **一行运行**：
 
-powershell:
-  powershell -File grade_v3.ps1 -Repo <候选datapipe仓库根> -Label <名字>
-  # 例：powershell -File grade_v3.ps1 -Repo .\gold2 -Label GOLD2
-  # 输出：public / heldout / d10-d12 / t2-t4 / v4 各行通过数
+```bash
+DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
+```
 
-### 方式 B：pytest 直跑（容器/CI）
+或 PowerShell 一键评分（含 public/heldout 对照）：
 
-bash:
-  DATAPIPE_REPO=<候选仓库根> python3 -m pytest <本仓库>/d10 <本仓库>/d11 <本仓库>/d12 <本仓库>/t2 <本仓库>/t3 <本仓库>/t4 <本仓库>/v4 -q
+```powershell
+powershell -File grade_v3.ps1 -Repo <候选仓库根> -Label <名字>
+```
 
-套件 conftest 从环境变量 `DATAPIPE_REPO` 解析候选仓库（默认回退到相对路径）；PYTHONPATH 无需手动设置（conftest 已注入）。
+## 适用场景
 
-## 关联项目
+- **DSH 预设消融**：persona（spec/react/weak）、首轮工具面收窄、任务路由、
+  引导注入的机制检验——轨迹指标说"变没变"，本套件说"好不好"
+- **基于 dsv4 的 agent 工程**：prompt/persona 迭代的回归防线（public 全绿
+  掩盖的退化在 d12/t4/v4 上现形）
+- **harness 层改动验收**：工具 schema、注入上下文、模型路由配置的批量对比
 
-- 消融实验设计与数据：见 dsh-routing-suite / dsh-anchored-standard 的机制消融
-- 本套件为 datapipe 任务（Python 遥测数据管道 CLI）专用；2048 任务分级套件待建
+## 验证
+
+- 校准门槛（V1-V4 方法论）：GOLD ≥ 8/10 且弱基线 ≤ 5/10，逐测试可归因
+- GOLD2 81/81 全绿无回归（v4 24/24、d10 11/11、d11 11/11、d12 10/10、t2 8/8、
+  t3 6/6、t4 11/11）
+- seed 25/81：套件对未修复基线不虚报
+
+## 局限
+
+- datapipe 任务专用（Python 遥测数据管道 CLI）；2048 等任务的同类分级套件待建
+- t2/t4 存在规格推断主观性：校准以 GOLD 对照 + 逐测试归因为准
+- 评分目标产物为"修复型任务"产出；构建型（greenfield）任务建议另行校准
 
 ## License
 
-MIT。套件基于消融实验方法论开发（V1-V4 分级迭代：v4core/d10-d12 预校准门槛 + GOLD 对照）。
+MIT。套件源于 DeepSeek Harness 消融实验方法论（V1-V4 分级迭代）。
