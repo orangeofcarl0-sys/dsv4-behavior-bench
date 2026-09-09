@@ -22,6 +22,7 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | gpt-5.6-sol | 81 | 25 | 11 | 11 | 10 | 8 | 6 | 11 | 24 |
 | m1-router（m1 路由预设） | 76 | 25 | 11 | 11 | 5 | 8 | 6 | 11 | 24 |
+| **glm-5.3-flash** | **75** | 25 | 11 | 9 | 9 | 8 | 6 | 10 | 22 |
 | **opencode-go / omen-alpha** | **71** | 25 | 11 | 11 | 9 | 7 | 6 | 9 | 18 |
 | **deepseek-v4.1-flash-expires-on-0910** | **71** | 25 | 10 | 11 | 10 | 7 | 6 | 9 | 18 |
 | deepseek-v4-flash | 66 | 25 | 11 | 11 | 10 | 7 | 6 | 8 | 13 |
@@ -34,7 +35,9 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
   NDJSON 坏行 skipped 计数、BOM 等规格外推断边界）；唯一分离点是 d12
   `test_d127_cli_transform_malformed_exit1`（omen-alpha 把坏行按跳过计数、退出 0）与
   d10 `test_d104_filter_whitespace_padded`（v4.1-flash 失败）。
-- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 为 2026-09-09。
+- **glm-5.3-flash 是模型候选里的最高分（75/81）**：t2 满分 8/8、v4 22/24；失败集中在 d11 的 NaN/Inf 拒绝、
+  d12 的 transform 坏行退出码、以及 legacy temperature 回退。
+- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 与 glm-5.3-flash 为 2026-09-09。
   每候选仅一轮（one-shot），未做方差测量，1-2 分差距应视为噪声级。
 
 ## 问题
