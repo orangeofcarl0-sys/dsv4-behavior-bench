@@ -9,6 +9,34 @@
 专门用于检验基于 dsv4 的 Harness / Agent 相关工作（persona 路由、工具面
 收窄、思维模式预设）的真实效果差异。
 
+## 实测对照：模型 one-shot 跑分
+
+协议：同一份 seed（datapipe 2.2.1 重建版）的逐字节副本作为起点；每个候选在**盲测**下单轮修复
+（只给 `ONBOARDING_TODO.md` 的 v2.3 规格，不可见 81 项套件），交付后由宿主侧统一评分：
+
+```bash
+DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
+```
+
+| 候选 | 总分/81 | public/25 | d10 | d11 | d12 | t2 | t3 | t4 | v4 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| gold2（修复版参考） | 81 | 25 | 11 | 11 | 10 | 8 | 6 | 11 | 24 |
+| m1-router（m1 路由预设） | 76 | 25 | 11 | 11 | 5 | 8 | 6 | 11 | 24 |
+| **opencode-go / omen-alpha** | **71** | 25 | 11 | 11 | 9 | 7 | 6 | 9 | 18 |
+| **deepseek-v4.1-flash-expires-on-0910** | **71** | 25 | 10 | 11 | 10 | 7 | 6 | 9 | 18 |
+| deepseek-v4-flash | 66 | 25 | 11 | 11 | 10 | 7 | 6 | 8 | 13 |
+| deepseek-v4-flash-vision-exp | 65 | 25 | 11 | 10 | 10 | 7 | 6 | 8 | 13 |
+
+- **public 全部 25/25**：公开测试对模型差异完全不敏感——这正是本套件存在的理由。
+- **分离器是 d12 与 v4**：m1-router 的 d12 仅 5/10（对抗健壮性退化），模型候选 9-10/10；
+  但 m1-router 的 v4 为 24/24，模型候选只有 18/24。
+- omen-alpha 与 v4.1-flash 总分相同（71），10 项失败中 9 项重叠（legacy temperature 映射、
+  NDJSON 坏行 skipped 计数、BOM 等规格外推断边界）；唯一分离点是 d12
+  `test_d127_cli_transform_malformed_exit1`（omen-alpha 把坏行按跳过计数、退出 0）与
+  d10 `test_d104_filter_whitespace_padded`（v4.1-flash 失败）。
+- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 为 2026-09-09。
+  每候选仅一轮（one-shot），未做方差测量，1-2 分差距应视为噪声级。
+
 ## 问题
 
 标准评测（public/heldout）对 dsv4 的**行为差异不敏感**：在我们的消融矩阵中
