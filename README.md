@@ -1,21 +1,137 @@
 # ablation-eval-v3
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
 [![dsh](https://img.shields.io/badge/dsh-0.1.0--rc.6-green)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-81-green)]()
+[![V5](https://img.shields.io/badge/V5%20tests-66-green)]()
+[![legacy](https://img.shields.io/badge/legacy%20tests-81-lightgrey)]()
 
-> **V5 (datapipe v2.4) added 2026-10-04.** The legacy 81-test suite remains frozen
-> and unchanged below. V5 adds a harder, behavior-scored layer on top: see
-> [V5：datapipe v2.4 升级](#v5datapipe-v24-升级2026-10-04) at the end of this file.
+轻量、零依赖的 **DeepSeek V4 行为区分度分级套件**：用一个小型 datapipe 修复任务，
+把基于 dsv4 的 Harness / Agent 工作的真实效果差异压进分数。
 
-轻量、零依赖的 **DeepSeek V4 行为区分度分级套件**：81 个纯 pytest 测试，
-专门用于检验基于 dsv4 的 Harness / Agent 相关工作（persona 路由、工具面
-收窄、思维模式预设）的真实效果差异。
+- **当前基准：V5（datapipe v2.4）** — 66 项组合语义测试 + 行为评分，见下。
+- **遗产基准：V1–V4（datapipe v2.3，81 项）** — 已冻结、结果已遗产化，见文末。
 
-## 实测对照：模型 one-shot 跑分
+---
 
-协议：同一份 seed（datapipe 2.2.1 重建版）的逐字节副本作为起点；每个候选在**盲测**下单轮修复
+# 当前基准：V5 / datapipe v2.4
+
+> **⚠️ 旧 81 分结果已遗产化（superseded），与 V5 不可比。**
+> 它们跑在 **v2.3 规格 + 旧 broken seed** 上，分母、任务书、seed 全部不同；
+> 顶部也已饱和（强 Flash 已达 75–79/81）。
+> 切换 V5 后 **所有候选必须全面重测**：同一盲测/one-shot 协议，改用
+> `spec/ONBOARDING_TODO_v2.4.md` + `v5seed`，宿主侧 `grade_v5.py` 评分。
+> 旧分数仅作历史留档，不得与 V5 分数并列。
+
+## 为什么升级
+
+旧套件把“单点边界 → 局部修复”做到了极致，强模型已接近满分，且一个缺陷常被多个
+测试重复覆盖（malformed-NDJSON 一项分散在 t2/t4a/v4/v4core 共 5+ 处），raw `/81`
+带有隐式重复加权。V5 把难度轴从「更多单点边界」换成：
+
+> **少量新增 contract × 非局部组合 × 一致性 × 错误策略 × atomicity。**
+
+## 新增 contract（少而深）
+
+- `--on-error skip|fail`（默认 `skip`），CLI + library 等价语义；`DataError`
+  与 `ValueError` 可区分（数据错误 vs 用法错误）。
+- `fail` 下的 **atomic output**：失败不留 partial，已有文件不被 truncate。
+- 重复 `--filter` 的 **AND 语义**；冻结处理顺序
+  `normalize → validation → dedupe → filter(s) → unit → emit`。
+- 唯一有意行为变更：`skip` 时退出码为 **0**（supersede 旧的 skip→exit1）。
+
+不引入 SQL/表达式语言、async、数据库、插件框架、第三方依赖、LLM judge。
+
+## 测试结构（66 项）
+
+| 套件 | 测试数 | 考察点 |
+|---|---:|---|
+| `v5/core` | 19 | v2.4 明确 contract（错误策略、atomicity、AND、顺序、退出码） |
+| `v5/interaction` | 8 | 跨模块一致性、算子顺序、多约束组合 |
+| `v5/adversarial` | 19 | 错误分类、坏输入、atomicity、表示边界 |
+| `v5/boss` | 11 | 高信息密度端到端 composite（B1–B11） |
+| `v5/metamorphic` | 9 | 固定 seed 确定性不变量（幂等 / 表示不变 / 顺序不变 / 守恒） |
+
+新增测试以**组合语义**为主：一个 case 同时压 3–7 个 contract，要求完整 pipeline
+心智模型，而不是作者知道答案的冷门 corner case。
+
+## 行为评分（取代纯计数）
+
+`v5/behavior_manifest.json` 把 **32 个 behavior → 测试**；behavior 只有在**其全部
+测试通过**时才算满足，类别分 = 满足数 / 该类别 behavior 数，overall = 五类均值。
+同一行为被多个测试覆盖不会获得额外权重——彻底消除「一个 malformed-NDJSON 缺陷
+重复扣很多分」。每个 behavior 标注 provenance（`explicit-v2.4-contract` /
+`backward-compatibility` / `cross-module-invariant` / `robustness-policy`）。
+
+## 运行
+
+```bash
+python grade_v5.py <候选仓库根> --label <名字> --json out.json
+```
+
+输出 machine-readable JSON：每个套件固定 expected 数（collection/import error 标记
+suite invalid 并按失败计，**denominator 不缩小**）、raw `passed/total`、
+core/interaction/adversarial/boss/metamorphic 分项与 overall behavior score，
+以及 legacy 81 套件（单独报告，仅保证历史可比）。
+
+## 校准（本机 Python 3.11 / pytest 9.1）
+
+| 对象 | V5 raw | behavior | legacy/81 | runtime |
+|---|---:|---:|---:|---:|
+| `v5ref`（v2.4 reference） | 66/66 | **1.000** | 80/81（仅 d127 有意 supersede） | ~17–20s |
+| `gold2`（v2.3 完成版，作为“代理能力”参照） | 35/66 | 0.469 | 81/81 | — |
+| `gold`（v2.3 GOLD） | 33/66 | 0.438 | 76/81 | — |
+| `v5seed`（broken baseline） | 17/66 | **0.094** | 37/81 | ~19s |
+| 语法错误注入（collection error） | 0/66 | 0.000 | 0/81 | — |
+
+mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mutation
+（only-last-filter / filter-after-unit / fail→skip / partial-output /
+`temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
+**8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
+
+**注意**：表中只有 reference / seed / 旧 GOLD 的校准值，**尚无真实模型 V5 跑分**。
+正式 V5 leaderboard 须在 frozen suite 之后，按与历史一致的盲测 one-shot 协议重跑
+全部候选后方可发布。
+
+### V5 leaderboard
+
+| 候选 | V5 raw /66 | behavior | legacy /81 | 日期 |
+|---|---:|---:|---:|---|
+| _（待重测：所有候选须用 v2.4 任务书 + `v5seed` 重跑）_ | — | — | — | — |
+
+> 旧榜分数（见下文遗产区）**不可**迁入此表。切换 benchmark 后所有候选必须全面重测。
+
+## 仓库内 frozen artifact
+
+| 路径 | 内容 |
+|---|---|
+| `spec/ONBOARDING_TODO_v2.4.md` | candidate 任务书（逐字节复制进候选工作区） |
+| `spec/V5_DESIGN.md` | 设计依据、provenance、校准、风险、开发记录 |
+| `spec/FROZEN_HASHES.txt` | spec / tests / reference / seed / grader 的 sha256 |
+| `v5ref/` | v2.4 reference 实现（全绿） |
+| `v5seed/` | plausible-but-wrong broken seed（低分基线） |
+| `v5/behavior_manifest.json` | behavior → tests 映射与评分方法 |
+| `grade_v5.py` / `mutation_check.py` | 评分器 / mutation 审计 |
+
+## 局限（V5）
+
+- `--on-error` 默认值、`DataError` 不继承 `ValueError` 属 **policy choice**，已写入 spec。
+- `skip → exit 0` 与 legacy `d12::test_d127` 冲突，是 v2.4 有意演进，legacy 保持冻结。
+- V5 对真实 Flash 模型的区分度**尚未实测**；需正式 candidate runs 才能验证。
+
+---
+
+# 遗产基准：V1–V4 / datapipe v2.3（81 项，已冻结）
+
+> **状态：legacy / superseded。** 保留用于历史留档与回归对照，**不再作为主榜**。
+> 所有下列分数都跑在 v2.3 规格与旧 seed 上，与 V5 不可比。目录 `d10/d11/d12/
+> t2/t3/t4/v4` 与 `gold/gold2` 自 V5 起不再改动。
+> 结果遗产化的完整说明见 [`results/LEGACY.md`](results/LEGACY.md)：
+> 分母、任务书、起始 seed 全部不同，旧分数**不能**用于推断 V5 表现，也不能迁入 V5 榜。
+
+## 旧 leaderboard：模型 one-shot 跑分（历史留档）
+
+协议：同一份 seed（datapipe v2.2.1 重建版）的逐字节副本作为起点；每个候选在**盲测**下单轮修复
 （只给 `ONBOARDING_TODO.md` 的 v2.3 规格，不可见 81 项套件），交付后由宿主侧统一评分：
 
 ```bash
@@ -53,7 +169,7 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
   space-bunny-free effort 扫描为 2026-10-03。
   每候选仅一轮（one-shot），未做方差测量，1-2 分差距应视为噪声级。
 
-## 附加实验：reasoning-effort 扫描（space-bunny-free，2026-10-03）
+## 旧附加实验：reasoning-effort 扫描（space-bunny-free，2026-10-03）
 
 同一个模型（`space-bunny-free`，OpenCode Zen）在本套件上跑满全部 5 档 `reasoning_effort`
 （low / medium / high / xhigh / max；该模型不支持 off/none），协议与上表完全一致：盲测、one-shot、
@@ -82,9 +198,11 @@ n=1、逐字节 seed 副本、交付后宿主侧统一评分。
 汇总见其 [SUMMARY.md](results/space-bunny-free-effort-sweep/SUMMARY.md)。
 该目录已脱敏（本机绝对路径与用户名替换为占位符），评分数据未作任何改动。
 
-## 问题
+## 旧套件方法论（V1–V4 迭代留档）
 
-标准评测（public/heldout）对 dsv4 的**行为差异不敏感**：在我们的消融矩阵中
+### 问题
+
+标准评测（public/heldout）对 dsv4 的**行为差异不敏感**：在消融矩阵中
 （54+ 格，deepseek-v4-pro / v4-flash，persona × 工具面 × 路由 × 引导全谱系），
 所有格 public/heldout 全部满分（25/25 + 8/8）——预设之间的真实机制差异
 （we/let-me 轨迹、persona 带、工具目录）在分数上**完全不可见**：
@@ -95,7 +213,7 @@ n=1、逐字节 seed 副本、交付后宿主侧统一评分。
 | heldout (8) | 4 失败 | **全绿** | 全绿 |
 | **区分度** | — | **0（饱和）** | — |
 
-## 方案
+### 方案
 
 把 dsv4 行为差异压进分数：7 个预校准套件（V1-V4 分级方法论迭代产物），
 全部为**零依赖 pytest**，conftest 自动解析候选仓库：
@@ -122,7 +240,7 @@ n=1、逐字节 seed 副本、交付后宿主侧统一评分。
 （we/let-me 密度）方向一致：能区分"persona 是否生效、工具面收窄是否
 带来质量回归、路由/引导是否真实改变产出"。
 
-## 轻量
+### 轻量
 
 - **零依赖**：纯 pytest + 标准库，conftest 自解析 `DATAPIPE_REPO`，无框架、无安装
 - **快**：单候选全套 81 测试 < 10 秒（含 gold 对照 < 30 秒）
@@ -138,7 +256,7 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
 powershell -File grade_v3.ps1 -Repo <候选仓库根> -Label <名字>
 ```
 
-## 适用场景
+### 适用场景
 
 - **DSH 预设消融**：persona（spec/react/weak）、首轮工具面收窄、任务路由、
   引导注入的机制检验——轨迹指标说"变没变"，本套件说"好不好"
@@ -146,85 +264,20 @@ powershell -File grade_v3.ps1 -Repo <候选仓库根> -Label <名字>
   掩盖的退化在 d12/t4/v4 上现形）
 - **harness 层改动验收**：工具 schema、注入上下文、模型路由配置的批量对比
 
-## 验证
+### 验证
 
 - 校准门槛（V1-V4 方法论）：GOLD ≥ 8/10 且弱基线 ≤ 5/10，逐测试可归因
 - GOLD2 81/81 全绿无回归（v4 24/24、d10 11/11、d11 11/11、d12 10/10、t2 8/8、
   t3 6/6、t4 11/11）
 - seed 25/81：套件对未修复基线不虚报
 
-## 局限
+### 局限（legacy）
 
 - datapipe 任务专用（Python 遥测数据管道 CLI）；2048 等任务的同类分级套件待建
 - t2/t4 存在规格推断主观性：校准以 GOLD 对照 + 逐测试归因为准
 - 评分目标产物为"修复型任务"产出；构建型（greenfield）任务建议另行校准
+- **顶部饱和**：强 Flash 已达 75–79/81，这是 V5 升级的直接动因
 
 ## License
 
-MIT。套件源于 DeepSeek Harness 消融实验方法论（V1-V4 分级迭代）。
-
----
-
-# V5：datapipe v2.4 升级（2026-10-04）
-
-上面 81 项套件已冻结、不改动。V5 在同一 datapipe 修复任务上新增一层更难的
-**语义行为评分**，目标是在保持「轻量 Flash 快评」定位的前提下打破 75–79/81
-的顶部饱和。
-
-- **新增 contract（少而深）**：`--on-error skip|fail`（默认 skip）、`fail` 下的
-  **atomic output**（失败不留 partial、已有文件不被 truncate）、重复
-  `--filter` 的 **AND 语义**；并冻结处理顺序
-  `normalize → validation → dedupe → filter(s) → unit → emit`。
-  不引入 SQL/表达式语言、async、数据库、插件框架、第三方依赖。
-- **测试 66 项**，按语义分层：`v5/core` 19、`v5/interaction` 8、
-  `v5/adversarial` 19、`v5/boss` 11、`v5/metamorphic` 9。
-  新增测试以**组合语义**为主（一个 case 同时压 3–7 个 contract），
-  metamorphic 用固定 seed 的 stdlib 生成器测不变量。
-- **行为评分取代纯计数**：`v5/behavior_manifest.json` 把 32 个 behavior 映射到
-  测试；behavior 只有在**其全部测试通过**时才算满足，overall = 五类均值的
-  透明加权。彻底消除「一个 malformed-NDJSON 缺陷重复扣很多分」。
-- **frozen artifact 进仓库**：`spec/ONBOARDING_TODO_v2.4.md`（candidate 任务书，
-  逐字节复制进候选工作区）、`spec/V5_DESIGN.md`（设计依据 + provenance）、
-  `spec/FROZEN_HASHES.txt`。
-- **V5 reference 与 broken seed 都在仓库内**：`v5ref/`（V5 66/66 全绿、
-  legacy 80/81，唯一失败是 v2.4 有意 supersede 的 d127）、
-  `v5seed/`（低分基线）。
-
-## 运行
-
-```bash
-python grade_v5.py <候选仓库根> --label <名字> --json out.json
-```
-
-输出 machine-readable JSON，含每个套件固定 expected 数（collection/import error
-标记 suite invalid 并按失败计，denominator 不缩小）、raw `passed/total`、
-core/interaction/adversarial/boss/metamorphic 分项与 overall behavior score、
-legacy 81 套件（单独报告，保证历史可比）。
-
-验证（本机 Python 3.11 / pytest 9.1）：
-
-| 对象 | V5 raw | behavior | legacy/81 | runtime |
-|---|---:|---:|---:|---:|
-| `v5ref`（v2.4 reference） | 66/66 | 1.000 | 80/81（仅 d127 有意 supersede） | ~20s |
-| `gold2`（v2.3 完成版） | 35/66 | 0.469 | 81/81 | — |
-| `gold`（v2.3 GOLD） | 33/66 | 0.438 | 76/81 | — |
-| `v5seed`（broken baseline） | 17/66 | 0.094 | 37/81 | ~19s |
-
-mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mutation
-（only-last-filter / filter-after-unit / fail→skip / partial-output /
-`temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
-**8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
-
-设计与 provenance 见 [`spec/V5_DESIGN.md`](spec/V5_DESIGN.md)，
-leaderboard 运行须在 frozen suite 之后另行开展。
-
-## 局限（V5）
-
-- V5 与旧 81 套件的关系：legacy 保持冻结、单独报告；`transform` 的
-  skip→exit0 是 v2.4 的有意演进，会与 legacy `d12::test_d127` 冲突，已在
-  `spec/V5_DESIGN.md` 记录，不改 legacy。
-- `--on-error` 默认值、`DataError` 不继承 `ValueError` 属 **policy choice**，
-  已在 spec 写明。
-- V5 对真实 Flash 模型的区分度尚未实测：当前只用 gold/gold2 作为梯度参照；
-  正式 leaderboard 需在冻结后跑真实 candidate。
-
+MIT。套件源于 DeepSeek Harness 消融实验方法论（V1–V5 分级迭代）。
