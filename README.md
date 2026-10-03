@@ -21,11 +21,16 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
 | 候选 | 总分/81 | public/25 | d10 | d11 | d12 | t2 | t3 | t4 | v4 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | gpt-5.6-sol | 81 | 25 | 11 | 11 | 10 | 8 | 6 | 11 | 24 |
+| **space-bunny-free（effort=xhigh）** | **79** | 25 | 11 | 11 | 8 | 8 | 6 | 11 | 24 |
+| **space-bunny-free（effort=high）** | **78** | 25 | 10 | 11 | 8 | 8 | 6 | 11 | 24 |
 | m1-router（m1 路由预设） | 76 | 25 | 11 | 11 | 5 | 8 | 6 | 11 | 24 |
 | **glm-5.3-flash** | **75** | 25 | 11 | 9 | 9 | 8 | 6 | 10 | 22 |
 | **opencode-go / omen-alpha** | **71** | 25 | 11 | 11 | 9 | 7 | 6 | 9 | 18 |
 | **deepseek-v4.1-flash-expires-on-0910** | **71** | 25 | 10 | 11 | 10 | 7 | 6 | 9 | 18 |
+| **space-bunny-free（effort=max）** | **71** | 25 | 11 | 9 | 7 | 8 | 6 | 10 | 20 |
+| **space-bunny-free（effort=low）** | **68** | 25 | 10 | 11 | 6 | 7 | 6 | 10 | 18 |
 | deepseek-v4-flash | 66 | 25 | 11 | 11 | 10 | 7 | 6 | 8 | 13 |
+| **space-bunny-free（effort=medium）** | **63** | 25 | 11 | 10 | 7 | 7 | 6 | 7 | 15 |
 | deepseek-v4-flash-vision-exp | 65 | 25 | 11 | 10 | 10 | 7 | 6 | 8 | 13 |
 
 - **public 全部 25/25**：公开测试对模型差异完全不敏感——这正是本套件存在的理由。
@@ -35,10 +40,43 @@ DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
   NDJSON 坏行 skipped 计数、BOM 等规格外推断边界）；唯一分离点是 d12
   `test_d127_cli_transform_malformed_exit1`（omen-alpha 把坏行按跳过计数、退出 0）与
   d10 `test_d104_filter_whitespace_padded`（v4.1-flash 失败）。
-- **glm-5.3-flash 是模型候选里的最高分（75/81）**：t2 满分 8/8、v4 22/24；失败集中在 d11 的 NaN/Inf 拒绝、
+- **glm-5.3-flash（75/81）是 GLM/omni 路线里的最高分**：t2 满分 8/8、v4 22/24；失败集中在 d11 的 NaN/Inf 拒绝、
   d12 的 transform 坏行退出码、以及 legacy temperature 回退。
-- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 与 glm-5.3-flash 为 2026-09-09。
+- **space-bunny-free（effort=xhigh，79/81）是模型候选里的最高分**：v4 24/24 全绿、
+  t2 满分 8/8、t4 11/11，仅 d12 停在 8/10；与 GOLD 的差距只剩 2 项，全部落在 d12 的对抗边界
+  （md 表格竖线转义、transform 坏行退出码 1）。
+- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 与 glm-5.3-flash 为 2026-09-09；
+  space-bunny-free effort 扫描为 2026-10-03。
   每候选仅一轮（one-shot），未做方差测量，1-2 分差距应视为噪声级。
+
+## 附加实验：reasoning-effort 扫描（space-bunny-free，2026-10-03）
+
+同一个模型（`space-bunny-free`，OpenCode Zen）在本套件上跑满全部 5 档 `reasoning_effort`
+（low / medium / high / xhigh / max；该模型不支持 off/none），协议与上表完全一致：盲测、one-shot、
+n=1、逐字节 seed 副本、交付后宿主侧统一评分。
+
+| effort | 总分/81 | public | d10 | d11 | d12 | t2 | t3 | t4 | v4 | steps | thinking | 工具调用 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| low | 68 | 25 | 10 | 11 | 6 | 7 | 6 | 10 | 18 | 24 | 9 | 29 |
+| medium | 63 | 25 | 11 | 10 | 7 | 7 | 6 | 7 | 15 | 27 | 12 | 33 |
+| high | 78 | 25 | 10 | 11 | 8 | 8 | 6 | 11 | 24 | 32 | 12 | 43 |
+| xhigh | 79 | 25 | 11 | 11 | 8 | 8 | 6 | 11 | 24 | 43 | 19 | 58 |
+| max | 71 | 25 | 11 | 9 | 7 | 8 | 6 | 10 | 20 | 45 | 20 | 58 |
+
+- **effort 参数确实生效**：步数 24→45、思考事件 9→20、工具调用 29→58 随强度单调上升，
+  所以分数回落不是参数没传进去。
+- **强度有用但非单调**：high(78) / xhigh(79) 明显优于 low(68) / medium(63)，
+  但 max(71) 反而低于 high 与 xhigh。
+- **甜点区在 high–xhigh**：两档都拿到 v4 24/24 全绿，距 GOLD 只剩 2 项，
+  全部落在 d12 的对抗边界（md 表格竖线转义、transform 坏行退出码）。
+- **档内排序不可信**：n=1、无方差测量。medium < low、max < high 的非单调说明
+  单次方差至少在 ±5–8 分量级，比上表所说"1–2 分为噪声"更大；可靠曲线需 n≥3。
+- public 层 5/5 全部 25/25 —— 再次印证本套件的核心论点：区分度完全落在 d12 / t4 / v4。
+
+证据（逐档逐套件分数与失败清单、各档配置 overlay、评分与运行脚本、运行元数据）见
+[`results/space-bunny-free-effort-sweep/`](results/space-bunny-free-effort-sweep/)，
+汇总见其 [SUMMARY.md](results/space-bunny-free-effort-sweep/SUMMARY.md)。
+该目录已脱敏（本机绝对路径与用户名替换为占位符），评分数据未作任何改动。
 
 ## 问题
 
