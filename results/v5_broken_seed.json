@@ -1,0 +1,431 @@
+{
+  "label": "broken-seed",
+  "repo": "F:\\Codex_Work_Space\\dsv4-behavior-bench\\v5seed",
+  "benchmark": "datapipe-v2.4-v5",
+  "v5": {
+    "suites": {
+      "core": {
+        "passed": 3,
+        "failed": 16,
+        "errors": 0,
+        "expected": 19,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [
+          "v5/core/test_core.py::test_c1_default_on_error_is_skip",
+          "v5/core/test_core.py::test_c1_library_default_skips",
+          "v5/core/test_core.py::test_c2_skip_nonzero_skipped_still_exit0",
+          "v5/core/test_core.py::test_c3_fail_raises_data_error",
+          "v5/core/test_core.py::test_c3_transform_fail_raises_data_error",
+          "v5/core/test_core.py::test_c4_fail_cli_exit1",
+          "v5/core/test_core.py::test_c5_atomic_output_absent_stays_absent",
+          "v5/core/test_core.py::test_c5_atomic_transform_output_absent_stays_absent",
+          "v5/core/test_core.py::test_c6_atomic_existing_output_unchanged",
+          "v5/core/test_core.py::test_c6_atomic_emit_output_unchanged",
+          "v5/core/test_core.py::test_c7_malformed_filter_exit2",
+          "v5/core/test_core.py::test_c7_malformed_filter_raises_value_error",
+          "v5/core/test_core.py::test_c9_multiple_filters_and",
+          "v5/core/test_core.py::test_c9_library_filters_list_and",
+          "v5/core/test_core.py::test_c12_emit_fail_absent_stays_absent",
+          "v5/core/test_core.py::test_c13_filter_expr_and_filters_merge"
+        ],
+        "error_targets": []
+      },
+      "interaction": {
+        "passed": 3,
+        "failed": 5,
+        "errors": 0,
+        "expected": 8,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [
+          "v5/interaction/test_interaction.py::test_i1_tz_micros_case_dedupe_keep_last",
+          "v5/interaction/test_interaction.py::test_i2_dedupe_filters_unit_ordering",
+          "v5/interaction/test_interaction.py::test_i3_validation_before_dedupe",
+          "v5/interaction/test_interaction.py::test_i5_cli_full_chain",
+          "v5/interaction/test_interaction.py::test_i6_csv_roundtrip_preserves_records"
+        ],
+        "error_targets": []
+      },
+      "adversarial": {
+        "passed": 6,
+        "failed": 13,
+        "errors": 0,
+        "expected": 19,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [
+          "v5/adversarial/test_adversarial.py::test_a1_skip_count_and_valid_rows",
+          "v5/adversarial/test_adversarial.py::test_a2_fail_stops_at_first_bad",
+          "v5/adversarial/test_adversarial.py::test_a3_fail_skip_duality_missing_fields",
+          "v5/adversarial/test_adversarial.py::test_a3_fail_skip_duality_unparseable_ts",
+          "v5/adversarial/test_adversarial.py::test_a3_fail_skip_duality_out_of_range",
+          "v5/adversarial/test_adversarial.py::test_a5_bool_temp_not_numeric",
+          "v5/adversarial/test_adversarial.py::test_a6_temp_zero_does_not_fall_back",
+          "v5/adversarial/test_adversarial.py::test_a6_temp_bool_does_not_fall_back",
+          "v5/adversarial/test_adversarial.py::test_a8_program_error_not_swallowed",
+          "v5/adversarial/test_adversarial.py::test_a9_transform_fail_preserves_existing",
+          "v5/adversarial/test_adversarial.py::test_a10_library_cli_agree",
+          "v5/adversarial/test_adversarial.py::test_a11_emit_fail_on_malformed",
+          "v5/adversarial/test_adversarial.py::test_a12_skipped_not_double_counted"
+        ],
+        "error_targets": []
+      },
+      "boss": {
+        "passed": 0,
+        "failed": 11,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [
+          "v5/boss/test_boss.py::test_b1_ndjson_skip_preserves_valid",
+          "v5/boss/test_boss.py::test_b2_ndjson_fail_exit1_atomic",
+          "v5/boss/test_boss.py::test_b3_tz_micros_case_dedupe",
+          "v5/boss/test_boss.py::test_b4_dedupe_filters_unit",
+          "v5/boss/test_boss.py::test_b5_legacy_temperature_distinctions",
+          "v5/boss/test_boss.py::test_b6_csv_bom_quoted_roundtrip",
+          "v5/boss/test_boss.py::test_b7_md_escaping_and_summary",
+          "v5/boss/test_boss.py::test_b8_full_cli_chain",
+          "v5/boss/test_boss.py::test_b9_existing_output_unchanged_on_fail",
+          "v5/boss/test_boss.py::test_b10_library_cli_correspond",
+          "v5/boss/test_boss.py::test_b11_emit_fail_preserves_existing_report"
+        ],
+        "error_targets": []
+      },
+      "metamorphic": {
+        "passed": 5,
+        "failed": 4,
+        "errors": 0,
+        "expected": 9,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [
+          "v5/metamorphic/test_metamorphic.py::test_m1_normalization_idempotent",
+          "v5/metamorphic/test_metamorphic.py::test_m4_filter_order_invariance",
+          "v5/metamorphic/test_metamorphic.py::test_m5_dedupe_representation_invariance",
+          "v5/metamorphic/test_metamorphic.py::test_m7_skip_totals_conserved"
+        ],
+        "error_targets": []
+      }
+    },
+    "raw": {
+      "passed": 17,
+      "total": 66,
+      "ratio": 0.25757575757575757
+    },
+    "behavior": {
+      "overall": 0.09375,
+      "behaviors_satisfied": 3,
+      "behaviors_total": 32,
+      "categories": {
+        "contract": {
+          "satisfied": 1,
+          "total": 8,
+          "score": 0.125,
+          "behaviors": {
+            "on_error_default_skip": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c1_default_on_error_is_skip",
+                "core/test_core.py::test_c1_library_default_skips"
+              ]
+            },
+            "skip_exit_zero": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c2_skip_nonzero_skipped_still_exit0"
+              ]
+            },
+            "fail_raises_data_error": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c3_fail_raises_data_error",
+                "core/test_core.py::test_c3_transform_fail_raises_data_error"
+              ]
+            },
+            "fail_cli_exit_one": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c4_fail_cli_exit1"
+              ]
+            },
+            "atomic_output": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c5_atomic_output_absent_stays_absent",
+                "core/test_core.py::test_c5_atomic_transform_output_absent_stays_absent",
+                "core/test_core.py::test_c6_atomic_existing_output_unchanged",
+                "core/test_core.py::test_c6_atomic_emit_output_unchanged",
+                "core/test_core.py::test_c12_emit_fail_absent_stays_absent"
+              ]
+            },
+            "usage_vs_data_error": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c7_malformed_filter_exit2",
+                "core/test_core.py::test_c7_malformed_filter_raises_value_error"
+              ]
+            },
+            "multiple_filter_and": {
+              "satisfied": false,
+              "failing": [
+                "core/test_core.py::test_c9_multiple_filters_and",
+                "core/test_core.py::test_c9_library_filters_list_and",
+                "core/test_core.py::test_c13_filter_expr_and_filters_merge"
+              ]
+            },
+            "pipeline_ordering": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        },
+        "interaction": {
+          "satisfied": 1,
+          "total": 5,
+          "score": 0.2,
+          "behaviors": {
+            "composite_normalization_dedupe": {
+              "satisfied": false,
+              "failing": [
+                "interaction/test_interaction.py::test_i1_tz_micros_case_dedupe_keep_last"
+              ]
+            },
+            "ordering_dedupe_filter_unit": {
+              "satisfied": false,
+              "failing": [
+                "interaction/test_interaction.py::test_i2_dedupe_filters_unit_ordering",
+                "interaction/test_interaction.py::test_i3_validation_before_dedupe"
+              ]
+            },
+            "cross_module_legacy": {
+              "satisfied": true,
+              "failing": []
+            },
+            "cli_chain": {
+              "satisfied": false,
+              "failing": [
+                "interaction/test_interaction.py::test_i5_cli_full_chain"
+              ]
+            },
+            "representation_roundtrip": {
+              "satisfied": false,
+              "failing": [
+                "interaction/test_interaction.py::test_i6_csv_roundtrip_preserves_records"
+              ]
+            }
+          }
+        },
+        "adversarial": {
+          "satisfied": 0,
+          "total": 6,
+          "score": 0.0,
+          "behaviors": {
+            "malformed_policy_skip": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a1_skip_count_and_valid_rows"
+              ]
+            },
+            "malformed_policy_fail": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a2_fail_stops_at_first_bad",
+                "adversarial/test_adversarial.py::test_a3_fail_skip_duality_missing_fields",
+                "adversarial/test_adversarial.py::test_a3_fail_skip_duality_out_of_range",
+                "adversarial/test_adversarial.py::test_a3_fail_skip_duality_unparseable_ts"
+              ]
+            },
+            "metric_coercion": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a5_bool_temp_not_numeric",
+                "adversarial/test_adversarial.py::test_a6_temp_zero_does_not_fall_back",
+                "adversarial/test_adversarial.py::test_a6_temp_bool_does_not_fall_back"
+              ]
+            },
+            "error_classification": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a8_program_error_not_swallowed"
+              ]
+            },
+            "atomicity_fail": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a9_transform_fail_preserves_existing",
+                "adversarial/test_adversarial.py::test_a11_emit_fail_on_malformed"
+              ]
+            },
+            "library_cli_parity": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a10_library_cli_agree",
+                "adversarial/test_adversarial.py::test_a12_skipped_not_double_counted"
+              ]
+            }
+          }
+        },
+        "boss": {
+          "satisfied": 0,
+          "total": 8,
+          "score": 0.0,
+          "behaviors": {
+            "boss_malformed_policy": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b1_ndjson_skip_preserves_valid",
+                "boss/test_boss.py::test_b2_ndjson_fail_exit1_atomic"
+              ]
+            },
+            "boss_identity_normalization": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b3_tz_micros_case_dedupe"
+              ]
+            },
+            "boss_ordering": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b4_dedupe_filters_unit"
+              ]
+            },
+            "boss_legacy_metrics": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b5_legacy_temperature_distinctions"
+              ]
+            },
+            "boss_formats_roundtrip": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b6_csv_bom_quoted_roundtrip",
+                "boss/test_boss.py::test_b7_md_escaping_and_summary"
+              ]
+            },
+            "boss_cli_chain": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b8_full_cli_chain"
+              ]
+            },
+            "boss_atomicity": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b9_existing_output_unchanged_on_fail",
+                "boss/test_boss.py::test_b11_emit_fail_preserves_existing_report"
+              ]
+            },
+            "boss_parity": {
+              "satisfied": false,
+              "failing": [
+                "boss/test_boss.py::test_b10_library_cli_correspond"
+              ]
+            }
+          }
+        },
+        "metamorphic": {
+          "satisfied": 1,
+          "total": 5,
+          "score": 0.2,
+          "behaviors": {
+            "timestamp_idempotence": {
+              "satisfied": false,
+              "failing": [
+                "metamorphic/test_metamorphic.py::test_m1_normalization_idempotent"
+              ]
+            },
+            "format_equivalence": {
+              "satisfied": true,
+              "failing": []
+            },
+            "filter_invariance": {
+              "satisfied": false,
+              "failing": [
+                "metamorphic/test_metamorphic.py::test_m4_filter_order_invariance"
+              ]
+            },
+            "dedupe_representation_invariance": {
+              "satisfied": false,
+              "failing": [
+                "metamorphic/test_metamorphic.py::test_m5_dedupe_representation_invariance"
+              ]
+            },
+            "conservation": {
+              "satisfied": false,
+              "failing": [
+                "metamorphic/test_metamorphic.py::test_m7_skip_totals_conserved"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "legacy": {
+    "suites": {
+      "d10": {
+        "passed": 7,
+        "failed": 4,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "d11": {
+        "passed": 7,
+        "failed": 4,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "d12": {
+        "passed": 4,
+        "failed": 6,
+        "errors": 0,
+        "expected": 10,
+        "invalid": false
+      },
+      "t2": {
+        "passed": 4,
+        "failed": 4,
+        "errors": 0,
+        "expected": 8,
+        "invalid": false
+      },
+      "t3": {
+        "passed": 1,
+        "failed": 5,
+        "errors": 0,
+        "expected": 6,
+        "invalid": false
+      },
+      "t4": {
+        "passed": 5,
+        "failed": 6,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "v4": {
+        "passed": 9,
+        "failed": 15,
+        "errors": 0,
+        "expected": 24,
+        "invalid": false
+      }
+    },
+    "raw": {
+      "passed": 37,
+      "total": 81,
+      "ratio": 0.4567901234567901
+    }
+  },
+  "public": {
+    "passed": 12,
+    "failed": 13,
+    "errors": 0,
+    "collection_error": false
+  },
+  "runtime_seconds": 18.83
+}

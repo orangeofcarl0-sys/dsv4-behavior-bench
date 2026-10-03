@@ -1,0 +1,159 @@
+{
+  "version": "v5.1",
+  "note": "Semantic behavior manifest. A behavior is SATISFIED only when ALL of its tests pass. Category score = satisfied_behaviors / total_behaviors. Overall = mean of the five category scores. This prevents raw testcount redundancy (e.g. one malformed-NDJSON defect covered by many tests) from acting as an implicit multiplier.",
+  "categories": {
+    "contract": {
+      "description": "Explicit v2.4 contract clauses (frozen spec §3-§9).",
+      "behaviors": {
+        "on_error_default_skip": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c1_default_on_error_is_skip", "core/test_core.py::test_c1_library_default_skips"]
+        },
+        "skip_exit_zero": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c2_skip_nonzero_skipped_still_exit0"]
+        },
+        "fail_raises_data_error": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c3_fail_raises_data_error", "core/test_core.py::test_c3_transform_fail_raises_data_error"]
+        },
+        "fail_cli_exit_one": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c4_fail_cli_exit1"]
+        },
+        "atomic_output": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c5_atomic_output_absent_stays_absent", "core/test_core.py::test_c5_atomic_transform_output_absent_stays_absent", "core/test_core.py::test_c6_atomic_existing_output_unchanged", "core/test_core.py::test_c6_atomic_emit_output_unchanged", "core/test_core.py::test_c12_emit_fail_absent_stays_absent"]
+        },
+        "usage_vs_data_error": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c7_malformed_filter_exit2", "core/test_core.py::test_c7_malformed_filter_raises_value_error", "core/test_core.py::test_c8_data_error_not_value_error"]
+        },
+        "multiple_filter_and": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c9_multiple_filters_and", "core/test_core.py::test_c9_library_filters_list_and", "core/test_core.py::test_c13_filter_expr_and_filters_merge"]
+        },
+        "pipeline_ordering": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["core/test_core.py::test_c10_filter_before_unit_conversion", "core/test_core.py::test_c11_filter_after_dedupe_no_resurrect"]
+        }
+      }
+    },
+    "interaction": {
+      "description": "Cross-module consistency and non-local operator ordering.",
+      "behaviors": {
+        "composite_normalization_dedupe": {
+          "provenance": "cross-module-invariant",
+          "tests": ["interaction/test_interaction.py::test_i1_tz_micros_case_dedupe_keep_last"]
+        },
+        "ordering_dedupe_filter_unit": {
+          "provenance": "cross-module-invariant",
+          "tests": ["interaction/test_interaction.py::test_i2_dedupe_filters_unit_ordering", "interaction/test_interaction.py::test_i3_validation_before_dedupe"]
+        },
+        "cross_module_legacy": {
+          "provenance": "backward-compatibility",
+          "tests": ["interaction/test_interaction.py::test_i4_ingest_legacy_then_transform_emit"]
+        },
+        "cli_chain": {
+          "provenance": "cross-module-invariant",
+          "tests": ["interaction/test_interaction.py::test_i5_cli_full_chain", "interaction/test_interaction.py::test_i7_mixed_on_error_chain", "interaction/test_interaction.py::test_i8_fail_on_clean_input_succeeds"]
+        },
+        "representation_roundtrip": {
+          "provenance": "cross-module-invariant",
+          "tests": ["interaction/test_interaction.py::test_i6_csv_roundtrip_preserves_records"]
+        }
+      }
+    },
+    "adversarial": {
+      "description": "Error classification, bad input, atomicity, representation edges.",
+      "behaviors": {
+        "malformed_policy_skip": {
+          "provenance": "robustness-policy",
+          "tests": ["adversarial/test_adversarial.py::test_a1_skip_count_and_valid_rows", "adversarial/test_adversarial.py::test_a4_non_object_record_malformed"]
+        },
+        "malformed_policy_fail": {
+          "provenance": "robustness-policy",
+          "tests": ["adversarial/test_adversarial.py::test_a2_fail_stops_at_first_bad", "adversarial/test_adversarial.py::test_a3_fail_skip_duality_missing_fields", "adversarial/test_adversarial.py::test_a3_fail_skip_duality_out_of_range", "adversarial/test_adversarial.py::test_a3_fail_skip_duality_unparseable_ts"]
+        },
+        "metric_coercion": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["adversarial/test_adversarial.py::test_a5_nonnumeric_metric_row_kept_null", "adversarial/test_adversarial.py::test_a5_bool_temp_not_numeric", "adversarial/test_adversarial.py::test_a6_temp_zero_does_not_fall_back", "adversarial/test_adversarial.py::test_a6_temp_empty_falls_back", "adversarial/test_adversarial.py::test_a6_temp_null_falls_back", "adversarial/test_adversarial.py::test_a6_temp_bool_does_not_fall_back"]
+        },
+        "error_classification": {
+          "provenance": "robustness-policy",
+          "tests": ["adversarial/test_adversarial.py::test_a7_invalid_on_error_exit2", "adversarial/test_adversarial.py::test_a7_bad_format_exit2", "adversarial/test_adversarial.py::test_a8_program_error_not_swallowed"]
+        },
+        "atomicity_fail": {
+          "provenance": "robustness-policy",
+          "tests": ["adversarial/test_adversarial.py::test_a9_transform_fail_preserves_existing", "adversarial/test_adversarial.py::test_a11_emit_fail_on_malformed"]
+        },
+        "library_cli_parity": {
+          "provenance": "cross-module-invariant",
+          "tests": ["adversarial/test_adversarial.py::test_a10_library_cli_agree", "adversarial/test_adversarial.py::test_a12_skipped_not_double_counted"]
+        }
+      }
+    },
+    "boss": {
+      "description": "High-density end-to-end composite scenarios.",
+      "behaviors": {
+        "boss_malformed_policy": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b1_ndjson_skip_preserves_valid", "boss/test_boss.py::test_b2_ndjson_fail_exit1_atomic"]
+        },
+        "boss_identity_normalization": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b3_tz_micros_case_dedupe"]
+        },
+        "boss_ordering": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b4_dedupe_filters_unit"]
+        },
+        "boss_legacy_metrics": {
+          "provenance": "backward-compatibility",
+          "tests": ["boss/test_boss.py::test_b5_legacy_temperature_distinctions"]
+        },
+        "boss_formats_roundtrip": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b6_csv_bom_quoted_roundtrip", "boss/test_boss.py::test_b7_md_escaping_and_summary"]
+        },
+        "boss_cli_chain": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b8_full_cli_chain"]
+        },
+        "boss_atomicity": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["boss/test_boss.py::test_b9_existing_output_unchanged_on_fail", "boss/test_boss.py::test_b11_emit_fail_preserves_existing_report"]
+        },
+        "boss_parity": {
+          "provenance": "cross-module-invariant",
+          "tests": ["boss/test_boss.py::test_b10_library_cli_correspond"]
+        }
+      }
+    },
+    "metamorphic": {
+      "description": "Deterministic invariants (idempotence, representation/order invariance, conservation).",
+      "behaviors": {
+        "timestamp_idempotence": {
+          "provenance": "cross-module-invariant",
+          "tests": ["metamorphic/test_metamorphic.py::test_m1_normalization_idempotent", "metamorphic/test_metamorphic.py::test_m1_microseconds_roundtrip"]
+        },
+        "format_equivalence": {
+          "provenance": "cross-module-invariant",
+          "tests": ["metamorphic/test_metamorphic.py::test_m2_format_equivalence"]
+        },
+        "filter_invariance": {
+          "provenance": "explicit-v2.4-contract",
+          "tests": ["metamorphic/test_metamorphic.py::test_m3_filter_whitespace_invariance", "metamorphic/test_metamorphic.py::test_m4_filter_order_invariance"]
+        },
+        "dedupe_representation_invariance": {
+          "provenance": "cross-module-invariant",
+          "tests": ["metamorphic/test_metamorphic.py::test_m5_dedupe_representation_invariance", "metamorphic/test_metamorphic.py::test_m6_keep_last_order_stable"]
+        },
+        "conservation": {
+          "provenance": "cross-module-invariant",
+          "tests": ["metamorphic/test_metamorphic.py::test_m7_skip_totals_conserved", "metamorphic/test_metamorphic.py::test_m8_transform_totals_conserved"]
+        }
+      }
+    }
+  }
+}

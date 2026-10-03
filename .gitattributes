@@ -1,0 +1,9 @@
+# Keep these text files as LF so the frozen artifact hashes stay stable across
+# checkouts, and so the task book copied into candidate workspaces is byte-identical.
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.toml text eol=lf
+*.csv text eol=lf
+*.ndjson text eol=lf
