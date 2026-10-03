@@ -1,0 +1,53 @@
+{
+  "label": "high",
+  "repo": "<harness>/runs/high/datapipe",
+  "suites": {
+    "d10": {
+      "passed": 10,
+      "failed": 1,
+      "total": 11
+    },
+    "d11": {
+      "passed": 11,
+      "failed": 0,
+      "total": 11
+    },
+    "d12": {
+      "passed": 8,
+      "failed": 2,
+      "total": 10
+    },
+    "t2": {
+      "passed": 8,
+      "failed": 0,
+      "total": 8
+    },
+    "t3": {
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    "t4": {
+      "passed": 11,
+      "failed": 0,
+      "total": 11
+    },
+    "v4": {
+      "passed": 24,
+      "failed": 0,
+      "total": 24
+    }
+  },
+  "failures": [
+    "d10/test_d10.py::test_d102_microseconds_preserved",
+    "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+    "d12/test_d12.py::test_d127_cli_transform_malformed_exit1"
+  ],
+  "public": {
+    "passed": 25,
+    "failed": 0
+  },
+  "total_passed": 78,
+  "total_failed": 3,
+  "total_tests": 81
+}

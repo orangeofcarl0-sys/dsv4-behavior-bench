@@ -1,0 +1,351 @@
+{
+  "run_date": "2026-10-03",
+  "model": "space-bunny-free",
+  "provider_route": "opencode-zen (https://opencode.ai/zen/v1)",
+  "reasoning_efforts_tested": [
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "max"
+  ],
+  "protocol": "one-shot, blind. Each level ran in its own fresh dsh headless agent over a byte-identical copy of the datapipe v2.2.1 broken seed. Candidates saw only ONBOARDING_TODO.md (v2.3 spec) inside their own workspace; the 81-test suite, gold/ and gold2/ were never in the workspace and outbound web + subagent tools were disabled. Host side graded after delivery.",
+  "n_per_level": 1,
+  "seed_commit": "61eff68 (tag datapipe-v2-broken-seed)",
+  "seed_tree_md5": "6aca0e6fbaa1efe594c3708a6fc21c9e",
+  "baseline_reproduced": {
+    "seed": "25/81",
+    "gold2": "81/81"
+  },
+  "levels": {
+    "low": {
+      "total_passed": 68,
+      "total_tests": 81,
+      "public": {
+        "passed": 25,
+        "failed": 0
+      },
+      "suites": {
+        "d10": {
+          "passed": 10,
+          "failed": 1,
+          "total": 11
+        },
+        "d11": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d12": {
+          "passed": 6,
+          "failed": 4,
+          "total": 10
+        },
+        "t2": {
+          "passed": 7,
+          "failed": 1,
+          "total": 8
+        },
+        "t3": {
+          "passed": 6,
+          "failed": 0,
+          "total": 6
+        },
+        "t4": {
+          "passed": 10,
+          "failed": 1,
+          "total": 11
+        },
+        "v4": {
+          "passed": 18,
+          "failed": 6,
+          "total": 24
+        }
+      },
+      "failures": [
+        "d10/test_d10.py::test_d102_microseconds_preserved",
+        "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+        "d12/test_d12.py::test_d129_filter_missing_field_no_crash",
+        "t2/test_t2.py::test_t2_ndjson_bad_line_skipped",
+        "t4/test_t4.py::test_t4a_ndjson_malformed_counted_not_crash",
+        "v4/test_v4.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+        "v4/test_v4core.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4core.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+      ],
+      "steps": 24,
+      "thinking_events": 9,
+      "tool_calls": {
+        "read": 7,
+        "bash": 10,
+        "write": 6,
+        "edit": 6
+      },
+      "wall_seconds": 309
+    },
+    "medium": {
+      "total_passed": 63,
+      "total_tests": 81,
+      "public": {
+        "passed": 25,
+        "failed": 0
+      },
+      "suites": {
+        "d10": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d11": {
+          "passed": 10,
+          "failed": 1,
+          "total": 11
+        },
+        "d12": {
+          "passed": 7,
+          "failed": 3,
+          "total": 10
+        },
+        "t2": {
+          "passed": 7,
+          "failed": 1,
+          "total": 8
+        },
+        "t3": {
+          "passed": 6,
+          "failed": 0,
+          "total": 6
+        },
+        "t4": {
+          "passed": 7,
+          "failed": 4,
+          "total": 11
+        },
+        "v4": {
+          "passed": 15,
+          "failed": 9,
+          "total": 24
+        }
+      },
+      "failures": [
+        "d11/test_d11.py::test_d114_filter_before_unit_conversion",
+        "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+        "t2/test_t2.py::test_t2_ndjson_bad_line_skipped",
+        "t4/test_t4.py::test_t4a_ndjson_malformed_counted_not_crash",
+        "t4/test_t4.py::test_t4a_extless_json_sniffed",
+        "t4/test_t4.py::test_t4b_unit_f_applies_after_filter",
+        "t4/test_t4.py::test_t4c_full_pipeline_roundtrip",
+        "v4/test_v4.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+        "v4/test_v4.py::test_d4_extless_json_object_sniffed",
+        "v4/test_v4.py::test_d4_extless_json_array_sniffed",
+        "v4/test_v4.py::test_d6_unit_after_filter",
+        "v4/test_v4core.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4core.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+      ],
+      "steps": 27,
+      "thinking_events": 12,
+      "tool_calls": {
+        "read": 9,
+        "bash": 13,
+        "write": 5,
+        "edit": 6
+      },
+      "wall_seconds": 382
+    },
+    "high": {
+      "total_passed": 78,
+      "total_tests": 81,
+      "public": {
+        "passed": 25,
+        "failed": 0
+      },
+      "suites": {
+        "d10": {
+          "passed": 10,
+          "failed": 1,
+          "total": 11
+        },
+        "d11": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d12": {
+          "passed": 8,
+          "failed": 2,
+          "total": 10
+        },
+        "t2": {
+          "passed": 8,
+          "failed": 0,
+          "total": 8
+        },
+        "t3": {
+          "passed": 6,
+          "failed": 0,
+          "total": 6
+        },
+        "t4": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "v4": {
+          "passed": 24,
+          "failed": 0,
+          "total": 24
+        }
+      },
+      "failures": [
+        "d10/test_d10.py::test_d102_microseconds_preserved",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d127_cli_transform_malformed_exit1"
+      ],
+      "steps": 32,
+      "thinking_events": 12,
+      "tool_calls": {
+        "read": 17,
+        "bash": 15,
+        "todo_write": 2,
+        "write": 6,
+        "edit": 3
+      },
+      "wall_seconds": 1344
+    },
+    "xhigh": {
+      "total_passed": 79,
+      "total_tests": 81,
+      "public": {
+        "passed": 25,
+        "failed": 0
+      },
+      "suites": {
+        "d10": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d11": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d12": {
+          "passed": 8,
+          "failed": 2,
+          "total": 10
+        },
+        "t2": {
+          "passed": 8,
+          "failed": 0,
+          "total": 8
+        },
+        "t3": {
+          "passed": 6,
+          "failed": 0,
+          "total": 6
+        },
+        "t4": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "v4": {
+          "passed": 24,
+          "failed": 0,
+          "total": 24
+        }
+      },
+      "failures": [
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+        "d12/test_d12.py::test_d127_cli_transform_malformed_exit1"
+      ],
+      "steps": 43,
+      "thinking_events": 19,
+      "tool_calls": {
+        "bash": 20,
+        "read": 21,
+        "todo_write": 2,
+        "write": 9,
+        "edit": 6
+      },
+      "wall_seconds": 650
+    },
+    "max": {
+      "total_passed": 71,
+      "total_tests": 81,
+      "public": {
+        "passed": 25,
+        "failed": 0
+      },
+      "suites": {
+        "d10": {
+          "passed": 11,
+          "failed": 0,
+          "total": 11
+        },
+        "d11": {
+          "passed": 9,
+          "failed": 2,
+          "total": 11
+        },
+        "d12": {
+          "passed": 7,
+          "failed": 3,
+          "total": 10
+        },
+        "t2": {
+          "passed": 8,
+          "failed": 0,
+          "total": 8
+        },
+        "t3": {
+          "passed": 6,
+          "failed": 0,
+          "total": 6
+        },
+        "t4": {
+          "passed": 10,
+          "failed": 1,
+          "total": 11
+        },
+        "v4": {
+          "passed": 20,
+          "failed": 4,
+          "total": 24
+        }
+      },
+      "failures": [
+        "d11/test_d11.py::test_d112_nan_temp_rejected",
+        "d11/test_d11.py::test_d113_inf_temp_rejected",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+        "d12/test_d12.py::test_d127_cli_transform_malformed_exit1",
+        "t4/test_t4.py::test_t4a_whitespace_fields_trimmed",
+        "v4/test_v4.py::test_d2_timestamp_whitespace_trimmed",
+        "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+        "v4/test_v4core.py::test_d2_timestamp_whitespace_trimmed",
+        "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+      ],
+      "steps": 45,
+      "thinking_events": 20,
+      "tool_calls": {
+        "read": 21,
+        "bash": 21,
+        "todo_write": 4,
+        "write": 8,
+        "edit": 4
+      },
+      "wall_seconds": 722
+    }
+  }
+}

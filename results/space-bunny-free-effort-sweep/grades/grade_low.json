@@ -1,0 +1,63 @@
+{
+  "label": "low",
+  "repo": "<harness>/runs/low/datapipe",
+  "suites": {
+    "d10": {
+      "passed": 10,
+      "failed": 1,
+      "total": 11
+    },
+    "d11": {
+      "passed": 11,
+      "failed": 0,
+      "total": 11
+    },
+    "d12": {
+      "passed": 6,
+      "failed": 4,
+      "total": 10
+    },
+    "t2": {
+      "passed": 7,
+      "failed": 1,
+      "total": 8
+    },
+    "t3": {
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    "t4": {
+      "passed": 10,
+      "failed": 1,
+      "total": 11
+    },
+    "v4": {
+      "passed": 18,
+      "failed": 6,
+      "total": 24
+    }
+  },
+  "failures": [
+    "d10/test_d10.py::test_d102_microseconds_preserved",
+    "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+    "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+    "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+    "d12/test_d12.py::test_d129_filter_missing_field_no_crash",
+    "t2/test_t2.py::test_t2_ndjson_bad_line_skipped",
+    "t4/test_t4.py::test_t4a_ndjson_malformed_counted_not_crash",
+    "v4/test_v4.py::test_d1_ndjson_malformed_line_skipped",
+    "v4/test_v4.py::test_d1_ndjson_truncated_line_skipped",
+    "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+    "v4/test_v4core.py::test_d1_ndjson_malformed_line_skipped",
+    "v4/test_v4core.py::test_d1_ndjson_truncated_line_skipped",
+    "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+  ],
+  "public": {
+    "passed": 25,
+    "failed": 0
+  },
+  "total_passed": 68,
+  "total_failed": 13,
+  "total_tests": 81
+}
