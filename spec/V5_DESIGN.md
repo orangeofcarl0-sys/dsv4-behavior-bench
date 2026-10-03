@@ -207,3 +207,19 @@ final commit. Formal candidate evaluation must not modify the tests after freeze
 - Discrimination against real Flash models is **not yet measured here** — the
   calibration above uses `gold`/`gold2` as stand-ins. Formal leaderboard runs
   should start only after this suite is frozen.
+
+## 12. Legacy results and mandatory re-test
+
+Switching to V5 changes the task spec (v2.3 → v2.4), the starting seed (external
+v2.2.1 tag → in-repo `v5seed/`), the denominator (81 → 66 + behavior score) and
+the task book. The previous leaderboard numbers are therefore **superseded and
+not comparable**; they are archived under `results/` with
+`results/LEGACY.md` as the marker, and the README presents them in a clearly
+fenced legacy section.
+
+Consequence: after freeze, **every candidate must be re-tested** under the same
+blind, one-shot protocol using `spec/ONBOARDING_TODO_v2.4.md` + `v5seed/` and
+scored with `grade_v5.py`. Legacy numbers must not be copied, rescaled, or placed
+into the V5 leaderboard. The V5 leaderboard is intentionally empty until those
+runs exist.
+
