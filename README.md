@@ -10,18 +10,19 @@
 把基于 dsv4 的 Harness / Agent 工作的真实效果差异压进分数。
 
 - **当前基准：V5（datapipe v2.4）** — 66 项组合语义测试 + 行为评分，见下。
-- **遗产基准：V1–V4（datapipe v2.3，81 项）** — 已冻结、结果已遗产化，见文末。
+- **遗产套件：V1–V4（datapipe v2.3，81 项）** — 测试套件保留冻结，结果、参考基线与
+  旧评分器已移除，见文末。
 
 ---
 
 # 当前基准：V5 / datapipe v2.4
 
-> **⚠️ 旧 81 分结果已遗产化（superseded），与 V5 不可比。**
+> **⚠️ 旧 81 分结果与其参考基线（`gold/`、`gold2/`）已全部清理，与 V5 不可比。**
 > 它们跑在 **v2.3 规格 + 旧 broken seed** 上，分母、任务书、seed 全部不同；
 > 顶部也已饱和（强 Flash 已达 75–79/81）。
 > 切换 V5 后 **所有候选必须全面重测**：同一盲测/one-shot 协议，改用
 > `spec/ONBOARDING_TODO_v2.4.md` + `v5seed`，宿主侧 `grade_v5.py` 评分。
-> 旧分数仅作历史留档，不得与 V5 分数并列。
+> 需要旧结果或旧基线时，从 git 历史取回（V5 之前的最后提交 `aa2d0a8`）。
 
 ## 为什么升级
 
@@ -79,17 +80,19 @@ core/interaction/adversarial/boss/metamorphic 分项与 overall behavior score�
 | 对象 | V5 raw | behavior | legacy/81 | runtime |
 |---|---:|---:|---:|---:|
 | `v5ref`（v2.4 reference） | 66/66 | **1.000** | 80/81（仅 d127 有意 supersede） | ~17–20s |
-| `gold2`（v2.3 完成版，作为“代理能力”参照） | 35/66 | 0.469 | 81/81 | — |
-| `gold`（v2.3 GOLD） | 33/66 | 0.438 | 76/81 | — |
-| `v5seed`（broken baseline） | 17/66 | **0.094** | 37/81 | ~19s |
+| `v5seed`（broken seed，低分基线） | 17/66 | **0.094** | 37/81 | ~19s |
 | 语法错误注入（collection error） | 0/66 | 0.000 | 0/81 | — |
+
+> 升级前曾用旧 v2.3 参考实现（`gold`/`gold2`）作为“代理能力”梯度参照，测得
+> `gold2` 35/66、`gold` 33/66。这些参考实现与其分数已随旧基线一并清理，
+> 需要时从 git 历史 `aa2d0a8` 取回；当时数值仅作历史记录，不参与 V5 评分。
 
 mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mutation
 （only-last-filter / filter-after-unit / fail→skip / partial-output /
 `temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
 **8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
 
-**注意**：表中只有 reference / seed / 旧 GOLD 的校准值，**尚无真实模型 V5 跑分**。
+**注意**：表中只有 reference / seed 的校准值，**尚无真实模型 V5 跑分**。
 正式 V5 leaderboard 须在 frozen suite 之后，按与历史一致的盲测 one-shot 协议重跑
 全部候选后方可发布。
 
@@ -99,7 +102,7 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
 |---|---:|---:|---:|---|
 | _（待重测：所有候选须用 v2.4 任务书 + `v5seed` 重跑）_ | — | — | — | — |
 
-> 旧榜分数（见下文遗产区）**不可**迁入此表。切换 benchmark 后所有候选必须全面重测。
+> 旧榜分数已清理，且**不可**迁入此表。切换 benchmark 后所有候选必须全面重测。
 
 ## 仓库内 frozen artifact
 
@@ -121,162 +124,44 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
 
 ---
 
-# 遗产基准：V1–V4 / datapipe v2.3（81 项，已冻结）
+# 遗产套件：V1–V4 / datapipe v2.3（81 项）
 
-> **状态：legacy / superseded。** 保留用于历史留档与回归对照，**不再作为主榜**。
-> 所有下列分数都跑在 v2.3 规格与旧 seed 上，与 V5 不可比。目录 `d10/d11/d12/
-> t2/t3/t4/v4` 与 `gold/gold2` 自 V5 起不再改动。
-> 结果遗产化的完整说明见 [`results/LEGACY.md`](results/LEGACY.md)：
-> 分母、任务书、起始 seed 全部不同，旧分数**不能**用于推断 V5 表现，也不能迁入 V5 榜。
+> **状态：legacy / superseded。** 仅保留**测试套件** `d10 d11 d12 t2 t3 t4 v4`，
+> 冻结不改，用于回归对照与历史方法论的溯源。
+>
+> **已清理**（随本次升级一并移除）：
+> - 旧跑分结果 `results/space-bunny-free-effort-sweep/`（含 leaderboard 与
+>   effort 扫描证据）；
+> - 旧参考基线 `gold/`、`gold2/`；
+> - 旧评分器 `grade_v3.ps1`（其能力已由 `grade_v5.py` 的 legacy 分项覆盖）。
+>
+> 以上均可在 git 历史 `aa2d0a8`（V5 之前的最后提交）中取回。它们跑在 v2.3 规格
+> 与外部 v2.2.1 seed 上，分母/任务书/seed 与 V5 全不同，分数**不可**与 V5 并列。
+> 说明见 [`results/LEGACY.md`](results/LEGACY.md)。
 
-## 旧 leaderboard：模型 one-shot 跑分（历史留档）
-
-协议：同一份 seed（datapipe v2.2.1 重建版）的逐字节副本作为起点；每个候选在**盲测**下单轮修复
-（只给 `ONBOARDING_TODO.md` 的 v2.3 规格，不可见 81 项套件），交付后由宿主侧统一评分：
-
-```bash
-DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
-```
-
-| 候选 | 总分/81 | public/25 | d10 | d11 | d12 | t2 | t3 | t4 | v4 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| gpt-5.6-sol | 81 | 25 | 11 | 11 | 10 | 8 | 6 | 11 | 24 |
-| **space-bunny-free（effort=xhigh）** | **79** | 25 | 11 | 11 | 8 | 8 | 6 | 11 | 24 |
-| **space-bunny-free（effort=high）** | **78** | 25 | 10 | 11 | 8 | 8 | 6 | 11 | 24 |
-| m1-router（m1 路由预设） | 76 | 25 | 11 | 11 | 5 | 8 | 6 | 11 | 24 |
-| **glm-5.3-flash** | **75** | 25 | 11 | 9 | 9 | 8 | 6 | 10 | 22 |
-| **opencode-go / omen-alpha** | **71** | 25 | 11 | 11 | 9 | 7 | 6 | 9 | 18 |
-| **deepseek-v4.1-flash-expires-on-0910** | **71** | 25 | 10 | 11 | 10 | 7 | 6 | 9 | 18 |
-| **space-bunny-free（effort=max）** | **71** | 25 | 11 | 9 | 7 | 8 | 6 | 10 | 20 |
-| **space-bunny-free（effort=low）** | **68** | 25 | 10 | 11 | 6 | 7 | 6 | 10 | 18 |
-| deepseek-v4-flash | 66 | 25 | 11 | 11 | 10 | 7 | 6 | 8 | 13 |
-| **space-bunny-free（effort=medium）** | **63** | 25 | 11 | 10 | 7 | 7 | 6 | 7 | 15 |
-| deepseek-v4-flash-vision-exp | 65 | 25 | 11 | 10 | 10 | 7 | 6 | 8 | 13 |
-
-- **public 全部 25/25**：公开测试对模型差异完全不敏感——这正是本套件存在的理由。
-- **分离器是 d12 与 v4**：m1-router 的 d12 仅 5/10（对抗健壮性退化），模型候选 9-10/10；
-  但 m1-router 的 v4 为 24/24，模型候选只有 18/24。
-- omen-alpha 与 v4.1-flash 总分相同（71），10 项失败中 9 项重叠（legacy temperature 映射、
-  NDJSON 坏行 skipped 计数、BOM 等规格外推断边界）；唯一分离点是 d12
-  `test_d127_cli_transform_malformed_exit1`（omen-alpha 把坏行按跳过计数、退出 0）与
-  d10 `test_d104_filter_whitespace_padded`（v4.1-flash 失败）。
-- **glm-5.3-flash（75/81）是 GLM/omni 路线里的最高分**：t2 满分 8/8、v4 22/24；失败集中在 d11 的 NaN/Inf 拒绝、
-  d12 的 transform 坏行退出码、以及 legacy temperature 回退。
-- **space-bunny-free（effort=xhigh，79/81）是模型候选里的最高分**：v4 24/24 全绿、
-  t2 满分 8/8、t4 11/11，仅 d12 停在 8/10；与 GOLD 的差距只剩 2 项，全部落在 d12 的对抗边界
-  （md 表格竖线转义、transform 坏行退出码 1）。
-- 运行日期：v4-flash / v4-flash-vision-exp 为 2026-08-21；omen-alpha / v4.1-flash-expires-on-0910 与 glm-5.3-flash 为 2026-09-09；
-  space-bunny-free effort 扫描为 2026-10-03。
-  每候选仅一轮（one-shot），未做方差测量，1-2 分差距应视为噪声级。
-
-## 旧附加实验：reasoning-effort 扫描（space-bunny-free，2026-10-03）
-
-同一个模型（`space-bunny-free`，OpenCode Zen）在本套件上跑满全部 5 档 `reasoning_effort`
-（low / medium / high / xhigh / max；该模型不支持 off/none），协议与上表完全一致：盲测、one-shot、
-n=1、逐字节 seed 副本、交付后宿主侧统一评分。
-
-| effort | 总分/81 | public | d10 | d11 | d12 | t2 | t3 | t4 | v4 | steps | thinking | 工具调用 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| low | 68 | 25 | 10 | 11 | 6 | 7 | 6 | 10 | 18 | 24 | 9 | 29 |
-| medium | 63 | 25 | 11 | 10 | 7 | 7 | 6 | 7 | 15 | 27 | 12 | 33 |
-| high | 78 | 25 | 10 | 11 | 8 | 8 | 6 | 11 | 24 | 32 | 12 | 43 |
-| xhigh | 79 | 25 | 11 | 11 | 8 | 8 | 6 | 11 | 24 | 43 | 19 | 58 |
-| max | 71 | 25 | 11 | 9 | 7 | 8 | 6 | 10 | 20 | 45 | 20 | 58 |
-
-- **effort 参数确实生效**：步数 24→45、思考事件 9→20、工具调用 29→58 随强度单调上升，
-  所以分数回落不是参数没传进去。
-- **强度有用但非单调**：high(78) / xhigh(79) 明显优于 low(68) / medium(63)，
-  但 max(71) 反而低于 high 与 xhigh。
-- **甜点区在 high–xhigh**：两档都拿到 v4 24/24 全绿，距 GOLD 只剩 2 项，
-  全部落在 d12 的对抗边界（md 表格竖线转义、transform 坏行退出码）。
-- **档内排序不可信**：n=1、无方差测量。medium < low、max < high 的非单调说明
-  单次方差至少在 ±5–8 分量级，比上表所说"1–2 分为噪声"更大；可靠曲线需 n≥3。
-- public 层 5/5 全部 25/25 —— 再次印证本套件的核心论点：区分度完全落在 d12 / t4 / v4。
-
-证据（逐档逐套件分数与失败清单、各档配置 overlay、评分与运行脚本、运行元数据）见
-[`results/space-bunny-free-effort-sweep/`](results/space-bunny-free-effort-sweep/)，
-汇总见其 [SUMMARY.md](results/space-bunny-free-effort-sweep/SUMMARY.md)。
-该目录已脱敏（本机绝对路径与用户名替换为占位符），评分数据未作任何改动。
-
-## 旧套件方法论（V1–V4 迭代留档）
-
-### 问题
-
-标准评测（public/heldout）对 dsv4 的**行为差异不敏感**：在消融矩阵中
-（54+ 格，deepseek-v4-pro / v4-flash，persona × 工具面 × 路由 × 引导全谱系），
-所有格 public/heldout 全部满分（25/25 + 8/8）——预设之间的真实机制差异
-（we/let-me 轨迹、persona 带、工具目录）在分数上**完全不可见**：
-
-| 评分层 | seed（未修复） | 全部消融格 | GOLD（修复版） |
-|---|---|---|---|
-| public (25) | 16 失败 | **全绿** | 全绿 |
-| heldout (8) | 4 失败 | **全绿** | 全绿 |
-| **区分度** | — | **0（饱和）** | — |
-
-### 方案
-
-把 dsv4 行为差异压进分数：7 个预校准套件（V1-V4 分级方法论迭代产物），
-全部为**零依赖 pytest**，conftest 自动解析候选仓库：
+## 遗产套件构成（保留）
 
 | 套件 | 测试数 | 考察点 |
-|---|---|---|
+|---|---:|---|
 | d10 / d11 | 22 | 常规边界 + 规格推导（时区/微秒/负值/幂等/CLI 链） |
 | d12 | 10 | 对抗性健壮性（坏行容错、bool 陷阱、数组输入、md 转义、退出码） |
 | t2 / t3 / t4 | 25 | 分级能力 + 规格缺失推断（MIXED 族） |
 | v4 | 24 | V4 核心区分（v4core 规格完整性 8 + 全量 16） |
-| gold / gold2 | — | GOLD 参考实现（gold2 = 修复版全过） |
 
-实测区分度（dsv4-pro 消融产物，2026-08-16）：
-
-| 候选 | 分级总分 / 81 | d12 | t4 | v4 |
-|---|---:|---:|---:|---:|
-| **GOLD2**（修复版） | **81** | 10/10 | 11/11 | 24/24 |
-| GOLD / m1-router | 76 | 5/10 | 11/11 | 24/24 |
-| anchored 系 | 64-66 | 6/10 | 9/11 | 14-16/24 |
-| router 系（m2/m4/m5/m6） | 62 | 4-5/10 | 9/11 | 13-14/24 |
-| **seed**（未修复基线） | **25** | 5/10 | 2/11 | 4/24 |
-
-同一个 dsv4 模型、同一任务、同一批产物——**61 分跨度**，且与轨迹指纹
-（we/let-me 密度）方向一致：能区分"persona 是否生效、工具面收窄是否
-带来质量回归、路由/引导是否真实改变产出"。
-
-### 轻量
-
-- **零依赖**：纯 pytest + 标准库，conftest 自解析 `DATAPIPE_REPO`，无框架、无安装
-- **快**：单候选全套 81 测试 < 10 秒（含 gold 对照 < 30 秒）
-- **一行运行**：
+套件仍可单独运行（需自备候选仓库）：
 
 ```bash
 DATAPIPE_REPO=<候选仓库根> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
 ```
 
-或 PowerShell 一键评分（含 public/heldout 对照）：
+`grade_v5.py` 也会把 legacy 81 项作为独立分项一并报告，便于回归对照。
 
-```powershell
-powershell -File grade_v3.ps1 -Repo <候选仓库根> -Label <名字>
-```
+## 为什么被 supersede
 
-### 适用场景
-
-- **DSH 预设消融**：persona（spec/react/weak）、首轮工具面收窄、任务路由、
-  引导注入的机制检验——轨迹指标说"变没变"，本套件说"好不好"
-- **基于 dsv4 的 agent 工程**：prompt/persona 迭代的回归防线（public 全绿
-  掩盖的退化在 d12/t4/v4 上现形）
-- **harness 层改动验收**：工具 schema、注入上下文、模型路由配置的批量对比
-
-### 验证
-
-- 校准门槛（V1-V4 方法论）：GOLD ≥ 8/10 且弱基线 ≤ 5/10，逐测试可归因
-- GOLD2 81/81 全绿无回归（v4 24/24、d10 11/11、d11 11/11、d12 10/10、t2 8/8、
-  t3 6/6、t4 11/11）
-- seed 25/81：套件对未修复基线不虚报
-
-### 局限（legacy）
-
-- datapipe 任务专用（Python 遥测数据管道 CLI）；2048 等任务的同类分级套件待建
-- t2/t4 存在规格推断主观性：校准以 GOLD 对照 + 逐测试归因为准
-- 评分目标产物为"修复型任务"产出；构建型（greenfield）任务建议另行校准
-- **顶部饱和**：强 Flash 已达 75–79/81，这是 V5 升级的直接动因
+旧套件把「单点边界 → 局部修复」做到极致后，强 Flash 已到 75–79/81 的顶部饱和；
+且单一语义被多个测试重复覆盖，raw `/81` 带有隐式重复加权。这正是 V5（datapipe
+v2.4）升级的直接动因。旧套件的完整方法论与实测结论保留在 git 历史 `aa2d0a8` 的
+README 中。
 
 ## License
 
