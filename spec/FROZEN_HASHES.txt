@@ -3,7 +3,7 @@
 
 [spec]
 6c7d51df0f8d4031db46ae7f98f7b6ec55ab9be14d095db6079962dde846b851  spec/ONBOARDING_TODO_v2.4.md
-8b2ef95c135552bf7472940b669c74f06bae340dcd96abfcc91a8e296d0da918  spec/V5_DESIGN.md
+d32737025e4f9c5e36da680c5a84b65bc74b1f75917c6fd8ca0b61936ba5fa08  spec/V5_DESIGN.md
 
 [tests]
 089105adedc808ce5631ba273b5f685f7ebad589af5e73477d81bddeed689c9d  v5/adversarial/test_adversarial.py

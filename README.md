@@ -186,7 +186,8 @@ MIT。套件源于 DeepSeek Harness 消融实验方法论（V1-V4 分级迭代�
 - **frozen artifact 进仓库**：`spec/ONBOARDING_TODO_v2.4.md`（candidate 任务书，
   逐字节复制进候选工作区）、`spec/V5_DESIGN.md`（设计依据 + provenance）、
   `spec/FROZEN_HASHES.txt`。
-- **V5 reference 与 broken seed 都在仓库内**：`v5ref/`（76→ 全绿）、
+- **V5 reference 与 broken seed 都在仓库内**：`v5ref/`（V5 66/66 全绿、
+  legacy 80/81，唯一失败是 v2.4 有意 supersede 的 d127）、
   `v5seed/`（低分基线）。
 
 ## 运行

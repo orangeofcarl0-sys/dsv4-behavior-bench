@@ -145,7 +145,32 @@ behavior score drops for each (see `results/v5_mutation_check.json`):
 
 All 8 caught. Baseline reference: 66/66, behavior 1.000.
 
-## 9. Development record — correction types
+## 9. Duplicate-weight audit
+
+Audit of `v5/behavior_manifest.json`:
+
+- No test id is mapped to more than one behavior (remapping would be the only way
+  raw redundancy could leak into the score).
+- Within a category, each behavior has weight `1/N`; every category has weight
+  `1/5` in the overall score. Test count per behavior therefore does **not** change
+  its weight: a behavior covered by 6 tests counts exactly as much as one covered
+  by 1.
+- Concretely, the legacy problem ("one malformed-NDJSON defect covered by t2,
+  t4a, v4×2, v4core×2") is gone: in V5 the malformed-input policy is a single
+  behavior per policy branch, and its several tests collapse into one weight.
+
+| Category | Behaviors | Tests mapped | Raw tests would have weighted |
+|---|---:|---:|---|
+| contract | 8 | 19 | 2.4× over |
+| interaction | 5 | 8 | 1.6× over |
+| adversarial | 6 | 19 | 3.2× over |
+| boss | 8 | 11 | 1.4× over |
+| metamorphic | 5 | 9 | 1.8× over |
+
+The right-hand column is what raw `/66` would have done; the behavior score
+removes it.
+
+## 10. Development record — correction types
 
 Per the task's requirement to distinguish corrections, this section records the
 non-obvious ones:
