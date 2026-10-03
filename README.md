@@ -5,6 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-81-green)]()
 
+> **V5 (datapipe v2.4) added 2026-10-04.** The legacy 81-test suite remains frozen
+> and unchanged below. V5 adds a harder, behavior-scored layer on top: see
+> [V5：datapipe v2.4 升级](#v5datapipe-v24-升级2026-10-04) at the end of this file.
+
 轻量、零依赖的 **DeepSeek V4 行为区分度分级套件**：81 个纯 pytest 测试，
 专门用于检验基于 dsv4 的 Harness / Agent 相关工作（persona 路由、工具面
 收窄、思维模式预设）的真实效果差异。
@@ -158,3 +162,68 @@ powershell -File grade_v3.ps1 -Repo <候选仓库根> -Label <名字>
 ## License
 
 MIT。套件源于 DeepSeek Harness 消融实验方法论（V1-V4 分级迭代）。
+
+---
+
+# V5：datapipe v2.4 升级（2026-10-04）
+
+上面 81 项套件已冻结、不改动。V5 在同一 datapipe 修复任务上新增一层更难的
+**语义行为评分**，目标是在保持「轻量 Flash 快评」定位的前提下打破 75–79/81
+的顶部饱和。
+
+- **新增 contract（少而深）**：`--on-error skip|fail`（默认 skip）、`fail` 下的
+  **atomic output**（失败不留 partial、已有文件不被 truncate）、重复
+  `--filter` 的 **AND 语义**；并冻结处理顺序
+  `normalize → validation → dedupe → filter(s) → unit → emit`。
+  不引入 SQL/表达式语言、async、数据库、插件框架、第三方依赖。
+- **测试 66 项**，按语义分层：`v5/core` 19、`v5/interaction` 8、
+  `v5/adversarial` 19、`v5/boss` 11、`v5/metamorphic` 9。
+  新增测试以**组合语义**为主（一个 case 同时压 3–7 个 contract），
+  metamorphic 用固定 seed 的 stdlib 生成器测不变量。
+- **行为评分取代纯计数**：`v5/behavior_manifest.json` 把 32 个 behavior 映射到
+  测试；behavior 只有在**其全部测试通过**时才算满足，overall = 五类均值的
+  透明加权。彻底消除「一个 malformed-NDJSON 缺陷重复扣很多分」。
+- **frozen artifact 进仓库**：`spec/ONBOARDING_TODO_v2.4.md`（candidate 任务书，
+  逐字节复制进候选工作区）、`spec/V5_DESIGN.md`（设计依据 + provenance）、
+  `spec/FROZEN_HASHES.txt`。
+- **V5 reference 与 broken seed 都在仓库内**：`v5ref/`（76→ 全绿）、
+  `v5seed/`（低分基线）。
+
+## 运行
+
+```bash
+python grade_v5.py <候选仓库根> --label <名字> --json out.json
+```
+
+输出 machine-readable JSON，含每个套件固定 expected 数（collection/import error
+标记 suite invalid 并按失败计，denominator 不缩小）、raw `passed/total`、
+core/interaction/adversarial/boss/metamorphic 分项与 overall behavior score、
+legacy 81 套件（单独报告，保证历史可比）。
+
+验证（本机 Python 3.11 / pytest 9.1）：
+
+| 对象 | V5 raw | behavior | legacy/81 | runtime |
+|---|---:|---:|---:|---:|
+| `v5ref`（v2.4 reference） | 66/66 | 1.000 | 80/81（仅 d127 有意 supersede） | ~20s |
+| `gold2`（v2.3 完成版） | 35/66 | 0.469 | 81/81 | — |
+| `gold`（v2.3 GOLD） | 33/66 | 0.438 | 76/81 | — |
+| `v5seed`（broken baseline） | 17/66 | 0.094 | 37/81 | ~19s |
+
+mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mutation
+（only-last-filter / filter-after-unit / fail→skip / partial-output /
+`temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
+**8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
+
+设计与 provenance 见 [`spec/V5_DESIGN.md`](spec/V5_DESIGN.md)，
+leaderboard 运行须在 frozen suite 之后另行开展。
+
+## 局限（V5）
+
+- V5 与旧 81 套件的关系：legacy 保持冻结、单独报告；`transform` 的
+  skip→exit0 是 v2.4 的有意演进，会与 legacy `d12::test_d127` 冲突，已在
+  `spec/V5_DESIGN.md` 记录，不改 legacy。
+- `--on-error` 默认值、`DataError` 不继承 `ValueError` 属 **policy choice**，
+  已在 spec 写明。
+- V5 对真实 Flash 模型的区分度尚未实测：当前只用 gold/gold2 作为梯度参照；
+  正式 leaderboard 需在冻结后跑真实 candidate。
+
