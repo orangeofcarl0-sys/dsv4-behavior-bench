@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+catalog.jsonl
+transformed.jsonl
+report.json
+report.md
