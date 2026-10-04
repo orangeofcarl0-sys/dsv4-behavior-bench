@@ -1,0 +1,241 @@
+[
+  {
+    "rep": 1,
+    "level": "low",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 32,
+    "thinking": 13,
+    "text_events": 6,
+    "tool_calls": 44,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 0,
+    "flags": []
+  },
+  {
+    "rep": 1,
+    "level": "medium",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 44,
+    "thinking": 23,
+    "text_events": 11,
+    "tool_calls": 55,
+    "tool_errors": 1,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1",
+      "tool_errors x1"
+    ]
+  },
+  {
+    "rep": 1,
+    "level": "high",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 62,
+    "thinking": 28,
+    "text_events": 8,
+    "tool_calls": 78,
+    "tool_errors": 4,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1",
+      "tool_errors x4"
+    ]
+  },
+  {
+    "rep": 1,
+    "level": "xhigh",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 72,
+    "thinking": 21,
+    "text_events": 15,
+    "tool_calls": 83,
+    "tool_errors": 1,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1",
+      "tool_errors x1"
+    ]
+  },
+  {
+    "rep": 1,
+    "level": "max",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 50,
+    "thinking": 22,
+    "text_events": 21,
+    "tool_calls": 72,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 13,
+    "flags": [
+      "transport_errors x13"
+    ]
+  },
+  {
+    "rep": 2,
+    "level": "low",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 39,
+    "thinking": 19,
+    "text_events": 9,
+    "tool_calls": 48,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 0,
+    "flags": []
+  },
+  {
+    "rep": 2,
+    "level": "medium",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 31,
+    "thinking": 19,
+    "text_events": 6,
+    "tool_calls": 44,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 0,
+    "flags": []
+  },
+  {
+    "rep": 2,
+    "level": "high",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 34,
+    "thinking": 21,
+    "text_events": 16,
+    "tool_calls": 49,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1"
+    ]
+  },
+  {
+    "rep": 2,
+    "level": "xhigh",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 62,
+    "thinking": 30,
+    "text_events": 15,
+    "tool_calls": 71,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 0,
+    "flags": []
+  },
+  {
+    "rep": 2,
+    "level": "max",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 62,
+    "thinking": 36,
+    "text_events": 7,
+    "tool_calls": 77,
+    "tool_errors": 2,
+    "terminal_markers": 1,
+    "transport_error_lines": 23,
+    "flags": [
+      "transport_errors x23",
+      "tool_errors x2"
+    ]
+  },
+  {
+    "rep": 3,
+    "level": "low",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 35,
+    "thinking": 13,
+    "text_events": 10,
+    "tool_calls": 46,
+    "tool_errors": 1,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1",
+      "tool_errors x1"
+    ]
+  },
+  {
+    "rep": 3,
+    "level": "medium",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 49,
+    "thinking": 27,
+    "text_events": 3,
+    "tool_calls": 60,
+    "tool_errors": 1,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1",
+      "tool_errors x1"
+    ]
+  },
+  {
+    "rep": 3,
+    "level": "high",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 33,
+    "thinking": 14,
+    "text_events": 8,
+    "tool_calls": 47,
+    "tool_errors": 0,
+    "terminal_markers": 1,
+    "transport_error_lines": 1,
+    "flags": [
+      "transport_errors x1"
+    ]
+  },
+  {
+    "rep": 3,
+    "level": "xhigh",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 50,
+    "thinking": 19,
+    "text_events": 9,
+    "tool_calls": 62,
+    "tool_errors": 1,
+    "terminal_markers": 1,
+    "transport_error_lines": 0,
+    "flags": [
+      "tool_errors x1"
+    ]
+  },
+  {
+    "rep": 3,
+    "level": "max",
+    "rc": "0",
+    "stderr_extra": [],
+    "steps": 87,
+    "thinking": 32,
+    "text_events": 19,
+    "tool_calls": 100,
+    "tool_errors": 2,
+    "terminal_markers": 1,
+    "transport_error_lines": 2,
+    "flags": [
+      "transport_errors x2",
+      "tool_errors x2"
+    ]
+  }
+]

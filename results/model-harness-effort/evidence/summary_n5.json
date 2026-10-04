@@ -1,0 +1,1590 @@
+{
+  "reps": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "levels": {
+    "low": {
+      "runs": [
+        {
+          "rep": 1,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 0.875,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 18,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "contract/usage_vs_data_error"
+            ],
+            "failed_tests": [
+              "test_c7_malformed_filter_raises_value_error"
+            ]
+          },
+          "process": {
+            "steps": 32,
+            "thinking_events": 13,
+            "tool_calls_total": 44,
+            "tools": {
+              "glob": 1,
+              "read": 16,
+              "bash": 13,
+              "write": 8,
+              "edit": 6
+            },
+            "wall_seconds": 202
+          }
+        },
+        {
+          "rep": 2,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 39,
+            "thinking_events": 19,
+            "tool_calls_total": 48,
+            "tools": {
+              "read": 15,
+              "bash": 14,
+              "write": 10,
+              "edit": 9
+            },
+            "wall_seconds": 328
+          }
+        },
+        {
+          "rep": 3,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 35,
+            "thinking_events": 13,
+            "tool_calls_total": 46,
+            "tools": {
+              "read": 14,
+              "bash": 12,
+              "write": 8,
+              "edit": 12
+            },
+            "wall_seconds": 601
+          }
+        },
+        {
+          "rep": 4,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 38,
+            "thinking_events": 17,
+            "tool_calls_total": 53,
+            "tools": {
+              "read": 16,
+              "glob": 1,
+              "bash": 19,
+              "write": 11,
+              "edit": 6
+            },
+            "wall_seconds": 335
+          }
+        },
+        {
+          "rep": 5,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 43,
+            "thinking_events": 19,
+            "tool_calls_total": 49,
+            "tools": {
+              "glob": 1,
+              "read": 15,
+              "bash": 19,
+              "write": 8,
+              "edit": 6
+            },
+            "wall_seconds": 306
+          }
+        }
+      ],
+      "raw": {
+        "n": 5,
+        "mean": 65.2,
+        "min": 65,
+        "max": 66,
+        "values": [
+          65,
+          65,
+          66,
+          65,
+          65
+        ],
+        "sd": 0.4472135954999579,
+        "sem": 0.19999999999999998
+      },
+      "behavior": {
+        "n": 5,
+        "mean": 0.975,
+        "min": 0.96875,
+        "max": 1.0,
+        "values": [
+          0.96875,
+          0.96875,
+          1.0,
+          0.96875,
+          0.96875
+        ],
+        "sd": 0.013975424859373685,
+        "sem": 0.0062499999999999995
+      },
+      "legacy": {
+        "n": 5,
+        "mean": 80.0,
+        "min": 80,
+        "max": 80,
+        "values": [
+          80,
+          80,
+          80,
+          80,
+          80
+        ],
+        "sd": 0.0,
+        "sem": 0.0
+      },
+      "steps": {
+        "n": 5,
+        "mean": 37.4,
+        "min": 32,
+        "max": 43,
+        "values": [
+          32,
+          39,
+          35,
+          38,
+          43
+        ],
+        "sd": 4.159326868617084,
+        "sem": 1.8601075237738274
+      },
+      "tool_calls": {
+        "n": 5,
+        "mean": 48.0,
+        "min": 44,
+        "max": 53,
+        "values": [
+          44,
+          48,
+          46,
+          53,
+          49
+        ],
+        "sd": 3.391164991562634,
+        "sem": 1.51657508881031
+      },
+      "wall": {
+        "n": 5,
+        "mean": 354.4,
+        "min": 202,
+        "max": 601,
+        "values": [
+          202,
+          328,
+          601,
+          335,
+          306
+        ],
+        "sd": 147.8624360681238,
+        "sem": 66.12609167340831
+      },
+      "category_means": {
+        "contract": 0.975,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "medium": {
+      "runs": [
+        {
+          "rep": 1,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 44,
+            "thinking_events": 23,
+            "tool_calls_total": 55,
+            "tools": {
+              "read": 13,
+              "bash": 23,
+              "write": 10,
+              "edit": 9
+            },
+            "wall_seconds": 456
+          }
+        },
+        {
+          "rep": 2,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 31,
+            "thinking_events": 19,
+            "tool_calls_total": 44,
+            "tools": {
+              "read": 15,
+              "glob": 1,
+              "bash": 12,
+              "write": 9,
+              "edit": 7
+            },
+            "wall_seconds": 414
+          }
+        },
+        {
+          "rep": 3,
+          "grade": {
+            "raw": 62,
+            "behavior": 0.875,
+            "behaviors_satisfied": 28,
+            "categories": {
+              "contract": 0.625,
+              "interaction": 1.0,
+              "adversarial": 0.8333333333333334,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 16,
+              "interaction": 8,
+              "adversarial": 18,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 79,
+            "public": 25,
+            "unsat": [
+              "contract/fail_raises_data_error",
+              "contract/atomic_output",
+              "contract/usage_vs_data_error",
+              "adversarial/atomicity_fail"
+            ],
+            "failed_tests": [
+              "test_c3_transform_fail_raises_data_error",
+              "test_c5_atomic_transform_output_absent_stays_absent",
+              "test_c7_malformed_filter_raises_value_error",
+              "test_a9_transform_fail_preserves_existing"
+            ]
+          },
+          "process": {
+            "steps": 49,
+            "thinking_events": 27,
+            "tool_calls_total": 60,
+            "tools": {
+              "bash": 28,
+              "glob": 1,
+              "read": 16,
+              "write": 9,
+              "edit": 6
+            },
+            "wall_seconds": 600
+          }
+        },
+        {
+          "rep": 4,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 39,
+            "thinking_events": 20,
+            "tool_calls_total": 53,
+            "tools": {
+              "bash": 17,
+              "glob": 1,
+              "read": 19,
+              "todo_write": 2,
+              "write": 9,
+              "edit": 5
+            },
+            "wall_seconds": 396
+          }
+        },
+        {
+          "rep": 5,
+          "grade": {
+            "raw": 63,
+            "behavior": 0.90625,
+            "behaviors_satisfied": 29,
+            "categories": {
+              "contract": 0.875,
+              "interaction": 0.6,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 18,
+              "interaction": 6,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 79,
+            "public": 25,
+            "unsat": [
+              "contract/usage_vs_data_error",
+              "interaction/ordering_dedupe_filter_unit",
+              "interaction/cli_chain"
+            ],
+            "failed_tests": [
+              "test_c7_malformed_filter_raises_value_error",
+              "test_i3_validation_before_dedupe",
+              "test_i5_cli_full_chain"
+            ]
+          },
+          "process": {
+            "steps": 53,
+            "thinking_events": 22,
+            "tool_calls_total": 62,
+            "tools": {
+              "bash": 20,
+              "read": 18,
+              "todo_write": 1,
+              "write": 11,
+              "edit": 12
+            },
+            "wall_seconds": 523
+          }
+        }
+      ],
+      "raw": {
+        "n": 5,
+        "mean": 64.2,
+        "min": 62,
+        "max": 66,
+        "values": [
+          65,
+          65,
+          62,
+          66,
+          63
+        ],
+        "sd": 1.6431676725154984,
+        "sem": 0.7348469228349535
+      },
+      "behavior": {
+        "n": 5,
+        "mean": 0.94375,
+        "min": 0.875,
+        "max": 1.0,
+        "values": [
+          0.96875,
+          0.96875,
+          0.875,
+          1.0,
+          0.90625
+        ],
+        "sd": 0.051348989766109326,
+        "sem": 0.022963966338592295
+      },
+      "legacy": {
+        "n": 5,
+        "mean": 79.6,
+        "min": 79,
+        "max": 80,
+        "values": [
+          80,
+          80,
+          79,
+          80,
+          79
+        ],
+        "sd": 0.5477225575051661,
+        "sem": 0.24494897427831777
+      },
+      "steps": {
+        "n": 5,
+        "mean": 43.2,
+        "min": 31,
+        "max": 53,
+        "values": [
+          44,
+          31,
+          49,
+          39,
+          53
+        ],
+        "sd": 8.613942186943211,
+        "sem": 3.852272056851644
+      },
+      "tool_calls": {
+        "n": 5,
+        "mean": 54.8,
+        "min": 44,
+        "max": 62,
+        "values": [
+          55,
+          44,
+          60,
+          53,
+          62
+        ],
+        "sd": 7.049822692805827,
+        "sem": 3.152776554086889
+      },
+      "wall": {
+        "n": 5,
+        "mean": 477.8,
+        "min": 396,
+        "max": 600,
+        "values": [
+          456,
+          414,
+          600,
+          396,
+          523
+        ],
+        "sd": 83.98333167956604,
+        "sem": 37.558487722484244
+      },
+      "category_means": {
+        "contract": 0.9,
+        "interaction": 0.8400000000000001,
+        "adversarial": 0.9666666666666666,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "high": {
+      "runs": [
+        {
+          "rep": 1,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 62,
+            "thinking_events": 28,
+            "tool_calls_total": 78,
+            "tools": {
+              "bash": 29,
+              "read": 26,
+              "todo_write": 2,
+              "write": 10,
+              "edit": 10,
+              "grep": 1
+            },
+            "wall_seconds": 477
+          }
+        },
+        {
+          "rep": 2,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 34,
+            "thinking_events": 21,
+            "tool_calls_total": 49,
+            "tools": {
+              "glob": 1,
+              "read": 18,
+              "bash": 16,
+              "todo_write": 2,
+              "write": 8,
+              "edit": 4
+            },
+            "wall_seconds": 417
+          }
+        },
+        {
+          "rep": 3,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 33,
+            "thinking_events": 14,
+            "tool_calls_total": 47,
+            "tools": {
+              "read": 15,
+              "bash": 14,
+              "todo_write": 3,
+              "write": 9,
+              "edit": 6
+            },
+            "wall_seconds": 659
+          }
+        },
+        {
+          "rep": 4,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 57,
+            "thinking_events": 20,
+            "tool_calls_total": 71,
+            "tools": {
+              "glob": 1,
+              "read": 25,
+              "todo_write": 3,
+              "bash": 17,
+              "write": 7,
+              "edit": 17,
+              "grep": 1
+            },
+            "wall_seconds": 600
+          }
+        },
+        {
+          "rep": 5,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 51,
+            "thinking_events": 21,
+            "tool_calls_total": 62,
+            "tools": {
+              "glob": 1,
+              "bash": 20,
+              "read": 18,
+              "todo_write": 3,
+              "write": 11,
+              "edit": 9
+            },
+            "wall_seconds": 589
+          }
+        }
+      ],
+      "raw": {
+        "n": 5,
+        "mean": 65.4,
+        "min": 65,
+        "max": 66,
+        "values": [
+          65,
+          66,
+          66,
+          65,
+          65
+        ],
+        "sd": 0.5477225575051661,
+        "sem": 0.24494897427831777
+      },
+      "behavior": {
+        "n": 5,
+        "mean": 0.98125,
+        "min": 0.96875,
+        "max": 1.0,
+        "values": [
+          0.96875,
+          1.0,
+          1.0,
+          0.96875,
+          0.96875
+        ],
+        "sd": 0.01711632992203644,
+        "sem": 0.00765465544619743
+      },
+      "legacy": {
+        "n": 5,
+        "mean": 80.0,
+        "min": 80,
+        "max": 80,
+        "values": [
+          80,
+          80,
+          80,
+          80,
+          80
+        ],
+        "sd": 0.0,
+        "sem": 0.0
+      },
+      "steps": {
+        "n": 5,
+        "mean": 47.4,
+        "min": 33,
+        "max": 62,
+        "values": [
+          62,
+          34,
+          33,
+          57,
+          51
+        ],
+        "sd": 13.277801022759755,
+        "sem": 5.938013135721409
+      },
+      "tool_calls": {
+        "n": 5,
+        "mean": 61.4,
+        "min": 47,
+        "max": 78,
+        "values": [
+          78,
+          49,
+          47,
+          71,
+          62
+        ],
+        "sd": 13.501851724856113,
+        "sem": 6.038211655780211
+      },
+      "wall": {
+        "n": 5,
+        "mean": 548.4,
+        "min": 417,
+        "max": 659,
+        "values": [
+          477,
+          417,
+          659,
+          600,
+          589
+        ],
+        "sd": 98.62454055659778,
+        "sem": 44.106235386847516
+      },
+      "category_means": {
+        "contract": 1.0,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "xhigh": {
+      "runs": [
+        {
+          "rep": 1,
+          "grade": {
+            "raw": 64,
+            "behavior": 0.9375,
+            "behaviors_satisfied": 30,
+            "categories": {
+              "contract": 0.875,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 18,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 79,
+            "public": 25,
+            "unsat": [
+              "contract/fail_cli_exit_one",
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_c4_fail_cli_exit1",
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 72,
+            "thinking_events": 21,
+            "tool_calls_total": 83,
+            "tools": {
+              "read": 25,
+              "bash": 21,
+              "todo_write": 3,
+              "write": 12,
+              "edit": 22
+            },
+            "wall_seconds": 1290
+          }
+        },
+        {
+          "rep": 2,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 62,
+            "thinking_events": 30,
+            "tool_calls_total": 71,
+            "tools": {
+              "read": 18,
+              "bash": 24,
+              "todo_write": 3,
+              "write": 10,
+              "edit": 16
+            },
+            "wall_seconds": 840
+          }
+        },
+        {
+          "rep": 3,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 50,
+            "thinking_events": 19,
+            "tool_calls_total": 62,
+            "tools": {
+              "read": 24,
+              "bash": 15,
+              "todo_write": 4,
+              "write": 9,
+              "edit": 10
+            },
+            "wall_seconds": 659
+          }
+        },
+        {
+          "rep": 4,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 46,
+            "thinking_events": 26,
+            "tool_calls_total": 58,
+            "tools": {
+              "bash": 22,
+              "glob": 1,
+              "read": 20,
+              "todo_write": 2,
+              "write": 8,
+              "edit": 4,
+              "grep": 1
+            },
+            "wall_seconds": 600
+          }
+        },
+        {
+          "rep": 5,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 66,
+            "thinking_events": 28,
+            "tool_calls_total": 78,
+            "tools": {
+              "read": 23,
+              "bash": 27,
+              "todo_write": 5,
+              "write": 9,
+              "edit": 14
+            },
+            "wall_seconds": 1612
+          }
+        }
+      ],
+      "raw": {
+        "n": 5,
+        "mean": 65.2,
+        "min": 64,
+        "max": 66,
+        "values": [
+          64,
+          65,
+          66,
+          66,
+          65
+        ],
+        "sd": 0.8366600265340756,
+        "sem": 0.3741657386773941
+      },
+      "behavior": {
+        "n": 5,
+        "mean": 0.975,
+        "min": 0.9375,
+        "max": 1.0,
+        "values": [
+          0.9375,
+          0.96875,
+          1.0,
+          1.0,
+          0.96875
+        ],
+        "sd": 0.02614562582918986,
+        "sem": 0.011692679333668566
+      },
+      "legacy": {
+        "n": 5,
+        "mean": 79.8,
+        "min": 79,
+        "max": 80,
+        "values": [
+          79,
+          80,
+          80,
+          80,
+          80
+        ],
+        "sd": 0.4472135954999579,
+        "sem": 0.19999999999999998
+      },
+      "steps": {
+        "n": 5,
+        "mean": 59.2,
+        "min": 46,
+        "max": 72,
+        "values": [
+          72,
+          62,
+          50,
+          46,
+          66
+        ],
+        "sd": 10.917875251164945,
+        "sem": 4.882622246293481
+      },
+      "tool_calls": {
+        "n": 5,
+        "mean": 70.4,
+        "min": 58,
+        "max": 83,
+        "values": [
+          83,
+          71,
+          62,
+          58,
+          78
+        ],
+        "sd": 10.502380682492898,
+        "sem": 4.696807426326951
+      },
+      "wall": {
+        "n": 5,
+        "mean": 1000.2,
+        "min": 600,
+        "max": 1612,
+        "values": [
+          1290,
+          840,
+          659,
+          600,
+          1612
+        ],
+        "sd": 436.04036510396605,
+        "sem": 195.00317946125904
+      },
+      "category_means": {
+        "contract": 0.975,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "max": {
+      "runs": [
+        {
+          "rep": 1,
+          "grade": {
+            "raw": 66,
+            "behavior": 1.0,
+            "behaviors_satisfied": 32,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 1.0,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 8,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 78,
+            "public": 25,
+            "unsat": [],
+            "failed_tests": []
+          },
+          "process": {
+            "steps": 50,
+            "thinking_events": 22,
+            "tool_calls_total": 72,
+            "tools": {
+              "read": 21,
+              "bash": 20,
+              "todo_write": 3,
+              "write": 9,
+              "edit": 19
+            },
+            "wall_seconds": 1290
+          }
+        },
+        {
+          "rep": 2,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 80,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 62,
+            "thinking_events": 36,
+            "tool_calls_total": 77,
+            "tools": {
+              "bash": 30,
+              "glob": 1,
+              "read": 20,
+              "todo_write": 3,
+              "write": 11,
+              "edit": 12
+            },
+            "wall_seconds": 866
+          }
+        },
+        {
+          "rep": 3,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 78,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 87,
+            "thinking_events": 32,
+            "tool_calls_total": 100,
+            "tools": {
+              "glob": 1,
+              "read": 28,
+              "todo_write": 3,
+              "bash": 37,
+              "write": 10,
+              "edit": 21
+            },
+            "wall_seconds": 798
+          }
+        },
+        {
+          "rep": 4,
+          "grade": {
+            "raw": 65,
+            "behavior": 0.96875,
+            "behaviors_satisfied": 31,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.8,
+              "adversarial": 1.0,
+              "boss": 1.0,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 7,
+              "adversarial": 19,
+              "boss": 11,
+              "metamorphic": 9
+            },
+            "legacy": 78,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe"
+            ]
+          },
+          "process": {
+            "steps": 51,
+            "thinking_events": 18,
+            "tool_calls_total": 65,
+            "tools": {
+              "glob": 2,
+              "read": 22,
+              "todo_write": 3,
+              "bash": 18,
+              "write": 9,
+              "edit": 10,
+              "grep": 1
+            },
+            "wall_seconds": 721
+          }
+        },
+        {
+          "rep": 5,
+          "grade": {
+            "raw": 63,
+            "behavior": 0.90625,
+            "behaviors_satisfied": 29,
+            "categories": {
+              "contract": 1.0,
+              "interaction": 0.6,
+              "adversarial": 1.0,
+              "boss": 0.875,
+              "metamorphic": 1.0
+            },
+            "suites": {
+              "core": 19,
+              "interaction": 6,
+              "adversarial": 19,
+              "boss": 10,
+              "metamorphic": 9
+            },
+            "legacy": 79,
+            "public": 25,
+            "unsat": [
+              "interaction/ordering_dedupe_filter_unit",
+              "interaction/cli_chain",
+              "boss/boss_cli_chain"
+            ],
+            "failed_tests": [
+              "test_i3_validation_before_dedupe",
+              "test_i5_cli_full_chain",
+              "test_b8_full_cli_chain"
+            ]
+          },
+          "process": {
+            "steps": 44,
+            "thinking_events": 23,
+            "tool_calls_total": 67,
+            "tools": {
+              "bash": 20,
+              "glob": 1,
+              "read": 20,
+              "todo_write": 3,
+              "write": 9,
+              "edit": 12,
+              "grep": 2
+            },
+            "wall_seconds": 1616
+          }
+        }
+      ],
+      "raw": {
+        "n": 5,
+        "mean": 64.8,
+        "min": 63,
+        "max": 66,
+        "values": [
+          66,
+          65,
+          65,
+          65,
+          63
+        ],
+        "sd": 1.0954451150103321,
+        "sem": 0.48989794855663554
+      },
+      "behavior": {
+        "n": 5,
+        "mean": 0.9625,
+        "min": 0.90625,
+        "max": 1.0,
+        "values": [
+          1.0,
+          0.96875,
+          0.96875,
+          0.96875,
+          0.90625
+        ],
+        "sd": 0.03423265984407288,
+        "sem": 0.01530931089239486
+      },
+      "legacy": {
+        "n": 5,
+        "mean": 78.6,
+        "min": 78,
+        "max": 80,
+        "values": [
+          78,
+          80,
+          78,
+          78,
+          79
+        ],
+        "sd": 0.8944271909999159,
+        "sem": 0.39999999999999997
+      },
+      "steps": {
+        "n": 5,
+        "mean": 58.8,
+        "min": 44,
+        "max": 87,
+        "values": [
+          50,
+          62,
+          87,
+          51,
+          44
+        ],
+        "sd": 17.049926686059386,
+        "sem": 7.6249590162833005
+      },
+      "tool_calls": {
+        "n": 5,
+        "mean": 76.2,
+        "min": 65,
+        "max": 100,
+        "values": [
+          72,
+          77,
+          100,
+          65,
+          67
+        ],
+        "sd": 14.096098751072937,
+        "sem": 6.3039670049897945
+      },
+      "wall": {
+        "n": 5,
+        "mean": 1058.2,
+        "min": 721,
+        "max": 1616,
+        "values": [
+          1290,
+          866,
+          798,
+          721,
+          1616
+        ],
+        "sd": 381.8444709564354,
+        "sem": 170.7660387782067
+      },
+      "category_means": {
+        "contract": 1.0,
+        "interaction": 0.8,
+        "adversarial": 1.0,
+        "boss": 0.975,
+        "metamorphic": 1.0
+      }
+    }
+  }
+}
