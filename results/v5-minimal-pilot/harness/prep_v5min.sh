@@ -10,7 +10,11 @@ OUT="${1:?usage: prep_v5min.sh OUTDIR}"
 LEVELS="${LEVELS:-low medium high}"
 
 rm -rf "$OUT"; mkdir -p "$OUT"
-for lv in $LEVELS; do cp -a "$BENCH/v5minseed" "$OUT/$lv"; done
+for lv in $LEVELS; do
+  cp -a "$BENCH/v5minseed" "$OUT/$lv"
+  find "$OUT/$lv" -name '__pycache__' -type d -prune -exec rm -rf {} + 2>/dev/null || true
+  find "$OUT/$lv" -name '.pytest_cache' -type d -prune -exec rm -rf {} + 2>/dev/null || true
+done
 
 echo "--- datapipe/ code byte-identity vs v5seed (must be identical) ---"
 for lv in $LEVELS; do
