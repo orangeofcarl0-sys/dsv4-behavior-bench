@@ -12,6 +12,12 @@ required by the task; the task text itself (what candidates see) is
 - `gold2` (v2.3-complete reference) = 81/81; `gold` (GOLD) = 76/81.
 - Strong Flash candidates already reach 75–79/81; the ceiling is saturated.
 
+> Note: the old reference baselines `gold/`, `gold2/`, the old run results, and
+> `grade_v3.ps1` were **removed from the working tree** as part of the V5 upgrade
+> (per "只留套件，结果与基线清除"). This document still refers to them as audit
+> history; they are retrievable from git at `aa2d0a8`. Legacy test suites
+> `d10..v4` are retained and frozen.
+
 **Ceiling causes (audited):**
 
 1. Most tests are single-point edge cases (`microsecond preserved`, `whitespace
