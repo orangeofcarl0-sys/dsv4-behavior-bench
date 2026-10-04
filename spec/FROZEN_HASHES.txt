@@ -1,6 +1,7 @@
 # Frozen V5 artifact hashes (sha256)
 # Revision: v2.4.1 (2026-10-04 errata: §3 wording corrected; non-finite metrics specified + covered).
 # v2.4.0 hashes are superseded; see git history for the pre-errata freeze.
+# Hashes are computed over LF-normalized content (see .gitattributes).
 # Generated after freeze; formal candidate evaluation must not modify these artifacts.
 
 [spec]
@@ -14,7 +15,7 @@
 e14f887e72bf89c18cec45025f2769dfc7a467976a37f00ee86a8bea02cddaa2  v5/core/test_core.py
 7f4fddce68c33fef6c567394444d0176c84fd0c19c419e8eb59eb92c93c65cb0  v5/interaction/test_interaction.py
 2c49296df3336bd203c06b8202434bc0532de5ebdd0ce2cba39ac5b9738e27f9  v5/metamorphic/test_metamorphic.py
-2467cc8192e1218e89370773b6fd67e6b7c1eadedd638738570f65b8f8d17ef1  v5/behavior_manifest.json
+4ead9fd6826142b684e0f2141cd10a06325bb7c2b123f08bdd29361045f98e9b  v5/behavior_manifest.json
 
 [reference]
 d5c406f2753947a9cbc745df4fd84f70e85e269e448aaa556ea331c604b63f89  v5ref/datapipe/__init__.py
