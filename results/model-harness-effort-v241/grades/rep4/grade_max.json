@@ -1,0 +1,303 @@
+{
+  "label": "space-bunny-free-v241-effort-max-r4",
+  "repo": "<harness>/runs_v241_r4/max",
+  "benchmark": "datapipe-v2.4-v5",
+  "v5": {
+    "suites": {
+      "core": {
+        "passed": 19,
+        "failed": 0,
+        "errors": 0,
+        "expected": 19,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [],
+        "error_targets": []
+      },
+      "interaction": {
+        "passed": 8,
+        "failed": 0,
+        "errors": 0,
+        "expected": 8,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [],
+        "error_targets": []
+      },
+      "adversarial": {
+        "passed": 21,
+        "failed": 0,
+        "errors": 0,
+        "expected": 21,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [],
+        "error_targets": []
+      },
+      "boss": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [],
+        "error_targets": []
+      },
+      "metamorphic": {
+        "passed": 9,
+        "failed": 0,
+        "errors": 0,
+        "expected": 9,
+        "invalid": false,
+        "collection_error": false,
+        "failed_tests": [],
+        "error_targets": []
+      }
+    },
+    "raw": {
+      "passed": 68,
+      "total": 68,
+      "ratio": 1.0
+    },
+    "behavior": {
+      "overall": 1.0,
+      "behaviors_satisfied": 33,
+      "behaviors_total": 33,
+      "categories": {
+        "contract": {
+          "satisfied": 8,
+          "total": 8,
+          "score": 1.0,
+          "behaviors": {
+            "on_error_default_skip": {
+              "satisfied": true,
+              "failing": []
+            },
+            "skip_exit_zero": {
+              "satisfied": true,
+              "failing": []
+            },
+            "fail_raises_data_error": {
+              "satisfied": true,
+              "failing": []
+            },
+            "fail_cli_exit_one": {
+              "satisfied": true,
+              "failing": []
+            },
+            "atomic_output": {
+              "satisfied": true,
+              "failing": []
+            },
+            "usage_vs_data_error": {
+              "satisfied": true,
+              "failing": []
+            },
+            "multiple_filter_and": {
+              "satisfied": true,
+              "failing": []
+            },
+            "pipeline_ordering": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        },
+        "interaction": {
+          "satisfied": 5,
+          "total": 5,
+          "score": 1.0,
+          "behaviors": {
+            "composite_normalization_dedupe": {
+              "satisfied": true,
+              "failing": []
+            },
+            "ordering_dedupe_filter_unit": {
+              "satisfied": true,
+              "failing": []
+            },
+            "cross_module_legacy": {
+              "satisfied": true,
+              "failing": []
+            },
+            "cli_chain": {
+              "satisfied": true,
+              "failing": []
+            },
+            "representation_roundtrip": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        },
+        "adversarial": {
+          "satisfied": 7,
+          "total": 7,
+          "score": 1.0,
+          "behaviors": {
+            "malformed_policy_skip": {
+              "satisfied": true,
+              "failing": []
+            },
+            "malformed_policy_fail": {
+              "satisfied": true,
+              "failing": []
+            },
+            "metric_coercion": {
+              "satisfied": true,
+              "failing": []
+            },
+            "non_finite_rejection": {
+              "satisfied": true,
+              "failing": []
+            },
+            "error_classification": {
+              "satisfied": true,
+              "failing": []
+            },
+            "atomicity_fail": {
+              "satisfied": true,
+              "failing": []
+            },
+            "library_cli_parity": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        },
+        "boss": {
+          "satisfied": 8,
+          "total": 8,
+          "score": 1.0,
+          "behaviors": {
+            "boss_malformed_policy": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_identity_normalization": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_ordering": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_legacy_metrics": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_formats_roundtrip": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_cli_chain": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_atomicity": {
+              "satisfied": true,
+              "failing": []
+            },
+            "boss_parity": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        },
+        "metamorphic": {
+          "satisfied": 5,
+          "total": 5,
+          "score": 1.0,
+          "behaviors": {
+            "timestamp_idempotence": {
+              "satisfied": true,
+              "failing": []
+            },
+            "format_equivalence": {
+              "satisfied": true,
+              "failing": []
+            },
+            "filter_invariance": {
+              "satisfied": true,
+              "failing": []
+            },
+            "dedupe_representation_invariance": {
+              "satisfied": true,
+              "failing": []
+            },
+            "conservation": {
+              "satisfied": true,
+              "failing": []
+            }
+          }
+        }
+      }
+    }
+  },
+  "legacy": {
+    "suites": {
+      "d10": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "d11": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "d12": {
+        "passed": 9,
+        "failed": 1,
+        "errors": 0,
+        "expected": 10,
+        "invalid": false
+      },
+      "t2": {
+        "passed": 8,
+        "failed": 0,
+        "errors": 0,
+        "expected": 8,
+        "invalid": false
+      },
+      "t3": {
+        "passed": 6,
+        "failed": 0,
+        "errors": 0,
+        "expected": 6,
+        "invalid": false
+      },
+      "t4": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "expected": 11,
+        "invalid": false
+      },
+      "v4": {
+        "passed": 24,
+        "failed": 0,
+        "errors": 0,
+        "expected": 24,
+        "invalid": false
+      }
+    },
+    "raw": {
+      "passed": 80,
+      "total": 81,
+      "ratio": 0.9876543209876543
+    }
+  },
+  "public": {
+    "passed": 25,
+    "failed": 0,
+    "errors": 0,
+    "collection_error": false
+  },
+  "runtime_seconds": 41.42
+}
