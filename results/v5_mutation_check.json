@@ -3,50 +3,56 @@
   "mutations": [
     {
       "mutation": "only_last_filter",
-      "behavior_score": 0.844,
-      "raw_passed": 60,
-      "caught": true
-    },
-    {
-      "mutation": "filter_after_unit",
-      "behavior_score": 0.875,
+      "behavior_score": 0.848,
       "raw_passed": 62,
       "caught": true
     },
     {
+      "mutation": "filter_after_unit",
+      "behavior_score": 0.879,
+      "raw_passed": 64,
+      "caught": true
+    },
+    {
       "mutation": "fail_as_skip",
-      "behavior_score": 0.906,
-      "raw_passed": 63,
+      "behavior_score": 0.909,
+      "raw_passed": 65,
       "caught": true
     },
     {
       "mutation": "partial_output",
-      "behavior_score": 0.969,
-      "raw_passed": 65,
+      "behavior_score": 0.97,
+      "raw_passed": 67,
       "caught": true
     },
     {
       "mutation": "temp_or_temperature",
-      "behavior_score": 0.938,
-      "raw_passed": 63,
+      "behavior_score": 0.939,
+      "raw_passed": 65,
       "caught": true
     },
     {
       "mutation": "broad_except",
-      "behavior_score": 0.938,
-      "raw_passed": 63,
+      "behavior_score": 0.939,
+      "raw_passed": 65,
       "caught": true
     },
     {
       "mutation": "dedupe_keep_first",
-      "behavior_score": 0.75,
-      "raw_passed": 58,
+      "behavior_score": 0.758,
+      "raw_passed": 60,
       "caught": true
     },
     {
       "mutation": "skip_exit_one",
-      "behavior_score": 0.969,
-      "raw_passed": 65,
+      "behavior_score": 0.97,
+      "raw_passed": 67,
+      "caught": true
+    },
+    {
+      "mutation": "nonfinite_as_null",
+      "behavior_score": 0.97,
+      "raw_passed": 66,
       "caught": true
     }
   ],

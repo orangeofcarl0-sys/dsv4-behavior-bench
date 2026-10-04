@@ -35,8 +35,12 @@ DATAPIPE_REPO=<candidate-repo> python3 -m pytest d10 d11 d12 t2 t3 t4 v4 -q
 
 ## Required action
 
-After the V5 suite is frozen, **all candidates must be re-tested** under the
-same blind, one-shot protocol using the v2.4 task book
+The old V1–V4 numbers must not be reused under V5: **every candidate must be
+re-tested** under the same blind, one-shot protocol using the v2.4 task book
 (`spec/ONBOARDING_TODO_v2.4.md`) and the in-repo seed (`v5seed/`), scored with
-`grade_v5.py`. Until those runs exist the V5 leaderboard is intentionally empty —
-do not fill it by copying, rescaling, or cherry-picking deleted legacy numbers.
+`grade_v5.py`.
+
+The first V5-era run (PR #5, `space-bunny-free`, n=5×5) was scored under spec
+**v2.4.0 / 66 tests** and is itself superseded by the **v2.4.1** errata (see
+README). It is kept as a historical data point only; a re-run under v2.4.1 is
+required before any level comparison. Do not mix v2.4.0 and v2.4.1 scores.

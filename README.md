@@ -3,13 +3,13 @@
 [![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
 [![dsh](https://img.shields.io/badge/dsh-0.1.0--rc.6-green)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![V5](https://img.shields.io/badge/V5%20tests-66-green)]()
+[![V5](https://img.shields.io/badge/V5%20tests-68-green)]()
 [![legacy](https://img.shields.io/badge/legacy%20tests-81-lightgrey)]()
 
 轻量、零依赖的 **DeepSeek V4 行为区分度分级套件**：用一个小型 datapipe 修复任务，
 把基于 dsv4 的 Harness / Agent 工作的真实效果差异压进分数。
 
-- **当前基准：V5（datapipe v2.4）** — 66 项组合语义测试 + 行为评分，见下。
+- **当前基准：V5（datapipe v2.4.1）** — 68 项组合语义测试 + 行为评分，见下。
 - **遗产套件：V1–V4（datapipe v2.3，81 项）** — 测试套件保留冻结，结果、参考基线与
   旧评分器已移除，见文末。
 
@@ -43,13 +43,13 @@
 
 不引入 SQL/表达式语言、async、数据库、插件框架、第三方依赖、LLM judge。
 
-## 测试结构（66 项）
+## 测试结构（68 项）
 
 | 套件 | 测试数 | 考察点 |
 |---|---:|---|
 | `v5/core` | 19 | v2.4 明确 contract（错误策略、atomicity、AND、顺序、退出码） |
 | `v5/interaction` | 8 | 跨模块一致性、算子顺序、多约束组合 |
-| `v5/adversarial` | 19 | 错误分类、坏输入、atomicity、表示边界 |
+| `v5/adversarial` | 21 | 错误分类、坏输入、atomicity、表示边界、非有限值 |
 | `v5/boss` | 11 | 高信息密度端到端 composite（B1–B11） |
 | `v5/metamorphic` | 9 | 固定 seed 确定性不变量（幂等 / 表示不变 / 顺序不变 / 守恒） |
 
@@ -58,7 +58,7 @@
 
 ## 行为评分（取代纯计数）
 
-`v5/behavior_manifest.json` 把 **32 个 behavior → 测试**；behavior 只有在**其全部
+`v5/behavior_manifest.json` 把 **33 个 behavior → 测试**；behavior 只有在**其全部
 测试通过**时才算满足，类别分 = 满足数 / 该类别 behavior 数，overall = 五类均值。
 同一行为被多个测试覆盖不会获得额外权重——彻底消除「一个 malformed-NDJSON 缺陷
 重复扣很多分」。每个 behavior 标注 provenance（`explicit-v2.4-contract` /
@@ -79,35 +79,57 @@ core/interaction/adversarial/boss/metamorphic 分项与 overall behavior score�
 
 | 对象 | V5 raw | behavior | legacy/81 | runtime |
 |---|---:|---:|---:|---:|
-| `v5ref`（v2.4 reference） | 66/66 | **1.000** | 80/81（仅 d127 有意 supersede） | ~17–20s |
-| `v5seed`（broken seed，低分基线） | 17/66 | **0.094** | 37/81 | ~19s |
-| 语法错误注入（collection error） | 0/66 | 0.000 | 0/81 | — |
+| `v5ref`（v2.4.1 reference） | 68/68 | **1.000** | 80/81（仅 d127 有意 supersede） | ~18s |
+| `v5seed`（broken seed，低分基线） | 17/68 | **0.091** | 37/81 | ~17s |
+| 语法错误注入（collection error） | 0/68 | 0.000 | 0/81 | — |
 
-> 升级前曾用旧 v2.3 参考实现（`gold`/`gold2`）作为“代理能力”梯度参照，测得
-> `gold2` 35/66、`gold` 33/66。这些参考实现与其分数已随旧基线一并清理，
-> 需要时从 git 历史 `aa2d0a8` 取回；当时数值仅作历史记录，不参与 V5 评分。
+> 升级前曾用旧 v2.3 参考实现（`gold`/`gold2`）作为“代理能力”梯度参照，在
+> v2.4.0/66 项套件上测得 `gold2` 35/66、`gold` 33/66。这些参考实现与其分数已随
+> 旧基线一并清理，需要时从 git 历史 `aa2d0a8` 取回；仅作历史记录，不参与 V5 评分。
 
-mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mutation
+mutation sanity：`python mutation_check.py` 对 reference 施加 9 类单点 mutation
 （only-last-filter / filter-after-unit / fail→skip / partial-output /
-`temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
-**8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
+`temp or temperature` / broad-except / dedupe-keep-first / skip→exit1 /
+nonfinite-as-null），**9/9 全部被捕获**（详见 `results/v5_mutation_check.json`）。
 
 **注意**：上表只有 reference / seed 的校准值；首个真实模型跑分见「V5 leaderboard」。
 其余候选仍须用 v2.4 任务书 + `v5seed` 重测后方可入榜。
 
 ### V5 leaderboard
 
-| 候选 | V5 raw /66 | behavior | legacy /81 | n | 日期 |
+| 候选 | V5 raw /66（v2.4.0） | behavior | legacy /81 | n | 日期 |
 |---|---:|---:|---:|---:|---|
 | `space-bunny-free`（reasoning-effort 扫描，5 档均值） | **65.4** | **0.981** | 80.0 | 5 | 2026-10-04 |
 | `space-bunny-free` @ high（单次最佳档） | 65.40 ± 0.55 | 0.981 | 80.0 | 5 | 2026-10-04 |
 | `v5ref`（v2.4 reference，非候选） | 66 | 1.000 | 80 | — | — |
 | `v5seed`（broken baseline，非候选） | 17 | 0.094 | 37 | — | — |
 
-> 旧榜分数已清理，且**不可**迁入此表。切换 benchmark 后所有候选必须全面重测。
+> ⚠️ **本表全部数字是 v2.4.0 / 66 项套件下的历史结果，已被 v2.4.1 勘误 supersede**，
+> 不可与 v2.4.1 / 68 项的新分数并列。原因见下方「v2.4.1 勘误」：这批 run 撞上了
+> §3 规格笔误（`test_i3` 16/25 失败）与非有限值覆盖缺失；需在 v2.4.1 下重跑才能
+> 作为当前榜单。旧 legacy 榜分数已清理，且**不可**迁入此表。
 > 本表首行为 5 档 reasoning-effort 的均值，**不是**某一档的单次成绩。
 
-## 附加实验：reasoning-effort 扫描（space-bunny-free，V5，n=5）
+### v2.4.1 勘误（2026-10-04）
+
+首轮真实模型跑分（PR #5）暴露两处基准缺陷，按该 PR 建议以独立、可审计的修订修复：
+
+1. **§3 validation/dedupe 表述自相矛盾**：原文写「更早的那条**不会**补位」，与冻结
+   顺序图、参考实现、`test_i3` 及 legacy `gold2` 行为全部相反（它们都保留更早的
+   合法记录）。这是笔误，已改正。它解释了该轮最大的方差来源——`test_i3` 单独
+   16/25 失败，且五档均匀分布（候选照错误句子实现了）。
+2. **非有限值（`nan`/`inf`）未规定也未测试**：25 次里 4 次把 `temp:"nan"` 归一为
+   `null` 后保留（legacy `d11` 会拒绝）。§6/§10 已明确其为 record-level invalid，
+   `v5/adversarial` 增加 `a13`/`a14` 两个用例，补齐 legacy 81 项语义。
+
+修订范围：spec 文本、2 个新测试、behavior manifest（+1 behavior）、grader 固定
+expected 数（66→68）。`v5ref` 未改动（原实现已符合修正后的语义），
+`spec/FROZEN_HASHES.txt` 已重新生成。
+
+## 附加实验：reasoning-effort 扫描（space-bunny-free，V5 **v2.4.0**，n=5）
+
+> 结果基于 **v2.4.0 / 66 项**套件，已被 v2.4.1 勘误 supersede（见上）。
+> 保留为「首轮实测」的历史证据；结论（饱和、effort 无分离度）需在 v2.4.1 下复测。
 
 同一模型跑满全部 5 档 `reasoning_effort`，协议与历史完全一致：盲测、one-shot、
 逐字节 `v5seed` 副本、交付后宿主侧 `grade_v5.py` 统一评分。
@@ -125,16 +147,16 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
   raw **p = 1.000**、behavior **p = 1.000**。组间均值跨度 1.20 分 ≈ 合并组内 sd 1.02。
   排序还会随 n 洗牌（`max` 在 n=3 并列最高，n=5 降到 64.80）。
 - **顶部饱和**：均值区间 64.2–65.4 / 66，仅 7/25 次跑出干净 66/66。
-  本模型远高于设计文档预期的 50–80% raw band——v2.4 任务书把 contract 写得过死，
-  几乎没有留给模型推断的空间。
+  本模型远高于设计文档预期的 50–80% raw band。
 - **方差几乎全部来自一个测试**：`test_i3_validation_before_dedupe` 单独占
   **16/25** 次失败，且五档分布几乎均匀（3/3/3/3/4），与 effort 无关。
+  → 已定位为 §3 规格笔误（见「v2.4.1 勘误」），v2.4.1 已改正，需复测。
 - **`max` 在 legacy 上稳定落后**（78.6，5 次里 4 次 78–79）：见下条。
 - **V5 漏检非有限值**：`v5/*/test_*.py` 对 `nan`/`inf` 的字面覆盖为 **0 处**，
   v2.4 任务书也从未提及非有限值。25 次中有 4 次把 `temp:"nan"` 归一为 `temp: null`
   并写入输出（`max` 3/5、`xhigh` 1/5），而这些运行的 V5 分数是 64–66。
-  **这意味着 V5 并未覆盖 legacy 81 项的全部语义**；若要替代 legacy，
-  建议在任务书第 10 节补回非有限值要求并在 `v5/adversarial` 增加用例。
+  → 已在 v2.4.1 修复：§10 明确非有限值为 record-level invalid，
+  `v5/adversarial` 增加 `a13`/`a14` 两个用例覆盖该语义。
 
 证据（25 次运行的逐档逐轮分数、行为明细、失败清单、5 档 overlay、
 运行与评分脚本、完整性审计）见
@@ -157,11 +179,10 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
 
 - `--on-error` 默认值、`DataError` 不继承 `ValueError` 属 **policy choice**，已写入 spec。
 - `skip → exit 0` 与 legacy `d12::test_d127` 冲突，是 v2.4 有意演进，legacy 保持冻结。
-- **首个模型已触及顶部饱和**：`space-bunny-free` 均分 64.2–65.4/66（见上节），本套
-  区分度对强 Flash 已接近 0，`--on-error`/atomicity/AND 等新 contract 未能把它拉回
-  50–80% 预期带。
-- **V5 漏检非有限值**：任务书与测试都未覆盖 `nan`/`inf`，而 legacy `d11` 会拒绝它们；
-  若要让 V5 覆盖 legacy 全部语义，需在 spec 第 10 节补回并加 1–2 个 adversarial 用例。
+- **首个模型已触及顶部饱和**：`space-bunny-free` 在 v2.4.0 下均分 64.2–65.4/66，
+  本套区分度对强 Flash 已接近 0；但该轮撞上 §3 规格笔误，**结论须在 v2.4.1 下复测**。
+  若复测仍饱和，下一步应是更难的 contract（V6），而不是继续加同类测试。
+- 非有限值覆盖已于 v2.4.1 补齐（spec §6/§10 + `a13`/`a14`）。
 
 ---
 

@@ -28,11 +28,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 BENCH_ROOT = HERE  # the directory containing v5/, d10/, ...
 
-# Fixed expected test counts — the frozen V5 suite.
+# Fixed expected test counts — the frozen V5 suite (v2.4.1: +2 non-finite cases).
 V5_SUITES = {
     "core": 19,
     "interaction": 8,
-    "adversarial": 19,
+    "adversarial": 21,
     "boss": 11,
     "metamorphic": 9,
 }

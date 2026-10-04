@@ -250,3 +250,44 @@ def test_a12_skipped_not_double_counted(workdir):
     ])
     kept, skipped = transform_mod.transform(str(src), str(workdir / "t.jsonl"))
     assert (kept, skipped) == (1, 2), (kept, skipped)
+
+
+# ── A13: non-finite metrics are record-level invalid, never null ─────────────
+
+def test_a13_non_finite_metrics_rejected(workdir):
+    """§6/§10 (v2.4.1): NaN / ±Infinity are not valid numbers. They are
+    record-level invalid -- skipped and counted, never normalized to null and
+    kept. Same input under fail stops with DataError and leaves no output."""
+    src = write_jsonl(workdir / "in.jsonl", [
+        {"device_id": "a", "timestamp": "2026-08-01T00:00:00Z", "temp": "nan"},
+        {"device_id": "b", "timestamp": "2026-08-01T00:00:01Z", "temp": "inf"},
+        {"device_id": "c", "timestamp": "2026-08-01T00:00:02Z", "temp": "-inf"},
+        {"device_id": "d", "timestamp": "2026-08-01T00:00:03Z", "humidity": "nan"},
+        {"device_id": "e", "timestamp": "2026-08-01T00:00:04Z", "temp": 20},
+    ])
+    out = workdir / "t.jsonl"
+    kept, skipped = transform_mod.transform(str(src), str(out))
+    rows = read_jsonl(out)
+    assert (kept, skipped) == (1, 4), (kept, skipped, rows)
+    assert rows[0]["device_id"] == "e" and rows[0]["temp"] == 20.0, rows
+
+    with pytest.raises(DataError):
+        transform_mod.transform(str(src), str(workdir / "fail.jsonl"), on_error="fail")
+    assert not (workdir / "fail.jsonl").exists()
+
+
+def test_a14_non_finite_not_nulled_by_ingest(workdir):
+    """§10 (v2.4.1): the full ingest -> transform chain must not turn a
+    non-finite metric into `null` and keep the row (observed real-model failure
+    mode); the record must be gone from the cleaned output either way."""
+    src = write_jsonl(workdir / "in.jsonl", [
+        {"device_id": "a", "timestamp": "2026-08-01T00:00:00Z", "temp": "nan"},
+        {"device_id": "b", "timestamp": "2026-08-01T00:00:01Z", "temp": 20},
+    ])
+    cat = workdir / "cat.jsonl"
+    ingest_mod.ingest(str(src), str(cat))
+    tr = workdir / "tr.jsonl"
+    kept, _ = transform_mod.transform(str(cat), str(tr))
+    rows = read_jsonl(tr)
+    assert kept == 1 and rows[0]["device_id"] == "b", rows
+    assert all(r.get("temp") is not None for r in rows), rows

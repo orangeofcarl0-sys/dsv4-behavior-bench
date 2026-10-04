@@ -171,6 +171,25 @@ MUTATIONS = {
         '        print(f"transform: kept={accepted} skipped={skipped}")\n        return 0',
         '        print(f"transform: kept={accepted} skipped={skipped}")\n        return 1 if skipped > 0 else 0',
     ),
+    # 9. Non-finite (NaN/Inf) normalized to null -> the row is kept (the exact
+    #    real-model failure mode the v2.4.1 non-finite cases target).
+    "nonfinite_as_null": lambda: _sub(
+        "transform.py",
+        """    if isinstance(value, (int, float)):
+        return float(value)
+    try:
+        return float(str(value).strip())
+    except (TypeError, ValueError):
+        return None""",
+        """    if isinstance(value, (int, float)):
+        f = float(value)
+        return f if f == f and f not in (float("inf"), float("-inf")) else None
+    try:
+        f = float(str(value).strip())
+        return f if f == f and f not in (float("inf"), float("-inf")) else None
+    except (TypeError, ValueError):
+        return None""",
+    ),
 }
 
 
