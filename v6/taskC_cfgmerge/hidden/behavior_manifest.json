@@ -1,0 +1,76 @@
+{
+  "task": "taskC_cfgmerge",
+  "note": "A behavior is satisfied only when ALL its tests pass.",
+  "categories": {
+    "merging": {
+      "description": "Per-leaf merge and precedence across layers.",
+      "behaviors": {
+        "per_leaf_merge": {
+          "provenance": "repository-derived-contract",
+          "tests": [
+            "test_cfgmerge.py::test_p1_nested_leaf_merge_file",
+            "test_cfgmerge.py::test_p1_nested_leaf_merge_three_layers"
+          ]
+        },
+        "precedence_order": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_cfgmerge.py::test_p6_precedence_order"]
+        },
+        "list_replacement": {
+          "provenance": "repository-derived-contract",
+          "tests": [
+            "test_cfgmerge.py::test_p4_list_replaced",
+            "test_cfgmerge.py::test_p4_list_replaced_by_empty"
+          ]
+        }
+      }
+    },
+    "value_semantics": {
+      "description": "Falsy values are values; None deletes.",
+      "behaviors": {
+        "falsy_overrides": {
+          "provenance": "explicit-issue-requirement",
+          "tests": [
+            "test_cfgmerge.py::test_p2_false_overrides_true",
+            "test_cfgmerge.py::test_p2_zero_overrides_nonzero",
+            "test_cfgmerge.py::test_p2_empty_string_overrides",
+            "test_cfgmerge.py::test_p2_falsy_in_nested_table"
+          ]
+        },
+        "none_deletes": {
+          "provenance": "explicit-issue-requirement",
+          "tests": [
+            "test_cfgmerge.py::test_p3_none_deletes_top_level",
+            "test_cfgmerge.py::test_p3_none_deletes_nested"
+          ]
+        }
+      }
+    },
+    "environment": {
+      "description": "Environment layer mapping and typing.",
+      "behaviors": {
+        "env_typing_and_nesting": {
+          "provenance": "repository-derived-contract",
+          "tests": [
+            "test_cfgmerge.py::test_p5_env_nested_and_typed",
+            "test_cfgmerge.py::test_p5_env_false_and_case_insensitive",
+            "test_cfgmerge.py::test_p5_env_overrides_file"
+          ]
+        }
+      }
+    },
+    "immutability": {
+      "description": "Inputs are never mutated.",
+      "behaviors": {
+        "inputs_unmodified": {
+          "provenance": "general-invariant",
+          "tests": [
+            "test_cfgmerge.py::test_p7_defaults_not_mutated",
+            "test_cfgmerge.py::test_p7_idempotent",
+            "test_cfgmerge.py::test_p7_returned_structure_is_independent"
+          ]
+        }
+      }
+    }
+  }
+}

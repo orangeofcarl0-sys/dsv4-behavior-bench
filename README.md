@@ -10,6 +10,10 @@
 把基于 dsv4 的 Harness / Agent 工作的真实效果差异压进分数。
 
 - **当前基准：V5（datapipe v2.4.1）** — 68 项组合语义测试 + 行为评分，见下。
+- **实验：V5-Minimal（信息消融）** — 同 seed / 同 hidden / 同 grader，只换任务书与
+  证据分布。**结果：仍饱和（9/9 满分）**，见下。
+- **原型：V6（多任务 inference tier）** — ledger / framecodec / cfgmerge 三个
+  微型 repo，短 issue + 固定工作预算。prototype + pilot，未 freeze。
 - **遗产套件：V1–V4（datapipe v2.3，81 项）** — 测试套件保留冻结，结果、参考基线与
   旧评分器已移除，见文末。
 
@@ -172,8 +176,11 @@ expected 数（66→68）。`v5ref` 未改动（原实现已符合修正后的�
 | `spec/FROZEN_HASHES.txt` | spec / tests / reference / seed / grader 的 sha256 |
 | `v5ref/` | v2.4 reference 实现（全绿） |
 | `v5seed/` | plausible-but-wrong broken seed（低分基线） |
+| `v5minseed/` | V5-Minimal 候选工作区（信息消融实验，代码与 `v5seed` 逐字节相同） |
+| `v6/` | V6 三个微型任务 prototype（ref / seed / hidden / public） |
 | `v5/behavior_manifest.json` | behavior → tests 映射与评分方法 |
-| `grade_v5.py` / `mutation_check.py` | 评分器 / mutation 审计 |
+| `grade_v5.py` / `mutation_check.py` | V5 评分器 / mutation 审计 |
+| `grade_v6.py` | V6 评分器 |
 
 ## 局限（V5）
 
@@ -182,7 +189,56 @@ expected 数（66→68）。`v5ref` 未改动（原实现已符合修正后的�
 - **首个模型已触及顶部饱和**：`space-bunny-free` 在 v2.4.0 下均分 64.2–65.4/66，
   本套区分度对强 Flash 已接近 0；但该轮撞上 §3 规格笔误，**结论须在 v2.4.1 下复测**。
   若复测仍饱和，下一步应是更难的 contract（V6），而不是继续加同类测试。
+- **已复测（V5-Minimal 信息消融）**：v2.4.1 下 9/9 满分，证明饱和不是任务书过详所致；
+  V5 作为「合规性 tier」保留，不再作为区分度来源。区分度实验转入 V6（见上）。
 - 非有限值覆盖已于 v2.4.1 补齐（spec §6/§10 + `a13`/`a14`）。
+
+---
+
+# 实验：V5-Minimal（信息消融）
+
+> **问题**：V5 顶部饱和，是因为任务**太简单**，还是任务书**过度详细**（等于给了
+> implementation checklist）？
+
+`spec/V5_MINIMAL.md` + `v5minseed/`。控制实验：**同 seed 代码（与 `v5seed`
+逐字节相同）、同 hidden 测试、同 grader、同工具权限**，只替换 candidate 可见信息
+——315 行逐条 spec 换成 36 行维护者 brief，contract 改由 README / CHANGELOG /
+docs/ / examples/ 分散承载（每个 hidden behavior 至少 2 个独立证据来源，
+provenance 审计见 `spec/V5_MINIMAL.md` §4）。
+
+| 条件 | 模型 | n | V5 raw | behavior |
+|---|---|---:|---:|---:|
+| full-spec V5（v2.4.0/66） | space-bunny-free | 25 | 64.2–65.4 | 0.94–0.98 |
+| **V5-Minimal（v2.4.1/68）** | space-bunny-free | **9** | **68/68 ×9** | **1.000 ×9** |
+
+**结论：减少信息没有降低分数——9/9 全部满分。** 轨迹显示模型自行从 CHANGELOG +
+docs + 源码重建了 contract（8/9 读全 docs，1 次只读 CHANGELOG+源码即达 68/68）。
+→ V5 饱和**不是** over-specification；对强 Flash，datapipe 类「单任务 contract
+重建」已被吃透。详细结果与 caveat 见
+[`results/v5-minimal-pilot/RESULT.md`](results/v5-minimal-pilot/RESULT.md)。
+
+---
+
+# 原型：V6（多任务 inference tier）
+
+> **不再往 datapipe 堆 corner case。** V6 换轴：在**固定工作预算**下，从仓库证据
+> 恢复程序语义、修复非局部问题。
+
+`spec/V6_PROTOTYPE.md` + `v6/`。三个独立微型 repo（stdlib only，~200–350 LOC），
+各测不同认知结构，短 `ISSUE.md`（只给症状，不给修法），public 套件**故意对深层
+behavior 盲**（seed 能全过 public 但 hidden 低分）：
+
+| task | 认知结构 | ref | seed behavior | seed public |
+|---|---|---:|---:|---:|
+| `taskA_ledger` | 原子性 + 不变量推理 | 1.000 | 0.444 | 5/5 |
+| `taskB_framecodec` | 字节流状态机（任意 chunk 切分） | 1.000 | 0.167 | 6/6 |
+| `taskC_cfgmerge` | 分层优先级推理 | 1.000 | 0.286 | 6/6 |
+
+Pilot（`space-bunny-free`，budget 40 tool calls，n=3/task）：**9/9 behavior 1.000**，
+仍饱和。把预算压到 **12 tool calls** 才出现本轮唯一的真实 reasoning 失败：
+`taskB` 0.833（escape 跨 chunk 状态机），taskA/taskC 仍在预算内解出。
+→ 区分度可能在**预算轴**而非任务数轴上，V6 **NOT READY TO FREEZE**。
+详见 [`results/v6-pilot/RESULT.md`](results/v6-pilot/RESULT.md)。
 
 ---
 

@@ -7,3 +7,4 @@
 *.toml text eol=lf
 *.csv text eol=lf
 *.ndjson text eol=lf
+*.sh text eol=lf

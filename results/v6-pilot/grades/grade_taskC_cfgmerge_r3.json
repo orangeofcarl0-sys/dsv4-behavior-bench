@@ -1,0 +1,82 @@
+{
+  "task": "taskC_cfgmerge",
+  "repo": "<workspace>/v6_taskC_cfgmerge_r3/medium",
+  "benchmark": "datapipe-v6-prototype",
+  "hidden": {
+    "passed": 17,
+    "failed": 0,
+    "expected": 17,
+    "invalid": false,
+    "collection_error": false
+  },
+  "behavior": {
+    "overall": 1.0,
+    "behaviors_satisfied": 7,
+    "behaviors_total": 7,
+    "categories": {
+      "merging": {
+        "satisfied": 3,
+        "total": 3,
+        "score": 1.0,
+        "behaviors": {
+          "per_leaf_merge": {
+            "satisfied": true,
+            "failing": []
+          },
+          "precedence_order": {
+            "satisfied": true,
+            "failing": []
+          },
+          "list_replacement": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "value_semantics": {
+        "satisfied": 2,
+        "total": 2,
+        "score": 1.0,
+        "behaviors": {
+          "falsy_overrides": {
+            "satisfied": true,
+            "failing": []
+          },
+          "none_deletes": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "environment": {
+        "satisfied": 1,
+        "total": 1,
+        "score": 1.0,
+        "behaviors": {
+          "env_typing_and_nesting": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "immutability": {
+        "satisfied": 1,
+        "total": 1,
+        "score": 1.0,
+        "behaviors": {
+          "inputs_unmodified": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      }
+    }
+  },
+  "public": {
+    "passed": 6,
+    "failed": 0,
+    "expected": 6,
+    "invalid": false
+  },
+  "runtime_seconds": 14.36
+}
