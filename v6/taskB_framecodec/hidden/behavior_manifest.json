@@ -1,0 +1,56 @@
+{
+  "task": "taskB_framecodec",
+  "note": "A behavior is satisfied only when ALL its tests pass.",
+  "categories": {
+    "chunking": {
+      "description": "The decoder is a state machine over the byte stream, not per-chunk.",
+      "behaviors": {
+        "any_split_equivalence": {
+          "provenance": "explicit-issue-requirement",
+          "tests": [
+            "test_framecodec.py::test_b1_any_split_equivalence",
+            "test_framecodec.py::test_b2_escape_split_inside_pair",
+            "test_framecodec.py::test_b3_partial_header",
+            "test_framecodec.py::test_b4_partial_payload_across_many_chunks"
+          ]
+        },
+        "multiple_frames_per_chunk": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_framecodec.py::test_b7_many_frames_one_chunk_plus_partial"]
+        },
+        "empty_chunk_noop": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_framecodec.py::test_b8_empty_chunk_noop"]
+        }
+      }
+    },
+    "recovery": {
+      "description": "Corrupt and truncated frames are dropped without corrupting the stream.",
+      "behaviors": {
+        "crc_failure_recovery": {
+          "provenance": "repository-derived-contract",
+          "tests": [
+            "test_framecodec.py::test_b5_crc_failure_recovery",
+            "test_framecodec.py::test_b5_crc_failure_same_chunk"
+          ]
+        },
+        "truncated_frame_resync": {
+          "provenance": "explicit-issue-requirement",
+          "tests": [
+            "test_framecodec.py::test_b6_truncated_then_new_frame",
+            "test_framecodec.py::test_b6_truncated_then_new_frame_split"
+          ]
+        }
+      }
+    },
+    "state": {
+      "description": "Decoder instances are independent.",
+      "behaviors": {
+        "decoder_independence": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_framecodec.py::test_b9_decoder_independence"]
+        }
+      }
+    }
+  }
+}

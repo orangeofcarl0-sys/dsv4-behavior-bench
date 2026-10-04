@@ -1,0 +1,70 @@
+{
+  "task": "taskA_ledger",
+  "note": "A behavior is satisfied only when ALL its tests pass. Provenance: explicit-issue-requirement | repository-derived-contract | backward-compatibility | general-invariant.",
+  "categories": {
+    "atomicity": {
+      "description": "A rejected write must change nothing.",
+      "behaviors": {
+        "reject_changes_nothing": {
+          "provenance": "repository-derived-contract",
+          "tests": [
+            "test_ledger.py::test_i3_unbalanced_entry_rejected_and_no_state_change",
+            "test_ledger.py::test_i3_single_posting_rejected",
+            "test_ledger.py::test_i3_zero_amount_rejected",
+            "test_ledger.py::test_i3_blank_account_rejected"
+          ]
+        },
+        "rejected_id_not_consumed": {
+          "provenance": "explicit-issue-requirement",
+          "tests": ["test_ledger.py::test_i3b_id_reusable_after_rejection"]
+        },
+        "settlement_all_or_nothing": {
+          "provenance": "explicit-issue-requirement",
+          "tests": [
+            "test_ledger.py::test_i4_settlement_all_or_nothing",
+            "test_ledger.py::test_i4_settlement_success_applies_all"
+          ]
+        }
+      }
+    },
+    "exactness": {
+      "description": "Exact integer-cent arithmetic.",
+      "behaviors": {
+        "exact_zero": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_ledger.py::test_i7_exact_zero_after_cancelling_postings"]
+        },
+        "money_rejects_float": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_ledger.py::test_i7_money_rejects_float"]
+        }
+      }
+    },
+    "isolation": {
+      "description": "Reads return copies; accounts are normalized.",
+      "behaviors": {
+        "read_isolation": {
+          "provenance": "repository-derived-contract",
+          "tests": ["test_ledger.py::test_i6_entries_returns_copies"]
+        },
+        "account_normalization": {
+          "provenance": "backward-compatibility",
+          "tests": ["test_ledger.py::test_i5_case_and_whitespace_insensitive"]
+        }
+      }
+    },
+    "invariants": {
+      "description": "Global double-entry and ordering invariants.",
+      "behaviors": {
+        "global_balance_zero": {
+          "provenance": "general-invariant",
+          "tests": ["test_ledger.py::test_i1_global_balance_zero"]
+        },
+        "order_preserved": {
+          "provenance": "general-invariant",
+          "tests": ["test_ledger.py::test_i2_order_preserved"]
+        }
+      }
+    }
+  }
+}
