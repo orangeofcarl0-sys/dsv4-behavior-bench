@@ -1,0 +1,12 @@
+你的工作目录就是本次任务的全部可见范围。
+
+请先阅读工作目录下的 ONBOARDING_TODO.md，然后按其中说明自行通读整个仓库
+（README、CHANGELOG、docs/、examples/、datapipe/ 源码、tests/public/），
+定位并修复 datapipe 的 v2.4 升级问题。
+
+约束：
+- 只在当前工作目录内读写，不要读取、搜索或依赖该目录之外的任何路径。
+- 一次性完成：不要向我提问，不要停下来等待确认，请自行诊断、修改、验证、迭代到完成。
+- 不得修改 tests/ 与 tools/ 下的任何文件；不得引入第三方依赖。
+- 按 ONBOARDING_TODO.md 的要求，把初始诊断、修改说明、最终验证、未验证风险写进 datapipe/PULL_REQUEST_TEMPLATE.md。
+- 结束时给出简短总结：改了什么、验证了什么、还有什么风险。
