@@ -2,7 +2,14 @@
 
 This document freezes the **why** behind the V5 upgrade. It is the design record
 required by the task; the task text itself (what candidates see) is
-`spec/ONBOARDING_TODO_v2.4.md`.
+`spec/ONBOARDING_TODO_v2.4.md` (current revision **v2.4.1**, see §10).
+
+> **Revision history of this benchmark**
+> - **v2.4.0 / 66 tests** — original freeze (2026-10-04).
+> - **v2.4.1 / 68 tests** — errata after the first real-model run: §3
+>   validation/dedupe wording corrected, non-finite metrics specified + covered,
+>   one behavior added (`non_finite_rejection`), grader expected counts updated.
+>   Frozen hashes regenerated. Details in §10.
 
 ## 1. Baseline (before V5)
 
@@ -64,15 +71,13 @@ stay frozen for historical comparability).
 
 | Subject | V5 raw | V5 behavior | Legacy raw | Notes |
 |---|---:|---:|---:|---|
-| `v5ref` (v2.4 reference) | 66/66 | 1.000 | 80/81 | only d127 (intended supersession) |
-| `gold2` (v2.3-complete) | 35/66 | 0.469 | 81/81 | models a competent v2.3 solver |
-| `gold` (v2.3 GOLD) | 33/66 | 0.438 | 76/81 | |
-| `v5seed` (broken baseline) | 17/66 | 0.094 | 37/81 | no accidental mass-passing |
+| `v5ref` (v2.4.1 reference) | 68/68 | 1.000 | 80/81 | only d127 (intended supersession) |
+| `v5seed` (broken baseline) | 17/68 | 0.091 | 37/81 | no accidental mass-passing |
+| syntax-error injection (collection error) | 0/68 | 0.000 | 0/81 | denominator stays fixed |
 
-`gold2` at 35/66 raw and 47% of behaviors shows the suite separates "implemented
-v2.3" from "understood v2.4" without any hidden knowledge: a solver that lands
-between the two bookends (as a real Flash candidate would) scores in the 50–80%
-raw band.
+The pre-errata v2.4.0 calibration (66-test suite) measured `gold2` 35/66 / 0.469
+and `gold` 33/66 / 0.438; those v2.3 bookends were removed from the repo during
+the results cleanup and are recorded here as history only.
 
 ## 4. Test matrix
 
@@ -80,10 +85,10 @@ raw band.
 |---|---:|---|
 | `v5/core` | 19 | Explicit v2.4 contract clauses (§3–§9). |
 | `v5/interaction` | 8 | Cross-module consistency, operator ordering, multi-constraint composition. |
-| `v5/adversarial` | 19 | Error classification, bad input, atomicity, representation edges. |
+| `v5/adversarial` | 21 | Error classification, bad input, atomicity, representation edges, non-finite metrics. |
 | `v5/boss` | 11 | High-density end-to-end composite scenarios (B1–B11). |
 | `v5/metamorphic` | 9 | Deterministic invariants (idempotence, representation/order invariance, conservation). |
-| **V5 total** | **66** | |
+| **V5 total** | **68** | v2.4.1; the v2.4.0 suite was 66 (no non-finite cases). |
 | legacy `d10..v4` | 81 | Frozen, reported separately for historical comparability. |
 
 Metamorphic tests use `random.Random(seed)` only (stdlib, fixed seeds) — no
@@ -91,7 +96,7 @@ Hypothesis, no third-party deps.
 
 ## 5. Semantic behavior manifest
 
-`v5/behavior_manifest.json` maps 32 behaviors → their tests. Scoring:
+`v5/behavior_manifest.json` maps 33 behaviors → their tests. Scoring:
 
 - A behavior is **satisfied only when all its tests pass**.
 - Category score = satisfied / total behaviors in the category.
@@ -117,7 +122,7 @@ the documented pre-v2.3 defects plus the realistic v2.4 traps from the design:
 - multiple `--filter` parsed but only the last applied;
 - filters run before dedupe / after unit conversion (ordering bugs).
 
-It scores 17/66 raw, 9.4% behavior — low without relying on "missing feature =
+It scores 17/68 raw, 9.1% behavior — low without relying on "missing feature =
 zero".
 
 ## 7. Grader
@@ -135,21 +140,22 @@ zero".
 
 ## 8. Mutation sanity
 
-`mutation_check.py` applies 8 single-source mutations to `v5ref` and confirms the
+`mutation_check.py` applies 9 single-source mutations to `v5ref` and confirms the
 behavior score drops for each (see `results/v5_mutation_check.json`):
 
 | Mutation | behavior | raw |
 |---|---:|---:|
-| only_last_filter | 0.844 | 60/66 |
-| filter_after_unit | 0.875 | 62/66 |
-| fail_as_skip | 0.906 | 63/66 |
-| partial_output | 0.969 | 65/66 |
-| temp_or_temperature | 0.938 | 63/66 |
-| broad_except | 0.938 | 63/66 |
-| dedupe_keep_first | 0.750 | 58/66 |
-| skip_exit_one | 0.969 | 65/66 |
+| only_last_filter | 0.848 | 62/68 |
+| filter_after_unit | 0.879 | 64/68 |
+| fail_as_skip | 0.909 | 65/68 |
+| partial_output | 0.970 | 67/68 |
+| temp_or_temperature | 0.939 | 65/68 |
+| broad_except | 0.939 | 65/68 |
+| dedupe_keep_first | 0.758 | 60/68 |
+| skip_exit_one | 0.970 | 67/68 |
+| nonfinite_as_null | 0.970 | 66/68 |
 
-All 8 caught. Baseline reference: 66/66, behavior 1.000.
+All 9 caught. Baseline reference: 68/68, behavior 1.000.
 
 ## 9. Duplicate-weight audit
 
@@ -169,11 +175,11 @@ Audit of `v5/behavior_manifest.json`:
 |---|---:|---:|---|
 | contract | 8 | 19 | 2.4× over |
 | interaction | 5 | 8 | 1.6× over |
-| adversarial | 6 | 19 | 3.2× over |
+| adversarial | 7 | 21 | 3.0× over |
 | boss | 8 | 11 | 1.4× over |
 | metamorphic | 5 | 9 | 1.8× over |
 
-The right-hand column is what raw `/66` would have done; the behavior score
+The right-hand column is what raw `/68` would have done; the behavior score
 removes it.
 
 ## 10. Development record — correction types
@@ -181,22 +187,39 @@ removes it.
 Per the task's requirement to distinguish corrections, this section records the
 non-obvious ones:
 
-- **spec correction:** none after freeze. The processing order was confirmed
-  against the actual v2.3 code semantics (`validation → dedupe → filter → unit`)
-  before freezing, so no post-hoc change was needed.
+- **spec corrections (v2.4.1, after the first real-model run):** the first
+  leaderboard run (PR #5, 25 runs) surfaced two defects. Both were fixed as a
+  separate, auditable revision, per that PR's own recommendation.
+  1. **§3 validation/dedupe wording was self-contradictory.** The prose said the
+     earlier duplicate "**不会**补位" (would not survive) after the out-of-range
+     last duplicate was dropped, while the frozen order diagram, the reference,
+     `test_i3`, and legacy `gold2` all keep the earlier valid row. The prose was
+     wrong; corrected to state the actual semantics. This alone explains the
+     single largest variance source in the run (`test_i3` failed 16/25 runs,
+     spread evenly across effort levels — candidates implemented the wrong
+     sentence).
+  2. **Non-finite metrics were unspecified.** `temp: "nan"` / `"inf"` were
+     neither documented nor tested; 4/25 runs normalised them to `null` and kept
+     the row (legacy `d11` rejects them). §6/§10 now state that non-finite values
+     are record-level invalid, and `v5/adversarial` gained two cases
+     (`a13`/`a14`), restoring full legacy-81 coverage.
+  The v2.4.0 suite (66 tests) remains recorded in this document's history; the
+  v2.4.1 suite is 68 tests with one extra behavior (`non_finite_rejection`).
 - **test corrections (during development, before freeze):**
   - `test_i3_validation_before_dedupe`: initially asserted the out-of-range last
     duplicate caused the whole key to vanish; the frozen order (validation before
     dedupe) means the earlier valid row survives. Test corrected to match the
-    spec, not the other way round.
+    order; the spec prose was corrected later in v2.4.1 (see above).
   - `test_m7_skip_totals_conserved`: initially undercounted the skipped records
     (forgot the non-object record). Corrected invariant.
   - `test_a2/a3/atomicity`: changed `pytest.raises(Exception)` →
     `pytest.raises(DataError)` so a crashing seed cannot pass by accident.
   - `test_c9_library_filters_list_and`: data adjusted so a last-filter-only
     implementation actually differs from AND.
-- **reference implementation bug:** none found; the reference was written from
-  the spec and passed the full V5 suite on first run.
+- **reference implementation bug:** none found. The v2.4.0 reference already
+  rejected non-finite values (via the range check) and implemented
+  validation-before-dedupe; the v2.4.1 changes were spec/tests only, and `v5ref`
+  was not modified.
 
 ## 10. Frozen hashes
 
@@ -211,17 +234,26 @@ final commit. Formal candidate evaluation must not modify the tests after freeze
 - `DataError` not subclassing `ValueError` is a policy choice for clean CLI error
   classification; tested directly (`test_c8`).
 - Discrimination against real Flash models is **not yet measured here** — the
-  calibration above uses `gold`/`gold2` as stand-ins. Formal leaderboard runs
-  should start only after this suite is frozen.
+  calibration above no longer includes in-repo v2.3 bookends. The first real-model
+  run (PR #5, `space-bunny-free`, n=5×5) found the suite **saturated for that
+  model**: 64.2–65.4 / 66 with no detectable effort effect, and its top score is
+  explained partly by the §3 spec defect fixed in v2.4.1. A re-run under v2.4.1
+  is required before drawing conclusions; if saturation persists, the next step
+  is a harder contract (V6), not more tests of the same kind.
 
 ## 12. Legacy results and mandatory re-test
 
 Switching to V5 changes the task spec (v2.3 → v2.4), the starting seed (external
-v2.2.1 tag → in-repo `v5seed/`), the denominator (81 → 66 + behavior score) and
+v2.2.1 tag → in-repo `v5seed/`), the denominator (81 → 68 + behavior score) and
 the task book. The previous leaderboard numbers are therefore **superseded and
 not comparable**; they are archived under `results/` with
 `results/LEGACY.md` as the marker, and the README presents them in a clearly
 fenced legacy section.
+
+The first V5 leaderboard run (PR #5, 2026-10-04) was scored under spec **v2.4.0 /
+66 tests** and is likewise superseded by the v2.4.1 errata; it is kept in the
+README as a historical data point and must be re-run under v2.4.1 before any
+level comparison.
 
 Consequence: after freeze, **every candidate must be re-tested** under the same
 blind, one-shot protocol using `spec/ONBOARDING_TODO_v2.4.md` + `v5seed/` and

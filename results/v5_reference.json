@@ -25,10 +25,10 @@
         "error_targets": []
       },
       "adversarial": {
-        "passed": 19,
+        "passed": 21,
         "failed": 0,
         "errors": 0,
-        "expected": 19,
+        "expected": 21,
         "invalid": false,
         "collection_error": false,
         "failed_tests": [],
@@ -56,14 +56,14 @@
       }
     },
     "raw": {
-      "passed": 66,
-      "total": 66,
+      "passed": 68,
+      "total": 68,
       "ratio": 1.0
     },
     "behavior": {
       "overall": 1.0,
-      "behaviors_satisfied": 32,
-      "behaviors_total": 32,
+      "behaviors_satisfied": 33,
+      "behaviors_total": 33,
       "categories": {
         "contract": {
           "satisfied": 8,
@@ -132,8 +132,8 @@
           }
         },
         "adversarial": {
-          "satisfied": 6,
-          "total": 6,
+          "satisfied": 7,
+          "total": 7,
           "score": 1.0,
           "behaviors": {
             "malformed_policy_skip": {
@@ -145,6 +145,10 @@
               "failing": []
             },
             "metric_coercion": {
+              "satisfied": true,
+              "failing": []
+            },
+            "non_finite_rejection": {
               "satisfied": true,
               "failing": []
             },
@@ -295,5 +299,5 @@
     "errors": 0,
     "collection_error": false
   },
-  "runtime_seconds": 19.21
+  "runtime_seconds": 19.04
 }

@@ -49,9 +49,9 @@
       },
       "adversarial": {
         "passed": 6,
-        "failed": 13,
+        "failed": 15,
         "errors": 0,
-        "expected": 19,
+        "expected": 21,
         "invalid": false,
         "collection_error": false,
         "failed_tests": [
@@ -67,7 +67,9 @@
           "v5/adversarial/test_adversarial.py::test_a9_transform_fail_preserves_existing",
           "v5/adversarial/test_adversarial.py::test_a10_library_cli_agree",
           "v5/adversarial/test_adversarial.py::test_a11_emit_fail_on_malformed",
-          "v5/adversarial/test_adversarial.py::test_a12_skipped_not_double_counted"
+          "v5/adversarial/test_adversarial.py::test_a12_skipped_not_double_counted",
+          "v5/adversarial/test_adversarial.py::test_a13_non_finite_metrics_rejected",
+          "v5/adversarial/test_adversarial.py::test_a14_non_finite_not_nulled_by_ingest"
         ],
         "error_targets": []
       },
@@ -111,13 +113,13 @@
     },
     "raw": {
       "passed": 17,
-      "total": 66,
-      "ratio": 0.25757575757575757
+      "total": 68,
+      "ratio": 0.25
     },
     "behavior": {
-      "overall": 0.09375,
+      "overall": 0.09090909090909091,
       "behaviors_satisfied": 3,
-      "behaviors_total": 32,
+      "behaviors_total": 33,
       "categories": {
         "contract": {
           "satisfied": 1,
@@ -219,7 +221,7 @@
         },
         "adversarial": {
           "satisfied": 0,
-          "total": 6,
+          "total": 7,
           "score": 0.0,
           "behaviors": {
             "malformed_policy_skip": {
@@ -243,6 +245,13 @@
                 "adversarial/test_adversarial.py::test_a5_bool_temp_not_numeric",
                 "adversarial/test_adversarial.py::test_a6_temp_zero_does_not_fall_back",
                 "adversarial/test_adversarial.py::test_a6_temp_bool_does_not_fall_back"
+              ]
+            },
+            "non_finite_rejection": {
+              "satisfied": false,
+              "failing": [
+                "adversarial/test_adversarial.py::test_a13_non_finite_metrics_rejected",
+                "adversarial/test_adversarial.py::test_a14_non_finite_not_nulled_by_ingest"
               ]
             },
             "error_classification": {
@@ -427,5 +436,5 @@
     "errors": 0,
     "collection_error": false
   },
-  "runtime_seconds": 17.26
+  "runtime_seconds": 17.6
 }

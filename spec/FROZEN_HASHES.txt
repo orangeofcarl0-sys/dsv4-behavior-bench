@@ -1,18 +1,20 @@
 # Frozen V5 artifact hashes (sha256)
+# Revision: v2.4.1 (2026-10-04 errata: §3 wording corrected; non-finite metrics specified + covered).
+# v2.4.0 hashes are superseded; see git history for the pre-errata freeze.
 # Generated after freeze; formal candidate evaluation must not modify these artifacts.
 
 [spec]
-6c7d51df0f8d4031db46ae7f98f7b6ec55ab9be14d095db6079962dde846b851  spec/ONBOARDING_TODO_v2.4.md
-1b8342adba8ce186e7f0678a19101fddcafaf2f6eaf2de64632892f1b5a9c6cd  spec/V5_DESIGN.md
+3e58e187b5396e92967bb4c79bc7291f542ff75390757eebc587e9da327b4b47  spec/ONBOARDING_TODO_v2.4.md
+57accaa54d6c813ae6d58459ce000ea33c684e9889d1854cd7cd547e79801f21  spec/V5_DESIGN.md
 
 [tests]
-29574aa3ebfab08ecd68f904c39bb6b9f672feb283523f930deba0f1f4f25be7  v5/adversarial/test_adversarial.py
+3b619de55687dda25a938f23a73a7a0fd0b3ea126a843cf17facc0f4181e1595  v5/adversarial/test_adversarial.py
 932f6f797b89693510f88c595fa1eca5c11c22e63126a366133b470afe0a21da  v5/boss/test_boss.py
 62773479934d557f170de42ea190fa3508709173f8cefe82cdce813abc705d85  v5/conftest.py
 e14f887e72bf89c18cec45025f2769dfc7a467976a37f00ee86a8bea02cddaa2  v5/core/test_core.py
 7f4fddce68c33fef6c567394444d0176c84fd0c19c419e8eb59eb92c93c65cb0  v5/interaction/test_interaction.py
 2c49296df3336bd203c06b8202434bc0532de5ebdd0ce2cba39ac5b9738e27f9  v5/metamorphic/test_metamorphic.py
-1e5f41fe8fb6553ebf52006bc2a162b61734bbe49aafb521dbb67bc8762a82e5  v5/behavior_manifest.json
+2467cc8192e1218e89370773b6fd67e6b7c1eadedd638738570f65b8f8d17ef1  v5/behavior_manifest.json
 
 [reference]
 d5c406f2753947a9cbc745df4fd84f70e85e269e448aaa556ea331c604b63f89  v5ref/datapipe/__init__.py
@@ -34,5 +36,5 @@ df2665fb0b1c499eeef0a11d4cc6435c3cbc33d1e4588ba1a3be36655cf097e3  v5seed/datapip
 d8936b5932a1c96cf13e10faf0b7618bf147bcadb81aabea716c46783783b3c5  v5seed/datapipe/version.py
 
 [grader]
-283f6979edaee89050b09cf74a8f63b814d5a31d01462eddc960382b9de1efdd  grade_v5.py
-7815059f14ed6a13e9345d17423ff830ef03a9d187c9afb7d4b26f405d037a23  mutation_check.py
+6e54cfc65a7fa1c274915eec8a7fe801688f83d7619d110cab0548408e8c6c23  grade_v5.py
+2a2b5529f790a10bb6c784d566d7e8713a1c7d1600d1a865306d15c843857aa0  mutation_check.py

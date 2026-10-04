@@ -1,8 +1,16 @@
-# ONBOARDING_TODO — datapipe v2.4
+# ONBOARDING_TODO — datapipe v2.4（修订 v2.4.1）
 
 > 本文件是 **frozen spec**。candidate 实际运行时看到的任务书必须逐字节复制本文件，
-> 不允许存在「实验时一版、repo 里另一版」。修改本文件等价于发布新的 spec 版本
-> （v2.5+），必须同时更新 `spec/V5_DESIGN.md` 的 hash 记录。
+> 不允许存在「实验时一版、repo 里另一版」。修改本文件等价于发布新的 spec 修订：
+> 勘误 / 澄清为 **v2.4.x**，新增 contract 为 **v2.5+**；每次修订必须同时更新
+> `spec/V5_DESIGN.md` 与 `spec/FROZEN_HASHES.txt`。
+>
+> **v2.4.1（2026-10-04）勘误**：
+> 1. §3 澄清 validation→dedupe 的实际语义。旧措辞「更早的那条**不会**补位」与冻结
+>    顺序、参考实现及 v2.3 legacy 行为相反，属笔误；正确语义是「更早的合法记录
+>    **会被保留**」。
+> 2. §6 / §10 明确非有限数值（`NaN` / `Infinity` / `-Infinity`）为 record-level
+>    invalid，不得归一为 `null` 保留（补齐 legacy `d11` 语义）。
 
 你是本次 datapipe 修复任务的负责人。工作目录就是你的全部可见范围。
 请先读完本文件，然后按「必须流程」章节直接开始修复 `datapipe/` 仓库。
@@ -74,8 +82,11 @@ emit / serialize       # 序列化输出
   表示「摄氏温度 > 25」，而不是「华氏温度 > 25」。
 - filter 作用在 **dedupe 之后**。被后一条 duplicate 替换掉的旧值，
   不得因为新值 filter 失败而「复活」。
-- validation（范围校验）在 dedupe 之前：一条 duplicate 的最后一条若越界被丢弃，
-  更早的那条**不会**补位。
+- validation（范围校验）在 dedupe 之前：越界的记录**先被丢弃**，之后才做去重。
+  因此若一条 duplicate 的最后一条越界，它在 dedupe 之前就已被移除；dedupe 只看到
+  剩下的记录，更早的那条**合法**记录会被保留。（对照上一段：filter 在 dedupe
+  **之后**，所以被 filter 淘汰的记录不会让更早的 duplicate 复活；两者顺序不同，
+  结果也不同。）
 - 多个 filter 是 AND，且与书写顺序无关：`A ∧ B` 与 `B ∧ A` 结果完全相同。
 
 ---
@@ -162,6 +173,9 @@ record-level malformed / invalid 数据：
 - **不是** malformed（记录保留，字段归一为 `null`）：
   `temp` / `humidity` 非数值或不可解析、布尔值（JSON `true`/`false` 不是数值）、
   `temp` 为空串。
+- **是** invalid（不是 malformed，但同样触发 `skip` / `fail`，**不得**归一为
+  `null` 后保留）：`temp` / `humidity` 解析结果为**非有限数值**
+  （`NaN` / `Infinity` / `-Infinity`）。
 - **是** malformed：整个记录不可解析、非对象、缺 `device_id`/`timestamp`。
 
 ---
@@ -244,6 +258,10 @@ field OP value
   - `temp = ""` / `temp = null` → 回退 `temperature`；
   - `temp = false`（布尔）→ 不是缺失，不回退；归一为 `null`。
 - `temp` / `humidity` 归一为 `float` 或 `null`。
+- **非有限数值不是合法取值**：`NaN` / `Infinity` / `-Infinity`（无论以 JSON 数值
+  字面量还是字符串形式出现）都必须按 record-level invalid 处理——范围校验拒绝该
+  记录（`skip` 下跳过并计入 `skipped`；`fail` 下抛出数据错误），
+  **不得**归一为 `null` 后保留。
 - transform 的时间戳归一为 UTC、以 `Z` 结尾的 ISO-8601，**保留微秒**。
 - 范围校验：`temp ∈ [-40, 85]`，`humidity ∈ [0, 100]`；值为 `null` 时通过。
 - dedupe key = (`device_id` 转小写, 归一后的 timestamp)，保留**最后一次**出现。
