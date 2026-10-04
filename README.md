@@ -92,17 +92,54 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
 `temp or temperature` / broad-except / dedupe-keep-first / skip→exit1），
 **8/8 全部被捕获**（详见 `results/v5_mutation_check.json`）。
 
-**注意**：表中只有 reference / seed 的校准值，**尚无真实模型 V5 跑分**。
-正式 V5 leaderboard 须在 frozen suite 之后，按与历史一致的盲测 one-shot 协议重跑
-全部候选后方可发布。
+**注意**：上表只有 reference / seed 的校准值；首个真实模型跑分见「V5 leaderboard」。
+其余候选仍须用 v2.4 任务书 + `v5seed` 重测后方可入榜。
 
 ### V5 leaderboard
 
-| 候选 | V5 raw /66 | behavior | legacy /81 | 日期 |
-|---|---:|---:|---:|---|
-| _（待重测：所有候选须用 v2.4 任务书 + `v5seed` 重跑）_ | — | — | — | — |
+| 候选 | V5 raw /66 | behavior | legacy /81 | n | 日期 |
+|---|---:|---:|---:|---:|---|
+| `space-bunny-free`（reasoning-effort 扫描，5 档均值） | **65.4** | **0.981** | 80.0 | 5 | 2026-10-04 |
+| `space-bunny-free` @ high（单次最佳档） | 65.40 ± 0.55 | 0.981 | 80.0 | 5 | 2026-10-04 |
+| `v5ref`（v2.4 reference，非候选） | 66 | 1.000 | 80 | — | — |
+| `v5seed`（broken baseline，非候选） | 17 | 0.094 | 37 | — | — |
 
 > 旧榜分数已清理，且**不可**迁入此表。切换 benchmark 后所有候选必须全面重测。
+> 本表首行为 5 档 reasoning-effort 的均值，**不是**某一档的单次成绩。
+
+## 附加实验：reasoning-effort 扫描（space-bunny-free，V5，n=5）
+
+同一模型跑满全部 5 档 `reasoning_effort`，协议与历史完全一致：盲测、one-shot、
+逐字节 `v5seed` 副本、交付后宿主侧 `grade_v5.py` 统一评分。
+**每档 n=5（25 次运行，0 次被剔除）**——本节是重复测量，与上表所有 one-shot 行不同。
+
+| effort | V5 raw /66 逐轮 | 均值 ± sd | behavior | legacy /81 | wall |
+|---|---|---:|---:|---:|---|
+| low | 65 / 65 / 66 / 65 / 65 | 65.20 ± 0.45 | 0.975 | 80.0 | 202–601s |
+| medium | 65 / 65 / 62 / 66 / 63 | **64.20 ± 1.64** | 0.944 | 79.6 | 396–600s |
+| high | 65 / 66 / 66 / 65 / 65 | **65.40 ± 0.55** | **0.981** | 80.0 | 417–659s |
+| xhigh | 64 / 65 / 66 / 66 / 65 | 65.20 ± 0.84 | 0.975 | 79.8 | 600–1612s |
+| max | 66 / 65 / 65 / 65 / 63 | 64.80 ± 1.10 | 0.963 | **78.6** | 721–1616s |
+
+- **effort 对 V5 分数无可检测影响**：置换检验（2 万次标签重排，组间平方和）
+  raw **p = 1.000**、behavior **p = 1.000**。组间均值跨度 1.20 分 ≈ 合并组内 sd 1.02。
+  排序还会随 n 洗牌（`max` 在 n=3 并列最高，n=5 降到 64.80）。
+- **顶部饱和**：均值区间 64.2–65.4 / 66，仅 7/25 次跑出干净 66/66。
+  本模型远高于设计文档预期的 50–80% raw band——v2.4 任务书把 contract 写得过死，
+  几乎没有留给模型推断的空间。
+- **方差几乎全部来自一个测试**：`test_i3_validation_before_dedupe` 单独占
+  **16/25** 次失败，且五档分布几乎均匀（3/3/3/3/4），与 effort 无关。
+- **`max` 在 legacy 上稳定落后**（78.6，5 次里 4 次 78–79）：见下条。
+- **V5 漏检非有限值**：`v5/*/test_*.py` 对 `nan`/`inf` 的字面覆盖为 **0 处**，
+  v2.4 任务书也从未提及非有限值。25 次中有 4 次把 `temp:"nan"` 归一为 `temp: null`
+  并写入输出（`max` 3/5、`xhigh` 1/5），而这些运行的 V5 分数是 64–66。
+  **这意味着 V5 并未覆盖 legacy 81 项的全部语义**；若要替代 legacy，
+  建议在任务书第 10 节补回非有限值要求并在 `v5/adversarial` 增加用例。
+
+证据（25 次运行的逐档逐轮分数、行为明细、失败清单、5 档 overlay、
+运行与评分脚本、完整性审计）见
+[`results/model-harness-effort/`](results/model-harness-effort/)。
+该目录已脱敏（本机绝对路径与用户名替换为占位符），评分数据未作任何改动。
 
 ## 仓库内 frozen artifact
 
@@ -120,7 +157,11 @@ mutation sanity：`python mutation_check.py` 对 reference 施加 8 类单点 mu
 
 - `--on-error` 默认值、`DataError` 不继承 `ValueError` 属 **policy choice**，已写入 spec。
 - `skip → exit 0` 与 legacy `d12::test_d127` 冲突，是 v2.4 有意演进，legacy 保持冻结。
-- V5 对真实 Flash 模型的区分度**尚未实测**；需正式 candidate runs 才能验证。
+- **首个模型已触及顶部饱和**：`space-bunny-free` 均分 64.2–65.4/66（见上节），本套
+  区分度对强 Flash 已接近 0，`--on-error`/atomicity/AND 等新 contract 未能把它拉回
+  50–80% 预期带。
+- **V5 漏检非有限值**：任务书与测试都未覆盖 `nan`/`inf`，而 legacy `d11` 会拒绝它们；
+  若要让 V5 覆盖 legacy 全部语义，需在 spec 第 10 节补回并加 1–2 个 adversarial 用例。
 
 ---
 

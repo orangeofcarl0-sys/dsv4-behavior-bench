@@ -1,0 +1,270 @@
+{
+  "run_date": "2026-10-04",
+  "benchmark": "dsv4-behavior-bench V5 / datapipe v2.4 (66 tests + 32-behavior score)",
+  "bench_commit": "f8ef910 (tag v1.0.0)",
+  "model": "space-bunny-free",
+  "provider_route": "opencode-zen (https://opencode.ai/zen/v1)",
+  "reasoning_efforts_tested": [
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "max"
+  ],
+  "n_per_level": 5,
+  "replicates": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "protocol": "one-shot, blind. Each replicate of each level ran in its own fresh dsh headless agent over a byte-identical copy of the frozen v5seed (cp -a; 15/15 workspace tree md5 identical). Candidates saw only ONBOARDING_TODO.md (v2.4 spec, byte-identical to spec/ONBOARDING_TODO_v2.4.md) inside their own workspace; the v5/ suite, v5ref/ and grade_v5.py were never in the workspace and outbound web + subagent tools were disabled. Host side graded after delivery with the frozen grade_v5.py.",
+  "baseline_reproduced": {
+    "v5seed": "17/66, behavior 0.094",
+    "v5ref": "66/66, behavior 1.000"
+  },
+  "frozen_hashes_verified": "26/26 sha256 in spec/FROZEN_HASHES.txt",
+  "levels": {
+    "low": {
+      "v5_raw_per_run": [
+        65,
+        65,
+        66,
+        65,
+        65
+      ],
+      "v5_raw_mean": 65.2,
+      "v5_raw_sd": 0.4472135954999579,
+      "behavior_per_run": [
+        0.96875,
+        0.96875,
+        1.0,
+        0.96875,
+        0.96875
+      ],
+      "behavior_mean": 0.975,
+      "legacy_per_run": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 80.0,
+      "steps_per_run": [
+        32,
+        39,
+        35,
+        38,
+        43
+      ],
+      "wall_per_run": [
+        202,
+        328,
+        601,
+        335,
+        306
+      ],
+      "category_means": {
+        "contract": 0.975,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "medium": {
+      "v5_raw_per_run": [
+        65,
+        65,
+        62,
+        66,
+        63
+      ],
+      "v5_raw_mean": 64.2,
+      "v5_raw_sd": 1.6431676725154984,
+      "behavior_per_run": [
+        0.96875,
+        0.96875,
+        0.875,
+        1.0,
+        0.90625
+      ],
+      "behavior_mean": 0.94375,
+      "legacy_per_run": [
+        80,
+        80,
+        79,
+        80,
+        79
+      ],
+      "legacy_mean": 79.6,
+      "steps_per_run": [
+        44,
+        31,
+        49,
+        39,
+        53
+      ],
+      "wall_per_run": [
+        456,
+        414,
+        600,
+        396,
+        523
+      ],
+      "category_means": {
+        "contract": 0.9,
+        "interaction": 0.8400000000000001,
+        "adversarial": 0.9666666666666666,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "high": {
+      "v5_raw_per_run": [
+        65,
+        66,
+        66,
+        65,
+        65
+      ],
+      "v5_raw_mean": 65.4,
+      "v5_raw_sd": 0.5477225575051661,
+      "behavior_per_run": [
+        0.96875,
+        1.0,
+        1.0,
+        0.96875,
+        0.96875
+      ],
+      "behavior_mean": 0.98125,
+      "legacy_per_run": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 80.0,
+      "steps_per_run": [
+        62,
+        34,
+        33,
+        57,
+        51
+      ],
+      "wall_per_run": [
+        477,
+        417,
+        659,
+        600,
+        589
+      ],
+      "category_means": {
+        "contract": 1.0,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "xhigh": {
+      "v5_raw_per_run": [
+        64,
+        65,
+        66,
+        66,
+        65
+      ],
+      "v5_raw_mean": 65.2,
+      "v5_raw_sd": 0.8366600265340756,
+      "behavior_per_run": [
+        0.9375,
+        0.96875,
+        1.0,
+        1.0,
+        0.96875
+      ],
+      "behavior_mean": 0.975,
+      "legacy_per_run": [
+        79,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 79.8,
+      "steps_per_run": [
+        72,
+        62,
+        50,
+        46,
+        66
+      ],
+      "wall_per_run": [
+        1290,
+        840,
+        659,
+        600,
+        1612
+      ],
+      "category_means": {
+        "contract": 0.975,
+        "interaction": 0.8800000000000001,
+        "adversarial": 1.0,
+        "boss": 1.0,
+        "metamorphic": 1.0
+      }
+    },
+    "max": {
+      "v5_raw_per_run": [
+        66,
+        65,
+        65,
+        65,
+        63
+      ],
+      "v5_raw_mean": 64.8,
+      "v5_raw_sd": 1.0954451150103321,
+      "behavior_per_run": [
+        1.0,
+        0.96875,
+        0.96875,
+        0.96875,
+        0.90625
+      ],
+      "behavior_mean": 0.9625,
+      "legacy_per_run": [
+        78,
+        80,
+        78,
+        78,
+        79
+      ],
+      "legacy_mean": 78.6,
+      "steps_per_run": [
+        50,
+        62,
+        87,
+        51,
+        44
+      ],
+      "wall_per_run": [
+        1290,
+        866,
+        798,
+        721,
+        1616
+      ],
+      "category_means": {
+        "contract": 1.0,
+        "interaction": 0.8,
+        "adversarial": 1.0,
+        "boss": 0.975,
+        "metamorphic": 1.0
+      }
+    }
+  }
+}
