@@ -1,0 +1,276 @@
+{
+  "run_date": "2026-10-05",
+  "benchmark": "dsv4-behavior-bench V5 / datapipe v2.4.1 (68 tests + behaviour score)",
+  "bench_commit": "b1d7006",
+  "model": "space-bunny-free",
+  "provider_route": "opencode-zen (https://opencode.ai/zen/v1)",
+  "reasoning_efforts_tested": [
+    "low",
+    "medium",
+    "high",
+    "xhigh",
+    "max"
+  ],
+  "n_per_level": 5,
+  "replicates": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "protocol": "one-shot, blind. Each replicate of each level ran in its own fresh dsh headless agent over a byte-identical copy of the frozen v5seed (cp -a; 25/25 workspace tree md5 identical). Candidates saw only ONBOARDING_TODO.md (v2.4.1 spec, byte-identical to spec/ONBOARDING_TODO_v2.4.md) inside their own workspace; the v5/ suite, v5ref/ and grade_v5.py were never in the workspace and outbound web + subagent tools were disabled. Host side graded after delivery with the frozen grade_v5.py.",
+  "baseline_reproduced": {
+    "v5seed": "17/68, behaviour 0.091, legacy 37/81",
+    "v5ref": "68/68, behaviour 1.000, legacy 80/81"
+  },
+  "frozen_hashes_verified": "26/26 sha256 in spec/FROZEN_HASHES.txt",
+  "errata_effect": {
+    "test_i3_validation_before_dedupe": "16/25 failures under v2.4.0 -> 0/25 under v2.4.1",
+    "non-finite silently emitted as temp:null": "4/25 -> 0/25",
+    "new a13/a14 failures": "0/25",
+    "clean full-score runs": "7/25 (28%) -> 18/25 (72%)"
+  },
+  "levels": {
+    "low": {
+      "v5_raw_per_run": [
+        63,
+        67,
+        68,
+        68,
+        67
+      ],
+      "v5_raw_mean": 66.6,
+      "v5_raw_sd": 2.073644135332772,
+      "behavior_per_run": [
+        0.8484848484848485,
+        0.9696969696969697,
+        1.0,
+        1.0,
+        0.9696969696969697
+      ],
+      "behavior_mean": 0.9575757575757576,
+      "legacy_per_run": [
+        79,
+        79,
+        79,
+        80,
+        80
+      ],
+      "legacy_mean": 79.4,
+      "steps_per_run": [
+        52,
+        39,
+        40,
+        28,
+        26
+      ],
+      "thinking_per_run": [
+        24,
+        16,
+        18,
+        15,
+        13
+      ],
+      "calls_per_run": [
+        51,
+        51,
+        49,
+        42,
+        36
+      ]
+    },
+    "medium": {
+      "v5_raw_per_run": [
+        68,
+        68,
+        64,
+        68,
+        68
+      ],
+      "v5_raw_mean": 67.2,
+      "v5_raw_sd": 1.7888543819998317,
+      "behavior_per_run": [
+        1.0,
+        1.0,
+        0.8787878787878788,
+        1.0,
+        1.0
+      ],
+      "behavior_mean": 0.9757575757575758,
+      "legacy_per_run": [
+        80,
+        79,
+        80,
+        80,
+        79
+      ],
+      "legacy_mean": 79.6,
+      "steps_per_run": [
+        44,
+        29,
+        43,
+        30,
+        40
+      ],
+      "thinking_per_run": [
+        19,
+        15,
+        18,
+        10,
+        22
+      ],
+      "calls_per_run": [
+        51,
+        42,
+        49,
+        38,
+        48
+      ]
+    },
+    "high": {
+      "v5_raw_per_run": [
+        68,
+        68,
+        67,
+        67,
+        68
+      ],
+      "v5_raw_mean": 67.6,
+      "v5_raw_sd": 0.5477225575051661,
+      "behavior_per_run": [
+        1.0,
+        1.0,
+        0.9696969696969697,
+        0.9696969696969697,
+        1.0
+      ],
+      "behavior_mean": 0.9878787878787879,
+      "legacy_per_run": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 80.0,
+      "steps_per_run": [
+        43,
+        84,
+        41,
+        52,
+        83
+      ],
+      "thinking_per_run": [
+        18,
+        27,
+        25,
+        15,
+        35
+      ],
+      "calls_per_run": [
+        59,
+        83,
+        52,
+        51,
+        93
+      ]
+    },
+    "xhigh": {
+      "v5_raw_per_run": [
+        68,
+        68,
+        68,
+        67,
+        68
+      ],
+      "v5_raw_mean": 67.8,
+      "v5_raw_sd": 0.4472135954999579,
+      "behavior_per_run": [
+        1.0,
+        1.0,
+        1.0,
+        0.9696969696969697,
+        1.0
+      ],
+      "behavior_mean": 0.9939393939393939,
+      "legacy_per_run": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 80.0,
+      "steps_per_run": [
+        57,
+        47,
+        44,
+        39,
+        48
+      ],
+      "thinking_per_run": [
+        23,
+        23,
+        20,
+        21,
+        24
+      ],
+      "calls_per_run": [
+        68,
+        63,
+        55,
+        55,
+        63
+      ]
+    },
+    "max": {
+      "v5_raw_per_run": [
+        68,
+        68,
+        68,
+        68,
+        68
+      ],
+      "v5_raw_mean": 68.0,
+      "v5_raw_sd": 0.0,
+      "behavior_per_run": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "behavior_mean": 1.0,
+      "legacy_per_run": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "legacy_mean": 80.0,
+      "steps_per_run": [
+        79,
+        42,
+        46,
+        53,
+        55
+      ],
+      "thinking_per_run": [
+        43,
+        17,
+        23,
+        21,
+        32
+      ],
+      "calls_per_run": [
+        93,
+        58,
+        62,
+        72,
+        73
+      ]
+    }
+  }
+}
