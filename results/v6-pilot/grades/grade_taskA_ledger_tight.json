@@ -1,0 +1,90 @@
+{
+  "task": "taskA_ledger",
+  "repo": "<workspace>/v6_taskA_ledger_tight/medium",
+  "benchmark": "datapipe-v6-prototype",
+  "hidden": {
+    "passed": 13,
+    "failed": 0,
+    "expected": 13,
+    "invalid": false,
+    "collection_error": false
+  },
+  "behavior": {
+    "overall": 1.0,
+    "behaviors_satisfied": 9,
+    "behaviors_total": 9,
+    "categories": {
+      "atomicity": {
+        "satisfied": 3,
+        "total": 3,
+        "score": 1.0,
+        "behaviors": {
+          "reject_changes_nothing": {
+            "satisfied": true,
+            "failing": []
+          },
+          "rejected_id_not_consumed": {
+            "satisfied": true,
+            "failing": []
+          },
+          "settlement_all_or_nothing": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "exactness": {
+        "satisfied": 2,
+        "total": 2,
+        "score": 1.0,
+        "behaviors": {
+          "exact_zero": {
+            "satisfied": true,
+            "failing": []
+          },
+          "money_rejects_float": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "isolation": {
+        "satisfied": 2,
+        "total": 2,
+        "score": 1.0,
+        "behaviors": {
+          "read_isolation": {
+            "satisfied": true,
+            "failing": []
+          },
+          "account_normalization": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "invariants": {
+        "satisfied": 2,
+        "total": 2,
+        "score": 1.0,
+        "behaviors": {
+          "global_balance_zero": {
+            "satisfied": true,
+            "failing": []
+          },
+          "order_preserved": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      }
+    }
+  },
+  "public": {
+    "passed": 5,
+    "failed": 0,
+    "expected": 5,
+    "invalid": false
+  },
+  "runtime_seconds": 14.91
+}

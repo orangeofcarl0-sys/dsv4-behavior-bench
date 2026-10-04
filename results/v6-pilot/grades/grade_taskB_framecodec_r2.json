@@ -1,0 +1,71 @@
+{
+  "task": "taskB_framecodec",
+  "repo": "<workspace>/v6_taskB_framecodec_r2/medium",
+  "benchmark": "datapipe-v6-prototype",
+  "hidden": {
+    "passed": 17,
+    "failed": 0,
+    "expected": 17,
+    "invalid": false,
+    "collection_error": false
+  },
+  "behavior": {
+    "overall": 1.0,
+    "behaviors_satisfied": 6,
+    "behaviors_total": 6,
+    "categories": {
+      "chunking": {
+        "satisfied": 3,
+        "total": 3,
+        "score": 1.0,
+        "behaviors": {
+          "any_split_equivalence": {
+            "satisfied": true,
+            "failing": []
+          },
+          "multiple_frames_per_chunk": {
+            "satisfied": true,
+            "failing": []
+          },
+          "empty_chunk_noop": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "recovery": {
+        "satisfied": 2,
+        "total": 2,
+        "score": 1.0,
+        "behaviors": {
+          "crc_failure_recovery": {
+            "satisfied": true,
+            "failing": []
+          },
+          "truncated_frame_resync": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      },
+      "state": {
+        "satisfied": 1,
+        "total": 1,
+        "score": 1.0,
+        "behaviors": {
+          "decoder_independence": {
+            "satisfied": true,
+            "failing": []
+          }
+        }
+      }
+    }
+  },
+  "public": {
+    "passed": 6,
+    "failed": 0,
+    "expected": 6,
+    "invalid": false
+  },
+  "runtime_seconds": 35.25
+}
