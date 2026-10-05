@@ -1,0 +1,576 @@
+{
+  "meta": {
+    "n_runs": 18,
+    "n_candidates": 6,
+    "mean_score": 61.611111111111114,
+    "sd_score": 7.678379799141827,
+    "score_min": 49,
+    "score_max": 74,
+    "per_candidate_mean": {
+      "deepseek-v4.1-flash": 68.33333333333333,
+      "gemini-3.5-flash": 60.333333333333336,
+      "grok-4.7": 63.333333333333336,
+      "hy4-preview-f": 71.33333333333333,
+      "kimi-k2.6": 52.0,
+      "minimax-m3": 54.333333333333336
+    }
+  },
+  "items": [
+    {
+      "item": "test_d101_extreme_offset_utc_normalization",
+      "suite": "legacy",
+      "pass_rate": 0.9444444444444444,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.6666666666666666,
+        "minimax-m3": 1.0
+      },
+      "var_model": 0.01851851851851852,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.3333333273333335,
+      "item_total_r": 0.4098935583486292,
+      "label": "noise"
+    },
+    {
+      "item": "test_d102_microseconds_preserved",
+      "suite": "legacy",
+      "pass_rate": 0.4444444444444444,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.2074074074074074,
+      "var_run": 0.1111111111111111,
+      "discrimination": 1.8666666498666669,
+      "item_total_r": 0.42118725402649787,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d102_negative_offset_utc_normalization",
+      "suite": "legacy",
+      "pass_rate": 0.9444444444444444,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.6666666666666666,
+        "minimax-m3": 1.0
+      },
+      "var_model": 0.01851851851851852,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.3333333273333335,
+      "item_total_r": 0.4098935583486292,
+      "label": "noise"
+    },
+    {
+      "item": "test_d1111_retransform_idempotent",
+      "suite": "legacy",
+      "pass_rate": 0.9444444444444444,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.6666666666666666,
+        "minimax-m3": 1.0
+      },
+      "var_model": 0.01851851851851852,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.3333333273333335,
+      "item_total_r": 0.4098935583486292,
+      "label": "noise"
+    },
+    {
+      "item": "test_d112_nan_temp_rejected",
+      "suite": "legacy",
+      "pass_rate": 0.5555555555555556,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.16296296296296298,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.9777777719111113,
+      "item_total_r": 0.552704222675088,
+      "label": "noise"
+    },
+    {
+      "item": "test_d113_inf_temp_rejected",
+      "suite": "legacy",
+      "pass_rate": 0.6111111111111112,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.1962962962962963,
+      "var_run": 0.1111111111111111,
+      "discrimination": 1.766666650766667,
+      "item_total_r": 0.6914836932150328,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d114_filter_before_unit_conversion",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_d118_cli_usage_error_exit2",
+      "suite": "legacy",
+      "pass_rate": 0.8888888888888888,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 1.0,
+        "minimax-m3": 1.0
+      },
+      "var_model": 0.07407407407407408,
+      "var_run": 0.05555555555555555,
+      "discrimination": 1.333333309333334,
+      "item_total_r": 0.12371505746109873,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d121_transform_skips_malformed_line",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 0.3333333333333333,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_d122_emit_skips_malformed_line",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 0.3333333333333333,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_d123_bool_temp_not_numeric",
+      "suite": "legacy",
+      "pass_rate": 0.3888888888888889,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.24074074074074073,
+      "var_run": 0.05555555555555555,
+      "discrimination": 4.333333255333335,
+      "item_total_r": 0.7746314256507053,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d125_transform_json_array_input",
+      "suite": "legacy",
+      "pass_rate": 0.4444444444444444,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.6666666666666666,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.2518518518518518,
+      "var_run": 0.05555555555555555,
+      "discrimination": 4.5333332517333345,
+      "item_total_r": 0.6908802783438601,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d126_md_table_pipe_escaped",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 0.3333333333333333,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_d127_cli_transform_malformed_exit1",
+      "suite": "legacy",
+      "pass_rate": 0.5555555555555556,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.3333333333333333,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 0.3333333333333333,
+        "kimi-k2.6": 1.0,
+        "minimax-m3": 0.6666666666666666
+      },
+      "var_model": 0.16296296296296298,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.9777777719111113,
+      "item_total_r": -0.4661360914127249,
+      "label": "noise"
+    },
+    {
+      "item": "test_d1_ndjson_malformed_line_skipped",
+      "suite": "legacy",
+      "pass_rate": 0.2222222222222222,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.3333333333333333,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.07407407407407407,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.4444444417777778,
+      "item_total_r": 0.7083626873526042,
+      "label": "noise"
+    },
+    {
+      "item": "test_d1_ndjson_truncated_line_skipped",
+      "suite": "legacy",
+      "pass_rate": 0.2222222222222222,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.3333333333333333,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.07407407407407407,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.4444444417777778,
+      "item_total_r": 0.7083626873526042,
+      "label": "noise"
+    },
+    {
+      "item": "test_d2_device_id_whitespace_trimmed",
+      "suite": "legacy",
+      "pass_rate": 0.6666666666666666,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.26666666666666666,
+      "var_run": 0.0,
+      "discrimination": 266666666.66666666,
+      "item_total_r": 0.800199520599447,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d2_timestamp_whitespace_trimmed",
+      "suite": "legacy",
+      "pass_rate": 0.6666666666666666,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.26666666666666666,
+      "var_run": 0.0,
+      "discrimination": 266666666.66666666,
+      "item_total_r": 0.800199520599447,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d3_legacy_temperature_when_temp_empty",
+      "suite": "legacy",
+      "pass_rate": 0.2777777777777778,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.1962962962962963,
+      "var_run": 0.05555555555555555,
+      "discrimination": 3.5333332697333346,
+      "item_total_r": 0.680582074545925,
+      "label": "high-value"
+    },
+    {
+      "item": "test_d5_nonnumeric_humidity_null_row_kept",
+      "suite": "legacy",
+      "pass_rate": 0.5,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.3333333333333333,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.16666666666666666,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.9999999940000001,
+      "item_total_r": 0.5732715929406998,
+      "label": "noise"
+    },
+    {
+      "item": "test_d5_nonnumeric_temp_null_row_kept",
+      "suite": "legacy",
+      "pass_rate": 0.5,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.3333333333333333,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.16666666666666666,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.9999999940000001,
+      "item_total_r": 0.5732715929406998,
+      "label": "noise"
+    },
+    {
+      "item": "test_d6_unit_after_filter",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_d9_bom_ndjson",
+      "suite": "legacy",
+      "pass_rate": 0.7777777777777778,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.6666666666666666
+      },
+      "var_model": 0.16296296296296298,
+      "var_run": 0.05555555555555555,
+      "discrimination": 2.9333332805333345,
+      "item_total_r": 0.6526487681226241,
+      "label": "high-value"
+    },
+    {
+      "item": "test_t2_ndjson_bad_line_skipped",
+      "suite": "legacy",
+      "pass_rate": 0.2222222222222222,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.3333333333333333,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.07407407407407407,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.4444444417777778,
+      "item_total_r": 0.7083626873526042,
+      "label": "noise"
+    },
+    {
+      "item": "test_t4a_ndjson_malformed_counted_not_crash",
+      "suite": "legacy",
+      "pass_rate": 0.2222222222222222,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.3333333333333333,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.6666666666666666,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.07407407407407407,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.4444444417777778,
+      "item_total_r": 0.7083626873526042,
+      "label": "noise"
+    },
+    {
+      "item": "test_t4a_nonnumeric_temp_skipped_as_null",
+      "suite": "legacy",
+      "pass_rate": 0.5,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 0.3333333333333333,
+        "grok-4.7": 0.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.3333333333333333,
+        "minimax-m3": 0.3333333333333333
+      },
+      "var_model": 0.16666666666666666,
+      "var_run": 0.16666666666666666,
+      "discrimination": 0.9999999940000001,
+      "item_total_r": 0.5732715929406998,
+      "label": "noise"
+    },
+    {
+      "item": "test_t4a_whitespace_fields_trimmed",
+      "suite": "legacy",
+      "pass_rate": 0.6666666666666666,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 1.0,
+        "gemini-3.5-flash": 1.0,
+        "grok-4.7": 1.0,
+        "hy4-preview-f": 1.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.26666666666666666,
+      "var_run": 0.0,
+      "discrimination": 266666666.66666666,
+      "item_total_r": 0.800199520599447,
+      "label": "high-value"
+    },
+    {
+      "item": "test_t4b_unit_f_applies_after_filter",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    },
+    {
+      "item": "test_t4c_full_pipeline_roundtrip",
+      "suite": "legacy",
+      "pass_rate": 0.05555555555555555,
+      "n_runs": 18,
+      "per_model": {
+        "deepseek-v4.1-flash": 0.0,
+        "gemini-3.5-flash": 0.0,
+        "grok-4.7": 0.3333333333333333,
+        "hy4-preview-f": 0.0,
+        "kimi-k2.6": 0.0,
+        "minimax-m3": 0.0
+      },
+      "var_model": 0.018518518518518517,
+      "var_run": 0.05555555555555555,
+      "discrimination": 0.33333332733333343,
+      "item_total_r": 0.2726604727341102,
+      "label": "floor"
+    }
+  ],
+  "label_counts": {
+    "noise": 12,
+    "high-value": 10,
+    "floor": 7
+  }
+}

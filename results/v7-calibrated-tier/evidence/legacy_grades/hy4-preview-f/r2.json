@@ -1,0 +1,86 @@
+{
+  "candidate": "hy4-preview-f",
+  "rep": 2,
+  "repo": "<harness>/legacy_runs/hy4-preview-f/r2",
+  "suites": {
+    "d10": {
+      "passed": 11,
+      "failed": 0,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": []
+    },
+    "d11": {
+      "passed": 10,
+      "failed": 1,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "d11/test_d11.py::test_d114_filter_before_unit_conversion"
+      ]
+    },
+    "d12": {
+      "passed": 7,
+      "failed": 3,
+      "expected": 10,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped"
+      ]
+    },
+    "t2": {
+      "passed": 8,
+      "failed": 0,
+      "expected": 8,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": []
+    },
+    "t3": {
+      "passed": 6,
+      "failed": 0,
+      "expected": 6,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": []
+    },
+    "t4": {
+      "passed": 9,
+      "failed": 2,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "t4/test_t4.py::test_t4b_unit_f_applies_after_filter",
+        "t4/test_t4.py::test_t4c_full_pipeline_roundtrip"
+      ]
+    },
+    "v4": {
+      "passed": 23,
+      "failed": 1,
+      "expected": 24,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "v4/test_v4.py::test_d6_unit_after_filter"
+      ]
+    }
+  },
+  "failures": [
+    "d11/test_d11.py::test_d114_filter_before_unit_conversion",
+    "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+    "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+    "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+    "t4/test_t4.py::test_t4b_unit_f_applies_after_filter",
+    "t4/test_t4.py::test_t4c_full_pipeline_roundtrip",
+    "v4/test_v4.py::test_d6_unit_after_filter"
+  ],
+  "total_passed": 74,
+  "total_failed": 7,
+  "total": 81
+}

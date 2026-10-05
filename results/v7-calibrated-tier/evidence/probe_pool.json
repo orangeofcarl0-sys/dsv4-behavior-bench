@@ -1,0 +1,686 @@
+{
+  "generated_from": [
+    "legacy_behavior_map.json",
+    "legacy_item_analysis.json"
+  ],
+  "n_probes": 28,
+  "verdict_counts": {
+    "noise": 4,
+    "live": 8,
+    "ceiling": 10,
+    "floor-spec-gap": 2,
+    "unmeasured": 4
+  },
+  "probes": [
+    {
+      "probe_id": "ndjson_malformed_tolerance",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "A malformed/truncated NDJSON line is skipped, counted, and never crashes; exit code follows policy",
+      "legacy_tests": [
+        "test_d121_transform_skips_malformed_line",
+        "test_d122_emit_skips_malformed_line",
+        "test_d127_cli_transform_malformed_exit1",
+        "test_d1_ndjson_malformed_line_skipped",
+        "test_d1_ndjson_truncated_line_skipped",
+        "test_t2_ndjson_bad_line_skipped",
+        "test_t4a_ndjson_malformed_counted_not_crash"
+      ],
+      "n_legacy_tests": 7,
+      "phase2": {
+        "verdict": "noise",
+        "mean_pass_rate": 0.22222222222222224,
+        "mean_D": 0.4888888848126985,
+        "labels": {
+          "floor": 2,
+          "noise": 5
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "nonfinite_rejected",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "NaN/Inf/-Inf temp or humidity is record-level invalid, never normalised to null, and never leaks into emitted output",
+      "legacy_tests": [
+        "test_d112_nan_temp_rejected",
+        "test_d113_inf_temp_rejected",
+        "test_d117_emit_json_no_nan"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.5833333333333334,
+        "mean_D": 1.372222211338889,
+        "labels": {
+          "noise": 1,
+          "high-value": 1,
+          "ceiling": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "range_boundary_exactness",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "temp range boundary is inclusive at 85 and exclusive just above it",
+      "legacy_tests": [
+        "test_t2_boundary_temp_85_kept",
+        "test_t2_boundary_temp_85_plus_epsilon_skipped"
+      ],
+      "n_legacy_tests": 2,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "json_input_shapes",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "JSON input accepted as array or as a single object",
+      "legacy_tests": [
+        "test_t2_single_object_json"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "utc_normalization",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Offsets (incl. extreme and negative) normalise to UTC Z form without loss",
+      "legacy_tests": [
+        "test_d101_extreme_offset_utc_normalization",
+        "test_d102_negative_offset_utc_normalization"
+      ],
+      "n_legacy_tests": 2,
+      "phase2": {
+        "verdict": "noise",
+        "mean_pass_rate": 0.9444444444444444,
+        "mean_D": 0.3333333273333335,
+        "labels": {
+          "noise": 2
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "timestamp_microseconds_preserved",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Microsecond precision survives transform",
+      "legacy_tests": [
+        "test_d102_microseconds_preserved",
+        "test_t2_microsecond_timestamp"
+      ],
+      "n_legacy_tests": 2,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.4444444444444444,
+        "mean_D": 1.8666666498666669,
+        "labels": {
+          "high-value": 1,
+          "ceiling": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "filter_expression_semantics",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "field OP value: whitespace-free, numeric-vs-string comparison, missing field does not match, negatives",
+      "legacy_tests": [
+        "test_d103_filter_negative_number",
+        "test_d104_filter_whitespace_padded",
+        "test_d105_filter_negative_value_with_space",
+        "test_d129_filter_missing_field_no_crash",
+        "test_d9_filter_numeric_vs_string",
+        "test_t2_filter_string_equality"
+      ],
+      "n_legacy_tests": 6,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "filter_multi_and_ordering",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Repeated filters are AND; filters run after dedupe and before unit conversion",
+      "legacy_tests": [
+        "test_d114_filter_before_unit_conversion",
+        "test_d6_dedupe_then_filter",
+        "test_d6_unit_after_filter",
+        "test_t4b_filter_applied_after_dedupe",
+        "test_t4b_unit_f_applies_after_filter"
+      ],
+      "n_legacy_tests": 5,
+      "phase2": {
+        "verdict": "floor-spec-gap",
+        "mean_pass_rate": 0.05555555555555555,
+        "mean_D": 0.33333332733333343,
+        "labels": {
+          "floor": 3,
+          "ceiling": 2
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "unit_f_exact",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "F = C*9/5+32 exactly, incl. boundaries and a single conversion point in the chain",
+      "legacy_tests": [
+        "test_d1010_unit_f_85c",
+        "test_d109_unit_f_boundary_exact",
+        "test_t3_unit_f_exact"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "md_mean_arithmetic",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "md stats mean is the arithmetic mean of non-null temps, not midrange",
+      "legacy_tests": [
+        "test_d7_md_mean_arithmetic",
+        "test_t3_md_mean_is_arithmetic_not_midrange",
+        "test_t4c_emit_md_uses_arithmetic_mean"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "md_table_escaping",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "md table cells escape | and replace newlines",
+      "legacy_tests": [
+        "test_d126_md_table_pipe_escaped"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "floor-spec-gap",
+        "mean_pass_rate": 0.05555555555555555,
+        "mean_D": 0.33333332733333343,
+        "labels": {
+          "floor": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "dedupe_key_normalization",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "dedupe key = (lowercased device_id, normalised ts), keeps last; --no-dedupe keeps all",
+      "legacy_tests": [
+        "test_d111_dedupe_normalized_ts_collapses_offsets",
+        "test_d115_no_dedupe_keeps_all",
+        "test_d128_dedupe_keeps_last_humidity",
+        "test_d9_duplicate_device_diff_case_keeps_last",
+        "test_t3_dedupe_lowercases_device_id",
+        "test_t4b_dedupe_keeps_last_value_and_lowercase_key"
+      ],
+      "n_legacy_tests": 6,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "legacy_temperature_fallback",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "temp absent/null/empty falls back to legacy temperature; temp=0 does not",
+      "legacy_tests": [
+        "test_d3_legacy_temperature_when_temp_empty",
+        "test_t4a_legacy_temperature_field"
+      ],
+      "n_legacy_tests": 2,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.2777777777777778,
+        "mean_D": 3.5333332697333346,
+        "labels": {
+          "high-value": 1,
+          "ceiling": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "bool_is_not_numeric",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "A boolean temp is not silently coerced to a number",
+      "legacy_tests": [
+        "test_d123_bool_temp_not_numeric"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.3888888888888889,
+        "mean_D": 4.333333255333335,
+        "labels": {
+          "high-value": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "extless_json_sniffing",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Unknown extension sniffs JSON object / array / NDJSON by content",
+      "legacy_tests": [
+        "test_d4_extless_json_array_sniffed",
+        "test_d4_extless_json_object_sniffed",
+        "test_t4a_extless_json_sniffed"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "csv_dialect_robustness",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "CSV: BOM tolerated, quoted commas parsed, short rows skipped, emit re-quotes",
+      "legacy_tests": [
+        "test_d116_csv_emit_roundtrip_ingest",
+        "test_d124_csv_short_row_skipped",
+        "test_d7_csv_quotes_comma_field",
+        "test_d9_bom_ndjson",
+        "test_t2_csv_bom_quotes",
+        "test_t3_csv_emit_quotes_commas"
+      ],
+      "n_legacy_tests": 6,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.7777777777777778,
+        "mean_D": 2.9333332805333345,
+        "labels": {
+          "ceiling": 5,
+          "high-value": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "cli_exit_codes",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Usage error -> 2, missing input -> 1, malformed-transform policy exit code",
+      "legacy_tests": [
+        "test_d118_cli_usage_error_exit2",
+        "test_d119_cli_missing_transform_input_exit1",
+        "test_d8_cli_missing_input_exit1",
+        "test_d8_cli_output_flag_writes_file",
+        "test_d8_cli_summary_flag"
+      ],
+      "n_legacy_tests": 5,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.8888888888888888,
+        "mean_D": 1.333333309333334,
+        "labels": {
+          "high-value": 1,
+          "ceiling": 4
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "transform_idempotent",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Re-transforming already-transformed data is a fixed point",
+      "legacy_tests": [
+        "test_d1111_retransform_idempotent"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "noise",
+        "mean_pass_rate": 0.9444444444444444,
+        "mean_D": 0.3333333273333335,
+        "labels": {
+          "noise": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "input_not_mutated",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "transform does not modify its input file",
+      "legacy_tests": [
+        "test_d1110_transform_does_not_modify_input"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "whitespace_trimming",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "device_id / timestamp strip surrounding whitespace",
+      "legacy_tests": [
+        "test_d2_device_id_whitespace_trimmed",
+        "test_d2_timestamp_whitespace_trimmed",
+        "test_t4a_whitespace_fields_trimmed"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.6666666666666666,
+        "mean_D": 266666666.66666666,
+        "labels": {
+          "high-value": 3
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "zero_preserved",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "temp=0 / humidity=0 survive as real values, not falsy-dropped",
+      "legacy_tests": [
+        "test_d1210_zero_values_preserved"
+      ],
+      "n_legacy_tests": 1,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "nonnumeric_becomes_null_kept",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Non-numeric temp/humidity normalise to null and the row is kept",
+      "legacy_tests": [
+        "test_d5_nonnumeric_humidity_null_row_kept",
+        "test_d5_nonnumeric_temp_null_row_kept",
+        "test_t4a_nonnumeric_temp_skipped_as_null"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "noise",
+        "mean_pass_rate": 0.5,
+        "mean_D": 0.9999999940000001,
+        "labels": {
+          "noise": 3
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "empty_catalog_stats",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "Empty input produces valid empty stats/emit without crashing",
+      "legacy_tests": [
+        "test_d106_empty_catalog_transform",
+        "test_d107_all_skipped_emit_stats",
+        "test_t2_empty_catalog_emit_no_crash"
+      ],
+      "n_legacy_tests": 3,
+      "phase2": {
+        "verdict": "ceiling",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "cli_full_chain",
+      "kind": "legacy-behaviour",
+      "source": "calibrated-legacy",
+      "description": "ingest -> transform -> emit end-to-end via CLI with default and explicit filenames",
+      "legacy_tests": [
+        "test_d108_cli_chain_default_filenames",
+        "test_d125_transform_json_array_input",
+        "test_t3_cli_output_writes_file",
+        "test_t3_cli_summary_flag_exists",
+        "test_t4c_cli_chain_end_to_end",
+        "test_t4c_full_pipeline_roundtrip"
+      ],
+      "n_legacy_tests": 6,
+      "phase2": {
+        "verdict": "live",
+        "mean_pass_rate": 0.25,
+        "mean_D": 2.433333289533334,
+        "labels": {
+          "ceiling": 4,
+          "high-value": 1,
+          "floor": 1
+        }
+      },
+      "candidate_visible_basis": [
+        "the v2.3 task book section that names the behaviour",
+        "standard pipeline semantics (parse -> normalize -> validate -> dedupe -> filter -> unit -> emit)"
+      ],
+      "rationale": "Kept because the legacy suite measured it; its Phase-2 verdict decides whether it belongs in the main score or the regression suite."
+    },
+    {
+      "probe_id": "stop_decision_depth",
+      "kind": "observe-only",
+      "source": "cross-run-invariant",
+      "description": "The agent decides when the work is done; runs must not differ by an order of magnitude in effort for the same outcome",
+      "legacy_tests": [],
+      "n_legacy_tests": 0,
+      "phase2": {
+        "verdict": "unmeasured",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "measured, not specified - the task book does not mention a budget"
+      ],
+      "rationale": "kimi-k2.6 used 516/57/77 steps across three identical runs; the tail is a failure mode",
+      "note": "candidate_visible_basis: none by design - this is an observe-only metric, never scored into V7"
+    },
+    {
+      "probe_id": "order_sensitivity_of_mutation",
+      "kind": "closure-probe",
+      "source": "cross-module-invariant",
+      "description": "transform must not depend on dict iteration order or on the order rows arrive within one key",
+      "legacy_tests": [],
+      "n_legacy_tests": 0,
+      "phase2": {
+        "verdict": "unmeasured",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "closure of 'dedupe keeps last' + 'filter is per-record'"
+      ],
+      "rationale": "legacy measured ordering only via one hard-coded scenario; a general probe is a stronger closure",
+      "note": "candidate_visible_basis: the frozen processing order line in the task book"
+    },
+    {
+      "probe_id": "emit_ingest_roundtrip_law",
+      "kind": "closure-probe",
+      "source": "robustness-closure",
+      "description": "emit(csv) -> ingest must be a value-preserving round trip for every row emit can produce",
+      "legacy_tests": [],
+      "n_legacy_tests": 0,
+      "phase2": {
+        "verdict": "unmeasured",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "closure of the csv quoting rule and the ingest normalisation rule"
+      ],
+      "rationale": "one legacy test covers a single happy row; the law covers all rows emit can emit",
+      "note": "candidate_visible_basis: csv quoting bullet + ingest normalization bullet"
+    },
+    {
+      "probe_id": "skipped_accounting_invariant",
+      "kind": "closure-probe",
+      "source": "cross-module-invariant",
+      "description": "kept + skipped = input record count, for every path (malformed, out-of-range, duplicate, filtered)",
+      "legacy_tests": [],
+      "n_legacy_tests": 0,
+      "phase2": {
+        "verdict": "unmeasured",
+        "mean_pass_rate": null,
+        "mean_D": null,
+        "labels": {}
+      },
+      "candidate_visible_basis": [
+        "closure of 'skip and count' appearing in three separate spec bullets"
+      ],
+      "rationale": "legacy has one test for this (a12); the invariant is stronger and cheap to check",
+      "note": "candidate_visible_basis: the three 'skip and count' bullets"
+    }
+  ]
+}

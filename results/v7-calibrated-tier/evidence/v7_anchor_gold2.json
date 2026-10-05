@@ -1,0 +1,184 @@
+{
+  "label": "gold2",
+  "repo": "<harness>/ref_aa2d0a8/gold2",
+  "tier": "V7",
+  "behaviours": {
+    "whitespace_trimming": {
+      "tier": "basic",
+      "weight": 1,
+      "satisfied": true,
+      "scored": true,
+      "passed": 3,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy d2 / t4a",
+      "note": null
+    },
+    "cli_exit_codes": {
+      "tier": "regression",
+      "weight": 0,
+      "satisfied": true,
+      "scored": false,
+      "passed": 3,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "pass",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy d118 / d119 / d8",
+      "note": "ceiling for references; live for models. Kept as basic."
+    },
+    "csv_dialect_robustness": {
+      "tier": "regression",
+      "weight": 0,
+      "satisfied": true,
+      "scored": false,
+      "passed": 2,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy t2 / t3 / d116 / d124 / d7",
+      "note": null
+    },
+    "legacy_temperature_fallback": {
+      "tier": "inference",
+      "weight": 2,
+      "satisfied": true,
+      "scored": true,
+      "passed": 3,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy t4a / d3",
+      "note": "pilot: scored but high run-to-run variance"
+    },
+    "nonfinite_rejected": {
+      "tier": "inference",
+      "weight": 2,
+      "satisfied": true,
+      "scored": true,
+      "passed": 4,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy d112 / d113 / d117",
+      "note": "pilot: scored but high run-to-run variance"
+    },
+    "timestamp_microseconds_preserved": {
+      "tier": "inference",
+      "weight": 2,
+      "satisfied": true,
+      "scored": true,
+      "passed": 2,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "source": "legacy d102 / t2",
+      "note": null
+    },
+    "bool_is_not_numeric": {
+      "tier": "inference",
+      "weight": 2,
+      "satisfied": true,
+      "scored": true,
+      "passed": 3,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "source": "legacy d123",
+      "note": "separates gold2 from gold -- top of the difficulty band"
+    },
+    "cli_full_chain": {
+      "tier": "regression",
+      "weight": 0,
+      "satisfied": true,
+      "scored": false,
+      "passed": 2,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "source": "legacy t4c",
+      "note": "separates gold2 from gold; exercises the now-stated filter/unit order"
+    },
+    "filter_unit_order": {
+      "tier": "regression",
+      "weight": 0,
+      "satisfied": true,
+      "scored": false,
+      "passed": 2,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "source": "former spec gap (legacy d114 / d6 / t4b)",
+      "note": "UNMEASURED under the V7 spec; legacy numbers are from the unstated-spec condition"
+    },
+    "md_table_escaping": {
+      "tier": "regression",
+      "weight": 0,
+      "satisfied": true,
+      "scored": false,
+      "passed": 1,
+      "failed": 0,
+      "invalid": false,
+      "failed_tests": [],
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "source": "former spec gap (legacy d126)",
+      "note": "UNMEASURED under the V7 spec; legacy numbers are from the unstated-spec condition"
+    }
+  },
+  "raw_passed": 25,
+  "raw_total": 25,
+  "weighted_earned": 9.0,
+  "weighted_possible": 9.0,
+  "score": 1.0,
+  "behaviours_satisfied": 10,
+  "behaviours_total": 10
+}

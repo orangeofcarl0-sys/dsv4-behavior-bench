@@ -1,0 +1,254 @@
+{
+  "n_behaviors": 24,
+  "n_tests_seen": 76,
+  "n_tests_assigned": 76,
+  "multiplicity": {
+    "ndjson_malformed_tolerance": 7,
+    "filter_expression_semantics": 6,
+    "dedupe_key_normalization": 6,
+    "csv_dialect_robustness": 6,
+    "cli_full_chain": 6,
+    "filter_multi_and_ordering": 5,
+    "cli_exit_codes": 5,
+    "nonfinite_rejected": 3,
+    "unit_f_exact": 3,
+    "md_mean_arithmetic": 3,
+    "extless_json_sniffing": 3,
+    "whitespace_trimming": 3,
+    "nonnumeric_becomes_null_kept": 3,
+    "empty_catalog_stats": 3,
+    "range_boundary_exactness": 2,
+    "utc_normalization": 2,
+    "timestamp_microseconds_preserved": 2,
+    "legacy_temperature_fallback": 2,
+    "json_input_shapes": 1,
+    "md_table_escaping": 1,
+    "bool_is_not_numeric": 1,
+    "transform_idempotent": 1,
+    "input_not_mutated": 1,
+    "zero_preserved": 1
+  },
+  "behaviors": {
+    "ndjson_malformed_tolerance": {
+      "description": "A malformed/truncated NDJSON line is skipped, counted, and never crashes; exit code follows policy",
+      "tests": [
+        "test_d121_transform_skips_malformed_line",
+        "test_d122_emit_skips_malformed_line",
+        "test_d127_cli_transform_malformed_exit1",
+        "test_d1_ndjson_malformed_line_skipped",
+        "test_d1_ndjson_truncated_line_skipped",
+        "test_t2_ndjson_bad_line_skipped",
+        "test_t4a_ndjson_malformed_counted_not_crash"
+      ],
+      "n_tests": 7
+    },
+    "nonfinite_rejected": {
+      "description": "NaN/Inf/-Inf temp or humidity is record-level invalid, never normalised to null, and never leaks into emitted output",
+      "tests": [
+        "test_d112_nan_temp_rejected",
+        "test_d113_inf_temp_rejected",
+        "test_d117_emit_json_no_nan"
+      ],
+      "n_tests": 3
+    },
+    "range_boundary_exactness": {
+      "description": "temp range boundary is inclusive at 85 and exclusive just above it",
+      "tests": [
+        "test_t2_boundary_temp_85_kept",
+        "test_t2_boundary_temp_85_plus_epsilon_skipped"
+      ],
+      "n_tests": 2
+    },
+    "json_input_shapes": {
+      "description": "JSON input accepted as array or as a single object",
+      "tests": [
+        "test_t2_single_object_json"
+      ],
+      "n_tests": 1
+    },
+    "utc_normalization": {
+      "description": "Offsets (incl. extreme and negative) normalise to UTC Z form without loss",
+      "tests": [
+        "test_d101_extreme_offset_utc_normalization",
+        "test_d102_negative_offset_utc_normalization"
+      ],
+      "n_tests": 2
+    },
+    "timestamp_microseconds_preserved": {
+      "description": "Microsecond precision survives transform",
+      "tests": [
+        "test_d102_microseconds_preserved",
+        "test_t2_microsecond_timestamp"
+      ],
+      "n_tests": 2
+    },
+    "filter_expression_semantics": {
+      "description": "field OP value: whitespace-free, numeric-vs-string comparison, missing field does not match, negatives",
+      "tests": [
+        "test_d103_filter_negative_number",
+        "test_d104_filter_whitespace_padded",
+        "test_d105_filter_negative_value_with_space",
+        "test_d129_filter_missing_field_no_crash",
+        "test_d9_filter_numeric_vs_string",
+        "test_t2_filter_string_equality"
+      ],
+      "n_tests": 6
+    },
+    "filter_multi_and_ordering": {
+      "description": "Repeated filters are AND; filters run after dedupe and before unit conversion",
+      "tests": [
+        "test_d114_filter_before_unit_conversion",
+        "test_d6_dedupe_then_filter",
+        "test_d6_unit_after_filter",
+        "test_t4b_filter_applied_after_dedupe",
+        "test_t4b_unit_f_applies_after_filter"
+      ],
+      "n_tests": 5
+    },
+    "unit_f_exact": {
+      "description": "F = C*9/5+32 exactly, incl. boundaries and a single conversion point in the chain",
+      "tests": [
+        "test_d1010_unit_f_85c",
+        "test_d109_unit_f_boundary_exact",
+        "test_t3_unit_f_exact"
+      ],
+      "n_tests": 3
+    },
+    "md_mean_arithmetic": {
+      "description": "md stats mean is the arithmetic mean of non-null temps, not midrange",
+      "tests": [
+        "test_d7_md_mean_arithmetic",
+        "test_t3_md_mean_is_arithmetic_not_midrange",
+        "test_t4c_emit_md_uses_arithmetic_mean"
+      ],
+      "n_tests": 3
+    },
+    "md_table_escaping": {
+      "description": "md table cells escape | and replace newlines",
+      "tests": [
+        "test_d126_md_table_pipe_escaped"
+      ],
+      "n_tests": 1
+    },
+    "dedupe_key_normalization": {
+      "description": "dedupe key = (lowercased device_id, normalised ts), keeps last; --no-dedupe keeps all",
+      "tests": [
+        "test_d111_dedupe_normalized_ts_collapses_offsets",
+        "test_d115_no_dedupe_keeps_all",
+        "test_d128_dedupe_keeps_last_humidity",
+        "test_d9_duplicate_device_diff_case_keeps_last",
+        "test_t3_dedupe_lowercases_device_id",
+        "test_t4b_dedupe_keeps_last_value_and_lowercase_key"
+      ],
+      "n_tests": 6
+    },
+    "legacy_temperature_fallback": {
+      "description": "temp absent/null/empty falls back to legacy temperature; temp=0 does not",
+      "tests": [
+        "test_d3_legacy_temperature_when_temp_empty",
+        "test_t4a_legacy_temperature_field"
+      ],
+      "n_tests": 2
+    },
+    "bool_is_not_numeric": {
+      "description": "A boolean temp is not silently coerced to a number",
+      "tests": [
+        "test_d123_bool_temp_not_numeric"
+      ],
+      "n_tests": 1
+    },
+    "extless_json_sniffing": {
+      "description": "Unknown extension sniffs JSON object / array / NDJSON by content",
+      "tests": [
+        "test_d4_extless_json_array_sniffed",
+        "test_d4_extless_json_object_sniffed",
+        "test_t4a_extless_json_sniffed"
+      ],
+      "n_tests": 3
+    },
+    "csv_dialect_robustness": {
+      "description": "CSV: BOM tolerated, quoted commas parsed, short rows skipped, emit re-quotes",
+      "tests": [
+        "test_d116_csv_emit_roundtrip_ingest",
+        "test_d124_csv_short_row_skipped",
+        "test_d7_csv_quotes_comma_field",
+        "test_d9_bom_ndjson",
+        "test_t2_csv_bom_quotes",
+        "test_t3_csv_emit_quotes_commas"
+      ],
+      "n_tests": 6
+    },
+    "cli_exit_codes": {
+      "description": "Usage error -> 2, missing input -> 1, malformed-transform policy exit code",
+      "tests": [
+        "test_d118_cli_usage_error_exit2",
+        "test_d119_cli_missing_transform_input_exit1",
+        "test_d8_cli_missing_input_exit1",
+        "test_d8_cli_output_flag_writes_file",
+        "test_d8_cli_summary_flag"
+      ],
+      "n_tests": 5
+    },
+    "transform_idempotent": {
+      "description": "Re-transforming already-transformed data is a fixed point",
+      "tests": [
+        "test_d1111_retransform_idempotent"
+      ],
+      "n_tests": 1
+    },
+    "input_not_mutated": {
+      "description": "transform does not modify its input file",
+      "tests": [
+        "test_d1110_transform_does_not_modify_input"
+      ],
+      "n_tests": 1
+    },
+    "whitespace_trimming": {
+      "description": "device_id / timestamp strip surrounding whitespace",
+      "tests": [
+        "test_d2_device_id_whitespace_trimmed",
+        "test_d2_timestamp_whitespace_trimmed",
+        "test_t4a_whitespace_fields_trimmed"
+      ],
+      "n_tests": 3
+    },
+    "zero_preserved": {
+      "description": "temp=0 / humidity=0 survive as real values, not falsy-dropped",
+      "tests": [
+        "test_d1210_zero_values_preserved"
+      ],
+      "n_tests": 1
+    },
+    "nonnumeric_becomes_null_kept": {
+      "description": "Non-numeric temp/humidity normalise to null and the row is kept",
+      "tests": [
+        "test_d5_nonnumeric_humidity_null_row_kept",
+        "test_d5_nonnumeric_temp_null_row_kept",
+        "test_t4a_nonnumeric_temp_skipped_as_null"
+      ],
+      "n_tests": 3
+    },
+    "empty_catalog_stats": {
+      "description": "Empty input produces valid empty stats/emit without crashing",
+      "tests": [
+        "test_d106_empty_catalog_transform",
+        "test_d107_all_skipped_emit_stats",
+        "test_t2_empty_catalog_emit_no_crash"
+      ],
+      "n_tests": 3
+    },
+    "cli_full_chain": {
+      "description": "ingest -> transform -> emit end-to-end via CLI with default and explicit filenames",
+      "tests": [
+        "test_d108_cli_chain_default_filenames",
+        "test_d125_transform_json_array_input",
+        "test_t3_cli_output_writes_file",
+        "test_t3_cli_summary_flag_exists",
+        "test_t4c_cli_chain_end_to_end",
+        "test_t4c_full_pipeline_roundtrip"
+      ],
+      "n_tests": 6
+    }
+  },
+  "unmapped_tests": []
+}

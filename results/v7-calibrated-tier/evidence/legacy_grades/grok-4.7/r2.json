@@ -1,0 +1,116 @@
+{
+  "candidate": "grok-4.7",
+  "rep": 2,
+  "repo": "<harness>/legacy_runs/grok-4.7/r2",
+  "suites": {
+    "d10": {
+      "passed": 10,
+      "failed": 1,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "d10/test_d10.py::test_d102_microseconds_preserved"
+      ]
+    },
+    "d11": {
+      "passed": 10,
+      "failed": 1,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "d11/test_d11.py::test_d114_filter_before_unit_conversion"
+      ]
+    },
+    "d12": {
+      "passed": 5,
+      "failed": 5,
+      "expected": 10,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+        "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+        "d12/test_d12.py::test_d123_bool_temp_not_numeric",
+        "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+        "d12/test_d12.py::test_d127_cli_transform_malformed_exit1"
+      ]
+    },
+    "t2": {
+      "passed": 7,
+      "failed": 1,
+      "expected": 8,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "t2/test_t2.py::test_t2_ndjson_bad_line_skipped"
+      ]
+    },
+    "t3": {
+      "passed": 6,
+      "failed": 0,
+      "expected": 6,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": []
+    },
+    "t4": {
+      "passed": 7,
+      "failed": 4,
+      "expected": 11,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "t4/test_t4.py::test_t4a_ndjson_malformed_counted_not_crash",
+        "t4/test_t4.py::test_t4a_nonnumeric_temp_skipped_as_null",
+        "t4/test_t4.py::test_t4b_unit_f_applies_after_filter",
+        "t4/test_t4.py::test_t4c_full_pipeline_roundtrip"
+      ]
+    },
+    "v4": {
+      "passed": 15,
+      "failed": 9,
+      "expected": 24,
+      "errors": 0,
+      "invalid": false,
+      "failed_tests": [
+        "v4/test_v4.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+        "v4/test_v4.py::test_d5_nonnumeric_temp_null_row_kept",
+        "v4/test_v4.py::test_d5_nonnumeric_humidity_null_row_kept",
+        "v4/test_v4.py::test_d6_unit_after_filter",
+        "v4/test_v4core.py::test_d1_ndjson_malformed_line_skipped",
+        "v4/test_v4core.py::test_d1_ndjson_truncated_line_skipped",
+        "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+      ]
+    }
+  },
+  "failures": [
+    "d10/test_d10.py::test_d102_microseconds_preserved",
+    "d11/test_d11.py::test_d114_filter_before_unit_conversion",
+    "d12/test_d12.py::test_d121_transform_skips_malformed_line",
+    "d12/test_d12.py::test_d122_emit_skips_malformed_line",
+    "d12/test_d12.py::test_d123_bool_temp_not_numeric",
+    "d12/test_d12.py::test_d126_md_table_pipe_escaped",
+    "d12/test_d12.py::test_d127_cli_transform_malformed_exit1",
+    "t2/test_t2.py::test_t2_ndjson_bad_line_skipped",
+    "t4/test_t4.py::test_t4a_ndjson_malformed_counted_not_crash",
+    "t4/test_t4.py::test_t4a_nonnumeric_temp_skipped_as_null",
+    "t4/test_t4.py::test_t4b_unit_f_applies_after_filter",
+    "t4/test_t4.py::test_t4c_full_pipeline_roundtrip",
+    "v4/test_v4.py::test_d1_ndjson_malformed_line_skipped",
+    "v4/test_v4.py::test_d1_ndjson_truncated_line_skipped",
+    "v4/test_v4.py::test_d3_legacy_temperature_when_temp_empty",
+    "v4/test_v4.py::test_d5_nonnumeric_temp_null_row_kept",
+    "v4/test_v4.py::test_d5_nonnumeric_humidity_null_row_kept",
+    "v4/test_v4.py::test_d6_unit_after_filter",
+    "v4/test_v4core.py::test_d1_ndjson_malformed_line_skipped",
+    "v4/test_v4core.py::test_d1_ndjson_truncated_line_skipped",
+    "v4/test_v4core.py::test_d3_legacy_temperature_when_temp_empty"
+  ],
+  "total_passed": 60,
+  "total_failed": 21,
+  "total": 81
+}

@@ -16,6 +16,11 @@
   微型 repo，短 issue + 固定工作预算。prototype + pilot，未 freeze。
 - **遗产套件：V1–V4（datapipe v2.3，81 项）** — 测试套件保留冻结，结果、参考基线与
   旧评分器已移除，见文末。
+- **校准 tier：V7（datapipe v2.3 + 两处规格修补）** — 由**真实 Flash population
+  实测反选出的 5 个行为**构成主分，权重显式。**未 freeze**：两个强 family 打平。
+
+> **三层定位**：V5 = compliance tier（饱和，不再扩张）；V6 = inference prototype
+> （未定型）；**V7 = calibrated discrimination tier**（由 item 区分度反选，不是覆盖度驱动）。
 
 ---
 
@@ -238,6 +243,110 @@ expected 数（66→68）。`v5ref` 未改动（原实现已符合修正后的�
 运行与评分脚本、完整性审计）见
 [`results/model-harness-effort/`](results/model-harness-effort/)。
 该目录已脱敏（本机绝对路径与用户名替换为占位符），评分数据未作任何改动。
+
+# V7：校准后的区分度 tier（calibration-driven）
+
+前三轮给出了三个负结果：V5 full-spec 饱和、V5-Minimal 信息消融无效、V6 在 40 tool
+calls 预算下同样 9/9。V7 因此**反向设计**——不再扩张 spec / 测试 / micro-repo，而是回到
+旧 V1–V4，先测量它为什么仍有区分度，再按测量结果重建。
+
+## 为什么回到 V1–V4
+
+当前 Flash population 在旧套件上的实测（6 个 model family × n=3 = 18 次运行；
+旧任务条件逐字节恢复；基线先复现 seed 25/81 · gold 76/81 · gold2 81/81）：
+
+| candidate | legacy /81 |
+|---|---:|
+| `hy4-preview-f` | 71.3 |
+| `deepseek-v4.1-flash` | 68.3 |
+| `grok-4.7` | 63.3 |
+| `gemini-3.5-flash` | 60.3 |
+| `minimax-m3` | 54.3 |
+| `kimi-k2.6` | 52.0 |
+
+**跨 family 跨度 19.3 分，档内 sd 2.5**；同期 V5 v2.4.1 上只有 1.4 分跨度。
+旧方法论在当前 population 上仍然有效。
+
+## 三个实测结论
+
+1. **旧 raw /81 并没有放大 hard behaviours。** 81 个测试映射到 24 个语义行为，
+   `correlation(n_tests, fail_rate) = 0.130` —— 几乎没有关系。重复集中在容错/管道类
+   （`ndjson_malformed_tolerance` 独占 7 槽），而最难的那项只有 1 槽。
+   81 个槽位里只有约 24.6 个是"活的"。
+2. **旧套件的 7 个 floor item 是规格缺口，不是难度。** 任务书把 `--filter` 与
+   `--unit` 列为两条互不相干的 bullet，**从未说明先后顺序**；md 转义同样从未提及。
+   6 个 family 全部按另一种读法实现，于是这些 item 的 between-model variance 为零。
+3. **把规则写进任务书后，它们从 p=0.06 直接变成 p=1.00** —— 三个行为全部从"没人过"
+   变成"所有人都过"。**在两种状态下它们都不测能力**：之前测的是有没有猜中未公布的
+   规则，之后什么都不测。
+
+> 可推广的判据：**隐藏项的规则若无法从可见契约推出，它产生的分数看起来像难度、
+> 行为像抛硬币；补上契约不会让它有区分度，只会删掉它。**
+
+## V7 构成（post-pilot，未 freeze）
+
+一个行为一个文件，行为级评分（一个行为的全部测试通过才算满足），三档显式权重
+（basic 1 / inference 2 / hard 3），**不按测试重复买权重**。
+
+| behaviour | tier | pilot p | var_between | var_within | 判定 |
+|---|---|---:|---:|---:|---|
+| `whitespace_trimming` | basic | 0.67 | 0.333 | 0.000 | **live** |
+| `timestamp_microseconds_preserved` | inference | 0.50 | 0.250 | 0.167 | **live** |
+| `bool_is_not_numeric` | inference | 0.50 | 0.250 | 0.167 | **live** |
+| `legacy_temperature_fallback` | inference | 0.33 | 0.083 | 0.333 | noise |
+| `nonfinite_rejected` | inference | 0.50 | 0.000 | 0.500 | noise |
+| `cli_exit_codes` | regression | 1.00 | 0 | 0 | ceiling |
+| `csv_dialect_robustness` | regression | 1.00 | 0 | 0 | ceiling |
+| `cli_full_chain` | regression | 1.00 | 0 | 0 | ceiling |
+| `filter_unit_order` | regression | 1.00 | 0 | 0 | ceiling |
+| `md_table_escaping` | regression | 1.00 | 0 | 0 | ceiling |
+
+锚点（5 个计分行为）：**seed 0.000 / gold 0.778 / gold2 1.000**。
+锚点只说明 tier 被锚定，**不**说明它难 —— V5 已经证明这个 proxy 是错的。
+
+pilot（3 family × n=2）：
+
+| candidate | r1 | r2 | mean |
+|---|---:|---:|---:|
+| `hy4-preview-f` | 0.778 | 0.556 | **0.667** |
+| `deepseek-v4.1-flash` | 0.556 | 0.778 | **0.667** |
+| `minimax-m3` | 0.000 | 0.222 | **0.111** |
+
+## 状态：NOT READY TO FREEZE
+
+必须如实记录失败面：
+
+1. **两个强 family 打平**（均 0.667）——最需要分辨率的区间没有分辨率。
+2. **档内方差仍高**：`nonfinite_rejected` 的 var_within 0.5 对 var_between 0.0，
+   纯抖动、不区分任何模型。真正 live 的只有 3 个行为。
+3. **跨任务书修订的分数不可比**：同一批产物在旧书下 0.10–0.60，新跑在新书下 0.00–0.78。
+
+**结构性结论**：删掉假难度后信号也少了一大半。排除规格缺口后，当前 Flash 之间真正
+可从契约推出的区分度**确实很薄**，集中在字段裁剪、数值精度、类型严格性三处。
+这比 legacy 原始数字更接近"模型能力已跨过旧任务复杂度"。
+
+## 后续条件
+
+1. 诚实地扩充 live 集（3 个不足以排序）：候选是修 noise 行为的探针设计，以及新的
+   契约可推导 closure probe，**不是**新的规格缺口项。
+2. 增加第二个任务族：现有 V7 行为全在 datapipe 上，模型已反复见过。
+3. 引用任何 V7 榜单前跑完整 population（6 family × n=3）。
+4. 不要丢掉 legacy 套件 —— 排除规格缺口后它是项目里校准最好的工具，
+   V7 是它 live 核心的重新加权，不是替代品。
+
+## V7 产物
+
+| 路径 | 内容 |
+|---|---|
+| `v7/` | 10 个 behaviour（一行为一文件）+ conftest + behavior_manifest（含 anchor / provenance / pilot 判定） |
+| `v7/ONBOARDING_TODO.md` | V7 任务书 = v2.3 + 两处规格修补 |
+| `grade_v7.py` | 行为级加权评分器（固定分母，collection error 不缩分母） |
+| `results/v7-calibrated-tier/` | 证据包：Phase 1–3 报告、18 次 legacy 评分、pilot 评分、锚点、行为映射与 item 分析、全部脚本（已脱敏） |
+
+**未改动任何 frozen artifact**：`spec/`、`v5/`、`v5ref/`、`v5seed/`、`grade_v5.py`、
+`mutation_check.py` 全部未触碰，`spec/FROZEN_HASHES.txt` 26/26 复验通过。
+
+---
 
 ## 仓库内 frozen artifact
 
