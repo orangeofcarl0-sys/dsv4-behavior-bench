@@ -1,0 +1,45 @@
+{
+  "run_date": "2026-10-05",
+  "bench_commit": "86b6adf",
+  "what_this_is": "V7, a calibrated discrimination tier selected by measurement over a real Flash population, plus the Phase 1-3 analysis that produced it.",
+  "task": "the same datapipe repair task as V1-V4; V7 scores its live behaviour core",
+  "task_book": "bench/v7/ONBOARDING_TODO.md = v2.3 book + two published spec fixes",
+  "no_frozen_artifact_touched": true,
+  "frozen_hashes_verified": "26/26 before and after building this bundle",
+  "baselines_reproduced": {
+    "seed": "25/81",
+    "gold": "76/81",
+    "gold2": "81/81"
+  },
+  "v7_anchors": {
+    "seed": 0.0,
+    "gold": 0.778,
+    "gold2": 1.0,
+    "note": "anchors show the tier is anchored, NOT that it is hard (brief section 23)"
+  },
+  "legacy_reevaluation": {
+    "population": "6 model families x n=3 = 18 runs",
+    "between_model_spread": 19.3,
+    "mean_within_model_sd": 2.5,
+    "per_family_mean": {
+      "hy4-preview-f": 71.3,
+      "deepseek-v4.1-flash": 68.3,
+      "grok-4.7": 63.3,
+      "gemini-3.5-flash": 60.3,
+      "minimax-m3": 54.3,
+      "kimi-k2.6": 52.0
+    }
+  },
+  "key_findings": [
+    "the legacy suite still discriminates on the current population (19.3-pt spread) while V5 v2.4.1 does not (1.4-pt)",
+    "the legacy 81 tests map to only 24 semantic behaviours; correlation(n_tests, fail_rate) = 0.130, so the old raw score did NOT amplify hard behaviours",
+    "the 7-item floor cluster was specification gaps, not difficulty: publishing the rules moved three of them from p=0.06 to p=1.00",
+    "after removing those, only 3 of 10 V7 behaviours are live -- genuine contract-derivable discrimination among current Flash models is thin"
+  ],
+  "v7_status": "NOT FROZEN -- 2 strong families tie at 0.667, within-model variance still high",
+  "pilot_scores": {
+    "hy4-preview-f": 0.667,
+    "deepseek-v4.1-flash": 0.667,
+    "minimax-m3": 0.111
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "tier": "V7",
+  "scoring": "behaviour-level: a behaviour counts only when every test in its file passes",
+  "weights": {
+    "basic": 1,
+    "inference": 2,
+    "hard": 3,
+    "regression": 0
+  },
+  "weight_rationale": "fixed three-tier weights per design brief section 14; no per-test duplication, no black-box weighting",
+  "behaviours": [
+    {
+      "id": "whitespace_trimming",
+      "tier": "basic",
+      "file": "v7/basic/test_whitespace_trimming.py",
+      "source": "legacy d2 / t4a",
+      "phase2": {
+        "pass_rate": 0.67,
+        "D": "very high (zero within-model variance)",
+        "verdict": "live"
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "scored": true
+    },
+    {
+      "id": "cli_exit_codes",
+      "tier": "regression",
+      "file": "v7/basic/test_cli_exit_codes.py",
+      "source": "legacy d118 / d119 / d8",
+      "phase2": {
+        "pass_rate": 0.89,
+        "D": 1.33,
+        "verdict": "live",
+        "v7_measured": {
+          "pass_rate": 1.0,
+          "note": "passed 18/18 runs -- ceiling, no discrimination"
+        }
+      },
+      "anchor": {
+        "seed": "pass",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "note": "ceiling for references; live for models. Kept as basic.",
+      "scored": false
+    },
+    {
+      "id": "csv_dialect_robustness",
+      "tier": "regression",
+      "file": "v7/basic/test_csv_dialect.py",
+      "source": "legacy t2 / t3 / d116 / d124 / d7",
+      "phase2": {
+        "pass_rate": 0.78,
+        "D": 2.93,
+        "verdict": "live",
+        "v7_measured": {
+          "pass_rate": 1.0,
+          "note": "passed 18/18 runs -- ceiling, no discrimination"
+        }
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "scored": false
+    },
+    {
+      "id": "legacy_temperature_fallback",
+      "tier": "inference",
+      "file": "v7/inference/test_legacy_temperature.py",
+      "source": "legacy t4a / d3",
+      "phase2": {
+        "pass_rate": 0.28,
+        "D": 3.53,
+        "verdict": "live"
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "scored": true
+    },
+    {
+      "id": "nonfinite_rejected",
+      "tier": "inference",
+      "file": "v7/inference/test_nonfinite.py",
+      "source": "legacy d112 / d113 / d117",
+      "phase2": {
+        "pass_rate": 0.58,
+        "D": 1.37,
+        "verdict": "live"
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "scored": true
+    },
+    {
+      "id": "timestamp_microseconds_preserved",
+      "tier": "inference",
+      "file": "v7/inference/test_microseconds.py",
+      "source": "legacy d102 / t2",
+      "phase2": {
+        "pass_rate": 0.44,
+        "D": 1.87,
+        "verdict": "live"
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "pass",
+        "gold2": "pass"
+      },
+      "scored": true
+    },
+    {
+      "id": "bool_is_not_numeric",
+      "tier": "inference",
+      "file": "v7/inference/test_bool_not_numeric.py",
+      "source": "legacy d123",
+      "phase2": {
+        "pass_rate": 0.39,
+        "D": 4.33,
+        "verdict": "live"
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "note": "separates gold2 from gold -- top of the difficulty band",
+      "scored": true
+    },
+    {
+      "id": "cli_full_chain",
+      "tier": "hard",
+      "file": "v7/hard/test_full_chain.py",
+      "source": "legacy t4c",
+      "phase2": {
+        "pass_rate": 0.25,
+        "D": 2.43,
+        "verdict": "live",
+        "v7_measured": {
+          "pass_rate": null,
+          "note": "UNMEASURED: the 18 artifacts used the v2.3 book that omitted this rule"
+        }
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "note": "separates gold2 from gold; exercises the now-stated filter/unit order",
+      "scored": true
+    },
+    {
+      "id": "filter_unit_order",
+      "tier": "hard",
+      "file": "v7/hard/test_filter_unit_order.py",
+      "source": "former spec gap (legacy d114 / d6 / t4b)",
+      "phase2": {
+        "pass_rate": 0.06,
+        "D": 0.33,
+        "verdict": "floor-spec-gap",
+        "v7_measured": {
+          "pass_rate": null,
+          "note": "UNMEASURED: the 18 artifacts used the v2.3 book that omitted this rule"
+        }
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "note": "UNMEASURED under the V7 spec; legacy numbers are from the unstated-spec condition",
+      "scored": true
+    },
+    {
+      "id": "md_table_escaping",
+      "tier": "hard",
+      "file": "v7/hard/test_md_escaping.py",
+      "source": "former spec gap (legacy d126)",
+      "phase2": {
+        "pass_rate": 0.06,
+        "D": 0.33,
+        "verdict": "floor-spec-gap",
+        "v7_measured": {
+          "pass_rate": null,
+          "note": "UNMEASURED: the 18 artifacts used the v2.3 book that omitted this rule"
+        }
+      },
+      "anchor": {
+        "seed": "fail",
+        "gold": "fail",
+        "gold2": "pass"
+      },
+      "note": "UNMEASURED under the V7 spec; legacy numbers are from the unstated-spec condition",
+      "scored": true
+    }
+  ],
+  "scored_behaviours": [
+    "whitespace_trimming",
+    "legacy_temperature_fallback",
+    "nonfinite_rejected",
+    "timestamp_microseconds_preserved",
+    "bool_is_not_numeric",
+    "cli_full_chain",
+    "filter_unit_order",
+    "md_table_escaping"
+  ],
+  "regression_behaviours": [
+    "cli_exit_codes",
+    "csv_dialect_robustness"
+  ],
+  "revision": "v7-r1"
+}
